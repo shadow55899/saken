@@ -1,3 +1,21 @@
+# Ignore everything
+*
+
+# Allow these directories
+!/android/
+!/lib/
+
+# Allow pubspec.yaml
+!/pubspec.yaml
+
+# Inside android and lib, ignore everything except their contents
+android/*
+lib/*
+
+# Re-allow all files inside android and lib
+!android/**/*
+!lib/**/*
+
 # Miscellaneous
 *.class
 *.lock
