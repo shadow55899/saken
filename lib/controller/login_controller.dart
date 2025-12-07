@@ -1,4 +1,4 @@
-import 'package:apartment/models/providers/user_provider.dart';
+import 'package:apartment/providers/user_provider.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
@@ -15,8 +15,13 @@ class LoginController extends GetxController {
   }
 
   Future login() async {
-    isLoading.value = true;
-    await provider.login(phone.value, password.value, isLoading.value);
-    isLoading.value = false;
+    try {
+      isLoading.value = true;
+      await provider.login(phone.value, password.value, isLoading.value);
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong");
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

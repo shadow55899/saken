@@ -1,38 +1,46 @@
+import 'package:apartment/controller/register_controller.dart';
+
 class User {
+  final int id;
   final String firstName;
   final String lastName;
   final String phone;
   final String password;
-
-  static final User user = User(
-    firstName: 'Aboabdo',
-    lastName: 'Alhalabastani',
-    phone: "0949378835",
-    password: "00000000",
-  );
+  final Role role;
 
   User({
+    required this.id,
     required this.firstName,
     required this.lastName,
     required this.phone,
     required this.password,
+    required this.role,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      phone: json['phone'],
-      password: json['password'],
+      id: json['id'] ?? 0,
+      firstName: json['firstname'] ?? '',
+      lastName: json['lastname'] ?? '',
+      phone: json['phone_number'] ?? '',
+      password: '', // backend never returns password
+      role: Role.values.firstWhere(
+        (r) => r.name == json['role'],
+        orElse: () => Role.renter,
+      ),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      "id": id,
       "firstName": firstName,
       "lastName": lastName,
       "phone": phone,
       "password": password,
+      "role": role.name,
     };
   }
+
 }
+

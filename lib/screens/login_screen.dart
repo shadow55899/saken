@@ -1,7 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_final_fields, deprecated_member_use
 
 import 'package:apartment/controller/login_controller.dart';
-import 'package:apartment/models/providers/user_provider.dart';
+import 'package:apartment/providers/user_provider.dart';
 import 'package:apartment/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

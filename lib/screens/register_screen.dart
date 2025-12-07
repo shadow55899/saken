@@ -1,5 +1,4 @@
 import 'package:apartment/controller/register_controller.dart';
-import 'package:apartment/screens/login_screen.dart';
 import 'package:apartment/widgets/date-picker.dart';
 import 'package:apartment/widgets/image_picker_button.dart';
 import 'package:flutter/material.dart';
@@ -239,6 +238,15 @@ class RegisterScreen extends StatelessWidget {
                         .toList();
 
                     return DropdownButton<Role>(
+                      hint: Text(
+                        "Role",
+                        style: TextStyle(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                      ),
                       underline: Container(
                         height: 1,
                         color: Theme.of(context).brightness == Brightness.light
@@ -266,15 +274,6 @@ class RegisterScreen extends StatelessWidget {
                       onChanged: (val) {
                         if (val != null) controller.role.value = val;
                       },
-                      hint: Text(
-                        "Role",
-                        style: TextStyle(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                              ? Colors.black
-                              : Colors.white,
-                        ),
-                      ),
                       iconEnabledColor:
                           Theme.of(context).brightness == Brightness.light
                           ? Colors.black
@@ -305,31 +304,34 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 15),
-                ElevatedButton(
-                  onPressed: () {
-                    //controller.submit();
-                    print("First name: ${controller.firstName.value}");
-                    print("Last name: ${controller.lastName.value}");
-                    print("Phone number: ${controller.phoneNumber.value}");
-                    print("Password: ${controller.password.value}");
-                    print("Date: ${controller.selectedDate.value}");
-                    print("Role: ${controller.role.value}");
-                    print(
-                      "Personal image path: ${controller.personalImage.value!.path}",
-                    );
-                    print("ID image path: ${controller.idImage.value!.path}");
-                    Get.offAll(() => LoginScreen());
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 75),
-                    maximumSize: Size(double.infinity, 100),
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                SizedBox(height: 15),
+                Obx(() {
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 75),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
-                  ),
-                  child: Text('Create Account', style: TextStyle(fontSize: 18)),
-                ),
+                    onPressed: controller.isLoading.value
+                        ? null // disable while loading
+                        : () async {
+                            controller.isLoading.value = true;
+                            await controller.register();
+                            controller.isLoading.value = false;
+                          },
+                    child: controller.isLoading.value
+                        ? const SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Text("Create Account"),
+                  );
+                }),
               ],
             ),
           ),
