@@ -9,7 +9,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  static RxString baseUrl = "http://127.0.0.1:8000/api".obs;
+  static RxString baseUrl = "http://192.168.50.105:8000/api".obs;
   // change to your backend URL
   @override
   Widget build(BuildContext context) {

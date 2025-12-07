@@ -1,42 +1,16 @@
-import 'dart:io';
 import 'package:apartment/controller/register_controller.dart';
 import 'package:apartment/screens/login_screen.dart';
 import 'package:apartment/widgets/date-picker.dart';
 import 'package:apartment/widgets/image_picker_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:image_picker/image_picker.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
-
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
+// ignore: use_key_in_widget_constructors
+class RegisterScreen extends StatelessWidget {
   final RegisterController controller = Get.put(RegisterController());
-  bool _isVisiblePassword = true;
-  bool _isVisibleCheckPassword = true;
-  File? _personalImage;
-  File? _idImage;
   // ignore: unused_field
-  DateTime? _selectedDate;
-
-  Future<void> _pickImage(bool isPersonal, ImageSource source) async {
-    final pickedFile = await ImagePicker().pickImage(source: source);
-    if (pickedFile != null) {
-      setState(() {
-        if (isPersonal) {
-          _personalImage = File(pickedFile.path);
-        } else {
-          _idImage = File(pickedFile.path);
-        }
-      });
-    }
-  }
-
+  //DateTime? _selectedDate;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,27 +151,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-                SizedBox(height: 15),
+                SizedBox(height: 25),
                 Theme.of(context).brightness == Brightness.dark
                     ? TextFormField(
                         onChanged: (val) => controller.password.value = val,
-                        obscureText: _isVisiblePassword,
+                        obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isVisiblePassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isVisiblePassword = !_isVisiblePassword;
-                              });
-                            },
                           ),
                         ),
                       )
@@ -208,7 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             0xFF5A7867,
                           ), // typed text color in light mode
                         ),
-                        obscureText: _isVisiblePassword,
+                        obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: const TextStyle(
@@ -226,42 +188,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: Color(0xFF5A7867),
                             ), // focused border color
                           ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isVisiblePassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: const Color(0xFF5A7867), // icon color
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isVisiblePassword = !_isVisiblePassword;
-                              });
-                            },
-                          ),
                         ),
                       ),
                 SizedBox(height: 15),
                 Theme.of(context).brightness == Brightness.dark
                     ? TextFormField(
-                        obscureText: _isVisibleCheckPassword,
+                        obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isVisibleCheckPassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isVisibleCheckPassword =
-                                    !_isVisibleCheckPassword;
-                              });
-                            },
                           ),
                         ),
                       )
@@ -269,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: const TextStyle(
                           color: Color(0xFF5A7867), // typed text color
                         ),
-                        obscureText: _isVisiblePassword,
+                        obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
                           labelStyle: const TextStyle(
@@ -287,43 +223,83 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: Color(0xFF5A7867),
                             ), // focused border color
                           ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isVisiblePassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: const Color(0xFF5A7867), // icon color
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isVisiblePassword = !_isVisiblePassword;
-                              });
-                            },
-                          ),
                         ),
                       ),
                 SizedBox(height: 15),
-                Container(
-                  decoration: BoxDecoration(color: Colors.grey),
-                  child: DatePickerRow(
-                    onDateSelected: (date) =>
-                        controller.selectedDate.value = date,
-                  ),
+                DatePickerRow(
+                  onDateSelected: (date) =>
+                      controller.selectedDate.value = date,
                 ),
                 SizedBox(height: 15),
+                Center(
+                  child: Obx(() {
+                    // Build the list of allowed roles
+                    final allowedRoles = Role.values
+                        .where((r) => r != Role.admin)
+                        .toList();
+
+                    return DropdownButton<Role>(
+                      underline: Container(
+                        height: 1,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.black
+                            : Colors.grey,
+                      ),
+                      value: allowedRoles.contains(controller.role.value)
+                          ? controller.role.value
+                          : null,
+                      items: allowedRoles.map((role) {
+                        return DropdownMenuItem<Role>(
+                          value: role,
+                          child: Text(
+                            role.name,
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).brightness ==
+                                      Brightness.light
+                                  ? Colors.black
+                                  : Colors.white,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        if (val != null) controller.role.value = val;
+                      },
+                      hint: Text(
+                        "Role",
+                        style: TextStyle(
+                          color:
+                              Theme.of(context).brightness == Brightness.light
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                      ),
+                      iconEnabledColor:
+                          Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                    );
+                  }),
+                ),
+
+                SizedBox(height: 15),
+
                 SingleChildScrollView(
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       imagePickerButton(
                         label: "Personal image",
-                        image: _personalImage,
-                        onPressed: () => _pickImage(true, ImageSource.camera),
+                        image: controller.personalImage,
+                        onPressed: () =>
+                            controller.pickImage(true, ImageSource.camera),
                       ),
                       imagePickerButton(
                         label: "ID image",
-                        image: _idImage,
-                        onPressed: () => _pickImage(false, ImageSource.gallery),
+                        image: controller.idImage,
+                        onPressed: () =>
+                            controller.pickImage(false, ImageSource.gallery),
                       ),
                     ],
                   ),
@@ -332,7 +308,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ElevatedButton(
                   onPressed: () {
                     //controller.submit();
-                    Get.off(() => LoginScreen());
+                    print("First name: ${controller.firstName.value}");
+                    print("Last name: ${controller.lastName.value}");
+                    print("Phone number: ${controller.phoneNumber.value}");
+                    print("Password: ${controller.password.value}");
+                    print("Date: ${controller.selectedDate.value}");
+                    print("Role: ${controller.role.value}");
+                    print(
+                      "Personal image path: ${controller.personalImage.value!.path}",
+                    );
+                    print("ID image path: ${controller.idImage.value!.path}");
+                    Get.offAll(() => LoginScreen());
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(double.infinity, 75),

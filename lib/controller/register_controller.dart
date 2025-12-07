@@ -1,37 +1,40 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+
+enum Role { admin, apartment_owner, renter, none }
 
 class RegisterController extends GetxController {
   var firstName = ''.obs;
   var lastName = ''.obs;
   var phoneNumber = ''.obs;
   var password = ''.obs;
-
   var personalImage = Rx<File?>(null);
   var idImage = Rx<File?>(null);
+  var role = Role.none.obs;
+
+  Future<void> pickImage(bool isPersonal, ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile != null) {
+      if (isPersonal) {
+        personalImage.value = File(pickedFile.path);
+      } else {
+        idImage.value = File(pickedFile.path);
+      }
+    }
+  }
 
   var selectedDate = Rx<DateTime?>(null);
 
   var isLoading = false.obs;
 
   Future<void> register() async {
-    if (firstName.isEmpty ||
-        lastName.isEmpty ||
-        phoneNumber.isEmpty ||
-        password.isEmpty ||
-        personalImage.value == null ||
-        idImage.value == null ||
-        selectedDate.value == null) {
-      Get.snackbar("Error", "Please fill all fields");
-      return;
-    }
     try {
-      isLoading.value = true; // start loading
+      isLoading.value = true;
 
-      // Simulate API call
       await Future.delayed(const Duration(seconds: 2));
-      // ✅ Success
+
       Get.snackbar("Success", "User registered successfully!");
 
       print("First name: ${firstName.value}");

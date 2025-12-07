@@ -4,6 +4,13 @@ class User {
   final String phone;
   final String password;
 
+  static final User user = User(
+    firstName: 'Aboabdo',
+    lastName: 'Alhalabastani',
+    phone: "0949378835",
+    password: "00000000",
+  );
+
   User({
     required this.firstName,
     required this.lastName,

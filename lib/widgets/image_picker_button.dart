@@ -2,28 +2,28 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 Widget imagePickerButton({
   required String label,
-  required File? image,
+  required Rx<File?> image,
   required VoidCallback onPressed,
 }) {
-  return ElevatedButton(
-    onPressed: onPressed,
-    style: ElevatedButton.styleFrom(
-      minimumSize: const Size(150, 150),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    ),
-    child: image == null
-        ? Text(label, style: const TextStyle(color: Colors.white))
-        : ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.file(
-              image,
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
-            ),
-          ),
-  );
+  return Obx(() {
+    return Column(
+      children: [
+        ElevatedButton(onPressed: onPressed, child: Text(label)),
+        const SizedBox(height: 8),
+        image.value == null
+            ? const Text("No image selected")
+            : Image.file(
+                image.value!,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+      ],
+    );
+  });
 }
