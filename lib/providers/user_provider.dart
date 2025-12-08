@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:apartment/controller/register_controller.dart';
 import 'package:apartment/main.dart';
 import 'package:apartment/models/user.dart';
-import 'package:apartment/repositories/user_repo.dart';
 import 'package:apartment/screens/home_screen.dart';
 import 'package:apartment/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ import 'dart:convert';
 class UserProvider {
   final String baseUrl = MyApp.baseUrl.value;
   static String? token;
+  static User? currentuser;
   final headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
@@ -39,13 +39,13 @@ class UserProvider {
       final data = jsonDecode(respStr);
       final userJson = data['data']['user'];
       token = data['Token'];
-      UserRepo.currentuser = User.fromJson(userJson);
+      currentuser = User.fromJson(userJson);
 
       print(token);
 
       if (data['status_code'] == 201) {
         isLoading = false;
-        UserRepo.currentuser = User.fromJson(data['data']['user']);
+        currentuser = User.fromJson(data['data']['user']);
         Get.off(() => HomeScreen());
         Get.snackbar(
           "Message",
@@ -124,6 +124,60 @@ class UserProvider {
 
       if (data["status_code"] == 201) {
         isLoading = false;
+        Get.offAll(() => LoginScreen());
+        Get.snackbar(
+          "Message",
+          data["message"],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
+      } else {
+        Get.snackbar(
+          "Message",
+          data["message"],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Message",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 3),
+      );
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      var headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      var request = http.Request('GET', Uri.parse('$baseUrl/logout'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      final respStr = await response.stream.bytesToString();
+
+      final data = jsonDecode(respStr);
+
+      if (data['status_code'] == 200) {
+        token = null;
+        currentuser = null;
         Get.offAll(() => LoginScreen());
         Get.snackbar(
           "Message",

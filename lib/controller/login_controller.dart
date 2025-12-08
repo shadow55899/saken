@@ -24,4 +24,12 @@ class LoginController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future logout() async {
+    try {
+      await provider.logout();
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong");
+    }
+  }
 }
