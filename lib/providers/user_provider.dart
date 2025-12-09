@@ -5,6 +5,7 @@ import 'package:apartment/main.dart';
 import 'package:apartment/models/user.dart';
 import 'package:apartment/screens/home_screen.dart';
 import 'package:apartment/screens/login_screen.dart';
+import 'package:apartment/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
@@ -46,7 +47,7 @@ class UserProvider {
       if (data['status_code'] == 201) {
         isLoading = false;
         currentuser = User.fromJson(data['data']['user']);
-        Get.off(() => HomeScreen());
+        Get.off(() => MainScreen());
         Get.snackbar(
           "Message",
           data['message'],
