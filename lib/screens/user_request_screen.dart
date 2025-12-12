@@ -1,0 +1,132 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:apartment/models/user.dart';
+import 'package:apartment/controller/user_controller.dart';
+
+class UserRequestScreen extends StatelessWidget {
+  final UserController controller = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final bool isMobile = size.height > size.width;
+
+    final boxHeight = size.height * 0.20;
+    final boxWidth = size.width;
+    final titleSize = isMobile ? size.width * 0.05 : size.width * 0.017;
+    final titleSize1 = size.width * 0.01;
+
+    controller.getAllUsersisApprovedFalse();
+
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          Container(
+            height: boxHeight,
+            width: boxWidth,
+            alignment: Alignment.center,
+            child: Text(
+              "Pending Requests",
+              style: TextStyle(
+                fontSize: titleSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+
+          Expanded(
+            child: Obx(() {
+              if (controller.users.isEmpty) {
+                return const Center(child: Text("No pending users"));
+              }
+              return isMobile
+                  ? _buildMobileList(context, controller.users)
+                  : _buildGridList(
+                      context,
+                      controller.users,
+                      titleSize,
+                      titleSize1,
+                    );
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileList(BuildContext context, List<User> users) {
+    return ListView.builder(
+      itemCount: users.length,
+      itemBuilder: (context, index) {
+        final user = users[index];
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: InkWell(
+            onTap: () => showDeleteDialog(context, user, controller),
+            child: Card(
+              child: ListTile(
+                title: Text('${user.firstName} ${user.lastName}'),
+                subtitle: Text(user.phone),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildGridList(
+    BuildContext context,
+    List<User> users,
+    double titleSize,
+    double titleSize1,
+  ) {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        childAspectRatio: 5,
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
+      itemCount: users.length,
+      itemBuilder: (context, index) {
+        final user = users[index];
+        return InkWell(
+          onTap: () => showDeleteDialog(context, user, controller),
+          child: Card(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '${user.firstName} ${user.lastName}',
+                  style: TextStyle(fontSize: titleSize),
+                ),
+                const SizedBox(height: 10),
+                Text(user.phone, style: TextStyle(fontSize: titleSize1)),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+void showDeleteDialog(
+  BuildContext context,
+  User user,
+  UserController controller,
+) {
+  Get.defaultDialog(
+    title: 'Delete',
+    textCancel: 'Reject',
+    textConfirm: 'Approve',
+    middleText: 'Do you want to approve ${user.firstName} ${user.lastName}?',
+    onCancel: () => print('Rejected: ${user.id}'),
+    onConfirm: () async {
+      await controller.approveUser(user);
+      Get.back();
+    },
+  );
+}

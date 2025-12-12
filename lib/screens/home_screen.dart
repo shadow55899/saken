@@ -1,50 +1,54 @@
-import 'package:apartment/ghazal/details.dart';
 import 'package:apartment/models/flat.dart';
+import 'package:apartment/screens/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 
 class HomeScreen extends StatelessWidget {
-  // Dummy data list
   final List<Flat> flats = [
     Flat(
-      address: 123,
+      address: "275 O'Reilly Corners Apt. 570, Mireillehaven, MN",
       area: 120.0,
-      average_rate: 4.5,
+      averageRate: 4.5,
       bathrooms: 2,
-      city_id: 1,
       description: "Nice flat in Damascus",
-      living_rooms: 1,
-      rental_price: 2500,
+      livingRooms: 1,
+      rentalPrice: 2500.0,
       rooms: 3,
-      status: 1,
-      user_id: 10,
+      status: "Booked",
+      governorate: "Damascus",
+      city: "An Nabk",
+      owner: "Tamia Kuvalis",
+      pictures: [],
     ),
     Flat(
-      address: 456,
+      address: "316 Schmidt Gateway, New Jaquantown, ME",
       area: 90.0,
-      average_rate: 4.0,
+      averageRate: 4.0,
       bathrooms: 1,
-      city_id: 2,
       description: "Cozy flat in Aleppo",
-      living_rooms: 1,
-      rental_price: 1800,
+      livingRooms: 1,
+      rentalPrice: 1800.0,
       rooms: 2,
-      status: 1,
-      user_id: 11,
+      status: "Free",
+      governorate: "Aleppo",
+      city: "Azaz",
+      owner: "Jakob Barton",
+      pictures: [],
     ),
     Flat(
-      address: 789,
+      address: "123 Kertzmann Cliff Suite 004, Lucioustown, NH",
       area: 150.0,
-      average_rate: 4.8,
+      averageRate: 4.8,
       bathrooms: 3,
-      city_id: 3,
       description: "Spacious flat in Homs",
-      living_rooms: 2,
-      rental_price: 3000,
+      livingRooms: 2,
+      rentalPrice: 3000.0,
       rooms: 4,
-      status: 1,
-      user_id: 12,
+      status: "Booked",
+      governorate: "Homs",
+      city: "Shin",
+      owner: "Jakob Barton",
+      pictures: [],
     ),
   ];
 
@@ -55,8 +59,6 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            // 🔹 Filter Bar
-            // 🔹 Filter Bar (no Padding widget used)
             Container(
               height: 60,
               decoration: BoxDecoration(
@@ -73,23 +75,22 @@ class HomeScreen extends StatelessWidget {
                       child: Text("City"),
                     ),
                   ),
-                  SizedBox(width: 10), // spacing between buttons
+                  SizedBox(width: 10),
                   Container(
-                    width: 80,
+                    width: 85,
                     height: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {},
                       child: Text("Price"),
                     ),
                   ),
-                  Spacer(), // pushes "فلترة" text to the right
-                  Text('فلترة', style: TextStyle(fontSize: 25)),
-                  SizedBox(width: 20), // right spacing instead of Padding
+                  Spacer(),
+                  Text('Filters', style: TextStyle(fontSize: 25)),
+                  SizedBox(width: 20),
                 ],
               ),
             ),
             SizedBox(height: 10),
-            // 🔹 Grid of Flats
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -104,15 +105,21 @@ class HomeScreen extends StatelessWidget {
                 final flat = flats[index];
                 return InkWell(
                   onTap: () {
-                    Get.to(() => Details(), arguments: flat);
+                    Get.to(() => DetailsScreen(), arguments: flat);
                   },
 
                   child: Container(
                     decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? null
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(blurRadius: 6, spreadRadius: 2),
-                      ],
+                      border: BoxBorder.all(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                        width: 2,
+                      ),
                     ),
                     child: Column(
                       children: [
@@ -129,8 +136,6 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-
-                        // 🔹 Info
                         Expanded(
                           flex: 1,
                           child: Padding(
@@ -140,7 +145,7 @@ class HomeScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${flat.rental_price}\$',
+                                  '${flat.rentalPrice}\$',
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,
@@ -150,7 +155,7 @@ class HomeScreen extends StatelessWidget {
                                   children: [
                                     const Icon(Icons.location_on_outlined),
                                     const SizedBox(width: 5),
-                                    Text("City ID: ${flat.city_id}"),
+                                    Text("City : ${flat.governorate}"),
                                   ],
                                 ),
                                 Row(

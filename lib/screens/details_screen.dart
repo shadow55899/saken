@@ -1,20 +1,12 @@
-import 'package:apartment/controller/rate_controller,dart';
 import 'package:apartment/models/flat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:rate_my_app/rate_my_app.dart';
 
-                                          
-class Details extends StatelessWidget {
-  const Details({super.key});
+class DetailsScreen extends StatelessWidget {
+  const DetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the Flat object passed from previous screen
-    // late RateMyApp rateMyApp = RateMyApp(
-    //   googlePlayIdentifier: 'app.openauthenticator',
-    //   appStoreIdentifier: '6479272927',
-    // );
     final Flat? flat = Get.arguments as Flat?;
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -25,36 +17,64 @@ class Details extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Flat Details"))),
-      // floatingActionButton: FloatingActionButton(
-      //   child: const Icon(Icons.star_rate),
-      //   onPressed: () {
-      //     showDialog(
-      //       context: context,
-      //       builder: (_) => AlertDialog(
-      //         title: const Text('Rate our app'),
-      //         content: const Text(
-      //           'If you enjoy using this app, please take a moment to rate it.',
-      //         ),
-      //         actions: [
-      //           TextButton(
-      //             onPressed: () => Navigator.pop(context),
-      //             child: const Text('Later'),
-      //           ),
-      //           TextButton(
-      //             onPressed: () {
-      //               rateMyApp.launchStore(); // opens Play Store / App Store
-      //               Navigator.pop(context);
-      //             },
-      //             child: const Text('Rate Now'),
-      //           ),
-      //         ],
-      //       ),
-      //     );
-      //   },
-      // ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? Colors.black
+            : Colors.white,
+        foregroundColor: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white
+            : Colors.black,
+        child: const Icon(Icons.star_rate),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              backgroundColor: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.black
+                  : Colors.white,
+              title: Text(
+                'Rate our app',
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
+                ),
+              ),
+              content: const Text(
+                'If you enjoy using this app, please take a moment to rate it.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Later',
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Rate Now',
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
       body: ListView(
         children: [
-          // 🔹 Image placeholder
           // SizedBox(
           //   height: screenHeight * .30,
           //   child: Image.asset(
@@ -70,8 +90,6 @@ class Details extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
           ),
-
-          // 🔹 Show Flat description
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
             padding: const EdgeInsets.all(12),
@@ -79,8 +97,6 @@ class Details extends StatelessWidget {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
             child: Text(flat.description ?? "No description"),
           ),
-
-          // 🔹 More Specifications using Flat fields
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             padding: const EdgeInsets.all(12),
@@ -89,14 +105,20 @@ class Details extends StatelessWidget {
               children: [
                 _SpecRow(
                   icon: Icons.location_on_outlined,
-                  title: "City ID",
-                  value: flat.city_id.toString(),
+                  title: "City",
+                  value: flat.governorate.toString(),
+                ),
+                const Divider(),
+                _SpecRow(
+                  icon: Icons.blinds_closed,
+                  title: "City",
+                  value: flat.city.toString(),
                 ),
                 const Divider(),
                 _SpecRow(
                   icon: Icons.price_change_outlined,
                   title: "Price",
-                  value: "${flat.rental_price}\$",
+                  value: "${flat.rentalPrice}\$",
                 ),
                 const Divider(),
                 _SpecRow(
@@ -114,7 +136,7 @@ class Details extends StatelessWidget {
                 _SpecRow(
                   icon: Icons.living_rounded,
                   title: "Halls",
-                  value: flat.living_rooms.toString(),
+                  value: flat.livingRooms.toString(),
                 ),
                 const Divider(),
                 _SpecRow(
@@ -132,7 +154,7 @@ class Details extends StatelessWidget {
                 _SpecRow(
                   icon: Icons.domain,
                   title: "Average Rate",
-                  value: flat.average_rate.toString(),
+                  value: flat.averageRate.toString(),
                 ),
               ],
             ),
@@ -140,7 +162,7 @@ class Details extends StatelessWidget {
 
           const Center(
             child: Text(
-              'اذا كنت ترغب بالحجز',
+              'If you want to reserve',
               style: TextStyle(fontWeight: FontWeight.w100),
             ),
           ),
@@ -151,9 +173,9 @@ class Details extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
               onPressed: () {
-                // booking action
+                // book()
               },
-              child: const Center(child: Text('حجز')),
+              child: const Center(child: Text("Book")),
             ),
           ),
         ],
@@ -162,7 +184,6 @@ class Details extends StatelessWidget {
   }
 }
 
-// 🔹 Helper widget
 class _SpecRow extends StatelessWidget {
   final IconData icon;
   final String title;

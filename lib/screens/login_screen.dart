@@ -5,7 +5,6 @@ import 'package:apartment/providers/user_provider.dart';
 import 'package:apartment/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 
 class LoginScreen extends StatelessWidget {
   final LoginController controller = Get.put(LoginController());
@@ -61,12 +60,12 @@ class LoginScreen extends StatelessWidget {
                         },
                         keyboardType: TextInputType.number,
                         style: const TextStyle(
-                          color: Color(0xFF5A7867), // typed text color
+                          color: Color(0xFF5A7867),
                         ),
                         decoration: InputDecoration(
                           labelText: 'Phone number',
                           labelStyle: const TextStyle(
-                            color: Color(0xFF5A7867), // label colorBahaa"
+                            color: Color(0xFF5A7867),
                           ),
                           prefixIcon: const Icon(
                             Icons.phone,
@@ -77,13 +76,13 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                             borderSide: const BorderSide(
                               color: Color(0xFF5A7867),
-                            ), // border color
+                            ),
                           ),
                           focusedBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             borderSide: BorderSide(
                               color: Color(0xFF5A7867),
-                            ), // focused border color
+                            ),
                           ),
                         ),
                       ),
@@ -165,7 +164,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: controller.isLoading.value
-                        ? null // disable while loading
+                        ? null
                         : () async {
                             controller.isLoading.value = true;
                             await controller.login();
@@ -199,13 +198,13 @@ class LoginScreen extends StatelessWidget {
                     foregroundColor:
                         Theme.of(context).brightness == Brightness.dark
                         ? Colors.white
-                        : Colors.black, // text color
+                        : Colors.black,
                     overlayColor:
                         Theme.of(context).brightness == Brightness.dark
                         ? Colors.white.withOpacity(0.1)
                         : const Color(
                             0xFF5A7867,
-                          ).withOpacity(0.1), // ripple color
+                          ).withOpacity(0.1),
                   ),
                   onPressed: () {
                     Get.to(() => RegisterScreen());

@@ -52,7 +52,7 @@ class RegisterController extends GetxController {
     } catch (e) {
       Get.snackbar("Error", "Something went wrong");
     } finally {
-      isLoading.value = false; // stop loading
+      isLoading.value = false;
     }
   }
 }

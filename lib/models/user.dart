@@ -5,7 +5,7 @@ class User {
   final String firstName;
   final String lastName;
   final String phone;
-  final String password;
+  final int is_approve;
   final Role role;
 
   User({
@@ -13,7 +13,7 @@ class User {
     required this.firstName,
     required this.lastName,
     required this.phone,
-    required this.password,
+    required this.is_approve,
     required this.role,
   });
 
@@ -23,11 +23,11 @@ class User {
       firstName: json['firstname'] ?? '',
       lastName: json['lastname'] ?? '',
       phone: json['phone_number'] ?? '',
-      password: '', // backend never returns password
       role: Role.values.firstWhere(
         (r) => r.name == json['role'],
         orElse: () => Role.renter,
       ),
+      is_approve: json['is_approve'] ?? 0,
     );
   }
 
@@ -37,10 +37,12 @@ class User {
       "firstName": firstName,
       "lastName": lastName,
       "phone": phone,
-      "password": password,
       "role": role.name,
     };
   }
 
+  static List<User> parseUsers(Map<String, dynamic> json) {
+    final List<dynamic> rawUsers = json['data']['users'] ?? [];
+    return rawUsers.map((userJson) => User.fromJson(userJson)).toList();
+  }
 }
-
