@@ -2,6 +2,7 @@
 
 import 'package:apartment/controller/auth_controller.dart';
 import 'package:apartment/controller/login_controller.dart';
+import 'package:apartment/screens/admin.dart';
 import 'package:apartment/screens/home_screen.dart';
 import 'package:apartment/screens/managment_screen.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class MainScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             Get.find<AuthController>().currentUser.value?.role.name == "admin"
-                ? ManagmentScreen()
+                ? Admin()
                 : HomeScreen(),
             Center(child: Text("Empty Notifications")),
             Center(child: Text("Empty User Info")),

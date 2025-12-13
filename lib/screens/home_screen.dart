@@ -1,64 +1,25 @@
+import 'package:apartment/controller/auth_controller.dart';
+import 'package:apartment/controller/home_controller.dart';
+import 'package:apartment/ghazal/details.dart';
 import 'package:apartment/models/flat.dart';
-import 'package:apartment/screens/details_screen.dart';
+import 'package:apartment/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<Flat> flats = [
-    Flat(
-      address: "275 O'Reilly Corners Apt. 570, Mireillehaven, MN",
-      area: 120.0,
-      averageRate: 4.5,
-      bathrooms: 2,
-      description: "Nice flat in Damascus",
-      livingRooms: 1,
-      rentalPrice: 2500.0,
-      rooms: 3,
-      status: "Booked",
-      governorate: "Damascus",
-      city: "An Nabk",
-      owner: "Tamia Kuvalis",
-      pictures: [],
-    ),
-    Flat(
-      address: "316 Schmidt Gateway, New Jaquantown, ME",
-      area: 90.0,
-      averageRate: 4.0,
-      bathrooms: 1,
-      description: "Cozy flat in Aleppo",
-      livingRooms: 1,
-      rentalPrice: 1800.0,
-      rooms: 2,
-      status: "Free",
-      governorate: "Aleppo",
-      city: "Azaz",
-      owner: "Jakob Barton",
-      pictures: [],
-    ),
-    Flat(
-      address: "123 Kertzmann Cliff Suite 004, Lucioustown, NH",
-      area: 150.0,
-      averageRate: 4.8,
-      bathrooms: 3,
-      description: "Spacious flat in Homs",
-      livingRooms: 2,
-      rentalPrice: 3000.0,
-      rooms: 4,
-      status: "Booked",
-      governorate: "Homs",
-      city: "Shin",
-      owner: "Jakob Barton",
-      pictures: [],
-    ),
-  ];
+  final HomeController controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
+    final List<Flat> flats = controller.flat;
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
+            // 🔹 Filter Bar
+            // 🔹 Filter Bar (no Padding widget used)
             Container(
               height: 60,
               decoration: BoxDecoration(
@@ -75,27 +36,28 @@ class HomeScreen extends StatelessWidget {
                       child: Text("City"),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: 10), // spacing between buttons
                   Container(
-                    width: 85,
+                    width: 80,
                     height: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {},
                       child: Text("Price"),
                     ),
                   ),
-                  Spacer(),
-                  Text('Filters', style: TextStyle(fontSize: 25)),
-                  SizedBox(width: 20),
+                  Spacer(), // pushes "فلترة" text to the right
+                  Text('فلترة', style: TextStyle(fontSize: 25)),
+                  SizedBox(width: 20), // right spacing instead of Padding
                 ],
               ),
             ),
             SizedBox(height: 10),
+            // 🔹 Grid of Flats
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
+                maxCrossAxisExtent: 400,
                 childAspectRatio: 6 / 8,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
@@ -105,21 +67,15 @@ class HomeScreen extends StatelessWidget {
                 final flat = flats[index];
                 return InkWell(
                   onTap: () {
-                    Get.to(() => DetailsScreen(), arguments: flat);
+                    Get.to(() => Details(), arguments: flat);
                   },
 
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).brightness == Brightness.dark
-                          ? null
-                          : Colors.white,
                       borderRadius: BorderRadius.circular(20),
-                      border: BoxBorder.all(
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black,
-                        width: 2,
-                      ),
+                      boxShadow: const [
+                        BoxShadow(blurRadius: 6, spreadRadius: 2),
+                      ],
                     ),
                     child: Column(
                       children: [
@@ -136,6 +92,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+
+                        // 🔹 Info
                         Expanded(
                           flex: 1,
                           child: Padding(
@@ -155,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                                   children: [
                                     const Icon(Icons.location_on_outlined),
                                     const SizedBox(width: 5),
-                                    Text("City : ${flat.governorate}"),
+                                    Text("City ID: ${flat.city}"),
                                   ],
                                 ),
                                 Row(

@@ -71,7 +71,6 @@ class ManagmentScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             isMobile
                 ? Padding(
                     padding: const EdgeInsets.only(top: 60),

@@ -1,7 +1,9 @@
 import 'package:apartment/models/flat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:rate_my_app/rate_my_app.dart';
 
+                                          
 class Details extends StatelessWidget {
   const Details({super.key});
 

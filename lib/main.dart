@@ -15,16 +15,15 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  static RxString baseUrl = "http://192.168.1.107:8000/api".obs;
+  static RxString baseUrl = "https://overreservedly-unlyric-mitch.ngrok-free.dev/api".obs;
+  // static RxString baseUrl = "http://192.168.50.105:8000/api".obs;
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: Obx(() {
-        return authController.isLoggedIn.value
-            ? MainScreen()
-            : LoginScreen();
+        return authController.isLoggedIn.value ? MainScreen() : LoginScreen();
       }),
       theme: Themes.myLightTheme,
       darkTheme: Themes.myDarkTheme,

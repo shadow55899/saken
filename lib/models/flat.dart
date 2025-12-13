@@ -1,55 +1,66 @@
+import 'dart:io';
+
 class Flat {
-  final double? area;
-  final int? rooms;
-  final int? livingRooms;
-  final String? description;
-  final int? bathrooms;
-  final double? rentalPrice;
-  final String? address;
-  final String? status;
-  final String? governorate;
-  final String? city;
-  final String? owner;
-  final double? averageRate;
-  final List<String>? pictures;
+    int area;
+    int rooms;
+    int livingRooms;
+    int bathrooms;
+    int rentalPrice;
+    String? governorate;
+    String? city;
+    String? address;
+    String? status;
+    String? averageRate;
+    String? owner;
+    String? description;
+    List<dynamic> pictures;
 
-  Flat({
-    this.area,
-    this.rooms,
-    this.livingRooms,
-    this.description,
-    this.bathrooms,
-    this.rentalPrice,
-    this.address,
-    this.status,
-    this.governorate,
-    this.city,
-    this.owner,
-    this.averageRate,
-    this.pictures,
-  });
+    Flat({
+        required this.area,
+        required this.rooms,
+        required this.livingRooms,
+        required this.bathrooms,
+        required this.rentalPrice,
+        required this.governorate,
+        required this.city,
+        required this.address,
+        required this.status,
+        required this.averageRate,
+        required this.owner,
+        required this.description,
+        required this.pictures,
+    });
 
-  factory Flat.fromJson(Map<String, dynamic> json) {
-    return Flat(
-      area: (json['area'] as num?)?.toDouble(),
-      rooms: json['rooms'] as int?,
-      livingRooms: json['living_rooms'] as int?,
-      description: json['description'] as String?,
-      bathrooms: json['bathrooms'] as int?,
-      rentalPrice: (json['rental_price'] as num?)?.toDouble(),
-      address: json['address'] as String?,
-      status: json['status'] as String?,
-      governorate: json['governorate'] as String?,
-      city: json['city'] as String?,
-      owner: json['owner'] as String?,
-      averageRate: double.tryParse(json['average_rate'] ?? '0'),
-      pictures: (json['pictures'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList(),
+    factory Flat.fromJson(Map<String, dynamic> json) => Flat(
+        area: json["area"],
+        rooms: json["rooms"],
+        livingRooms: json["living_rooms"],
+        bathrooms: json["bathrooms"],
+        rentalPrice: json["rental_price"],
+        governorate: json["governorate"],
+        city: json["city"],
+        address: json["address"],
+        status: json["status"],
+        averageRate: json["average_rate"],
+        owner: json["owner"],
+        description: json["description"],
+        pictures: List<dynamic>.from(json["pictures"].map((x) => x)),
     );
-  }
-  static List<Flat> parseFlats(Map<String, dynamic> json) {
-    final List<dynamic> rawFlats = json['data']['users'] ?? [];
-    return rawFlats.map((flatJson) => Flat.fromJson(flatJson)).toList();
-  }
+
+    Map<String, dynamic> toJson() => {
+        "area": area,
+        "rooms": rooms,
+        "living_rooms": livingRooms,
+        "bathrooms": bathrooms,
+        "rental_price": rentalPrice,
+        "governorate": governorate,
+        "city": city,
+        "address": address,
+        "status": status,
+        "average_rate": averageRate,
+        "owner": owner,
+        "description": description,
+        "pictures": List<dynamic>.from(pictures.map((x) => x)),
+    };
 }
+
