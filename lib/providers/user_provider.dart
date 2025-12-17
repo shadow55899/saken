@@ -1,21 +1,21 @@
 import 'dart:io';
-
-import 'package:apartment/controller/register_controller.dart';
-import 'package:apartment/main.dart';
-import 'package:apartment/models/user.dart';
-import 'package:apartment/screens/home_screen.dart';
-import 'package:apartment/screens/login_screen.dart';
-import 'package:apartment/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import '../controller/auth_controller.dart';
+import '../controller/register_controller.dart';
+import '../main.dart';
+import '../models/user.dart';
+import '../screens/login_screen.dart';
+import '../screens/main_screen.dart';
 
 class UserProvider {
   final String baseUrl = MyApp.baseUrl.value;
   static String? token;
   static User? currentuser;
+  static List<User> users = [];
   final headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
@@ -38,13 +38,20 @@ class UserProvider {
       final respStr = await response.stream.bytesToString();
 
       final data = jsonDecode(respStr);
-      final userJson = data['data']['user'];
-      token = data['Token'];
-      currentuser = User.fromJson(userJson);
+      // final userJson = data['data']['user'];
+      // token = data['Token'];
+      // currentuser = User.fromJson(userJson);
+      var userjson;
+      if(response.statusCode == 201){
+        userjson= data['data']['user'];
+        token = data['token'];
+        currentuser = User.fromJson(userjson);
+      }
 
-      print(token);
+
 
       if (data['status_code'] == 201) {
+        Get.find<AuthController>().login(token!, currentuser!);
         isLoading = false;
         currentuser = User.fromJson(data['data']['user']);
         Get.off(() => MainScreen());
@@ -77,7 +84,7 @@ class UserProvider {
         "Message",
         e.toString(),
         snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 25),
+        duration: Duration(seconds: 3),
       );
     }
   }
@@ -164,7 +171,7 @@ class UserProvider {
     try {
       var headers = {
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
+        'Authorization': 'Bearer ${Get.find<AuthController>().userToken}',
       };
       var request = http.Request('GET', Uri.parse('$baseUrl/logout'));
 
@@ -177,6 +184,7 @@ class UserProvider {
       final data = jsonDecode(respStr);
 
       if (data['status_code'] == 200) {
+        Get.find<AuthController>().logout();
         token = null;
         currentuser = null;
         Get.offAll(() => LoginScreen());
@@ -191,6 +199,205 @@ class UserProvider {
           duration: Duration(seconds: 2),
           snackStyle: SnackStyle.FLOATING,
         );
+      } else {
+        Get.snackbar(
+          "Message",
+          data["message"],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Message",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 3),
+      );
+    }
+  }
+
+  Future<void> getAllUsersis_apprved_false() async {
+    try {
+      var headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Get.find<AuthController>().userToken}',
+      };
+      var request = http.Request('GET', Uri.parse('$baseUrl/users/isfalse'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      final respStr = await response.stream.bytesToString();
+
+      final data = jsonDecode(respStr);
+
+      if (data['status_code'] == 200) {
+        users = [];
+        users = User.parseUsers(data);
+      } else {
+        Get.snackbar(
+          "Message",
+          data["message"],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Message",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 3),
+      );
+    }
+  }
+
+  Future<void> approveuser(User user) async {
+    try {
+      var headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Get.find<AuthController>().userToken}',
+      };
+      var request = http.Request(
+        'PUT',
+        Uri.parse('$baseUrl/users/${user.id}/approve'),
+      );
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      final respStr = await response.stream.bytesToString();
+
+      final data = jsonDecode(respStr);
+
+      if (data['status_code'] == 200) {
+        Get.snackbar(
+          "Message",
+          data["message"] + " " + user.firstName + " " + user.lastName,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
+      } else {
+        Get.snackbar(
+          "Message",
+          data["message"],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Message",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 3),
+      );
+    }
+  }
+
+  Future<void> rejectuser(User user) async {
+    try {
+      var headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Get.find<AuthController>().userToken}',
+      };
+      var request = http.Request(
+        'PUT',
+        Uri.parse('$baseUrl/users/${user.id}/reject'),
+      );
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      final respStr = await response.stream.bytesToString();
+
+      final data = jsonDecode(respStr);
+
+      if (data['status_code'] == 200) {
+        Get.snackbar(
+          "Message",
+          data["message"] + " " + user.firstName + " " + user.lastName,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
+      } else {
+        Get.snackbar(
+          "Message",
+          data["message"],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Message",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 3),
+      );
+    }
+  }
+
+  Future<void> getAllUsersis_apprved_true() async {
+    try {
+      var headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Get.find<AuthController>().userToken}',
+      };
+      var request = http.Request('GET', Uri.parse('$baseUrl/users/istrue'));
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+      final respStr = await response.stream.bytesToString();
+
+      final data = jsonDecode(respStr);
+
+      if (data['status_code'] == 200) {
+        users = [];
+        users = User.parseUsers(data);
+        // Get.snackbar(
+        //   "Message",
+        //   data["message"],
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.black.withOpacity(0.5),
+        //   colorText: Colors.white,
+        //   margin: EdgeInsets.all(8),
+        //   borderRadius: 8,
+        //   duration: Duration(seconds: 2),
+        //   snackStyle: SnackStyle.FLOATING,
+        // );
       } else {
         Get.snackbar(
           "Message",

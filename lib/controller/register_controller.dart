@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:apartment/providers/user_provider.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tapbar/providers/user_provider.dart';
 
 enum Role { admin, apartment_owner, renter }
 
@@ -52,7 +52,7 @@ class RegisterController extends GetxController {
     } catch (e) {
       Get.snackbar("Error", "Something went wrong");
     } finally {
-      isLoading.value = false; // stop loading
+      isLoading.value = false;
     }
   }
 }

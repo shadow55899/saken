@@ -1,5 +1,6 @@
-import 'package:apartment/providers/user_provider.dart';
+
 import 'package:get/get.dart';
+import 'package:tapbar/providers/user_provider.dart';
 
 class LoginController extends GetxController {
   final phone = ''.obs;

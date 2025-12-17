@@ -1,12 +1,15 @@
-import 'package:apartment/controller/register_controller.dart';
-import 'package:apartment/providers/user_provider.dart';
-import 'package:apartment/screens/home_screen.dart';
-import 'package:apartment/screens/managment_screen.dart';
-import 'package:apartment/widgets/themes.dart';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tapbar/widgets/themes.dart';
+
+import '../controller/auth_controller.dart';
+import '../controller/login_controller.dart';
+import 'admin.dart';
+import 'home_screen.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+  LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +19,16 @@ class MainScreen extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              changeTheme();
+              loginController.logout();
             },
-            icon: Icon(Icons.chat),
+            icon: Icon(Icons.logout),
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                child: Text("SAKEN"),
                 padding: EdgeInsets.only(top: 30, right: 30),
+                child: Text("SAKEN"),
               ),
             ],
           ),
@@ -44,13 +47,13 @@ class MainScreen extends StatelessWidget {
 
         body: TabBarView(
           children: [
-            // HomeScreen(),
-            // UserProvider.currentuser?.role.name == Role.admin.name
-            //     ? ManagmentScreen()
-            //     : HomeScreen(),
-            HomeScreen(),
-            Center(child: Text("jjjjj")),
-            Center(child: Text("ooooooooooooooooooooo")),
+            Get.find<AuthController>().currentUser.value?.role.name == "admin"
+                ? Admin()
+                : HomeScreen(),
+            Center(child: MaterialButton(onPressed: ()=>changeTheme(),
+            child: Text('Theme'),
+            )),
+            Center(child: Text("Empty User Info")),
           ],
         ),
       ),

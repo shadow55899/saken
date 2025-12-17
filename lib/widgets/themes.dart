@@ -6,15 +6,15 @@ import 'package:get/state_manager.dart';
 
 class Themes {
   static ThemeData myLightTheme = ThemeData.light().copyWith(
-    scaffoldBackgroundColor: const Color(0xFFF5F5F5), // light beige
-    primaryColor: const Color(0xFF5A7867), // muted green
+    scaffoldBackgroundColor: const Color(0xFFF5F5F5), 
+    primaryColor: const Color(0xFF5A7867), 
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFF5A7867),
       foregroundColor: Colors.white,
       elevation: 0,
     ),
     textTheme: const TextTheme(
-      bodyMedium: TextStyle(color: Color(0xFF5A7867)), // typed text color
+      bodyMedium: TextStyle(color: Color(0xFF5A7867)), 
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -29,8 +29,8 @@ class Themes {
       fillColor: MaterialStateProperty.all(Color(0xFF5A7867)),
     ),
     inputDecorationTheme: const InputDecorationTheme(
-      labelStyle: TextStyle(color: Color(0xFF5A7867)), // same as border color
-      hintStyle: TextStyle(color: Color(0xFF5A7867)), // placeholder text
+      labelStyle: TextStyle(color: Color(0xFF5A7867)), 
+      hintStyle: TextStyle(color: Color(0xFF5A7867)), 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         borderSide: BorderSide(color: Color(0xFF5A7867)),
@@ -45,15 +45,15 @@ class Themes {
   );
 
   static ThemeData myDarkTheme = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: const Color(0xFF0D1B2A), // deep navy blue
-    primaryColor: const Color(0xFF1B263B), // medium-dark blue
+    scaffoldBackgroundColor: const Color(0xFF0D1B2A), 
+    primaryColor: const Color(0xFF1B263B), 
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFF1B263B), // matches primary
+      backgroundColor: Color(0xFF1B263B), 
       foregroundColor: Colors.white,
       elevation: 0,
     ),
     textTheme: const TextTheme(
-      bodyMedium: TextStyle(color: Color(0xFFBFC9D6)), // soft light blue-gray
+      bodyMedium: TextStyle(color: Color(0xFFBFC9D6)),
       titleLarge: TextStyle(
         color: Colors.white,
         fontWeight: FontWeight.bold,
@@ -73,7 +73,7 @@ class Themes {
       ),
     ),
     checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.all(Color(0xFF415A77)), // matches button
+      fillColor: MaterialStateProperty.all(Color(0xFF415A77)), 
       checkColor: MaterialStateProperty.all(Colors.white),
     ),
     inputDecorationTheme: const InputDecorationTheme(

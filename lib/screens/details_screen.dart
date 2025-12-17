@@ -3,19 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../models/flat.dart';
-// import 'package:rate_my_app/rate_my_app.dart';
 
-                                          
 class Details extends StatelessWidget {
   const Details({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the Flat object passed from previous screen
-    // late RateMyApp rateMyApp = RateMyApp(
-    //   googlePlayIdentifier: 'app.openauthenticator',
-    //   appStoreIdentifier: '6479272927',
-    // );
+    
     final Flat? flat = Get.arguments as Flat?;
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -26,44 +20,10 @@ class Details extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Flat Details"))),
-      // floatingActionButton: FloatingActionButton(
-      //   child: const Icon(Icons.star_rate),
-      //   onPressed: () {
-      //     showDialog(
-      //       context: context,
-      //       builder: (_) => AlertDialog(
-      //         title: const Text('Rate our app'),
-      //         content: const Text(
-      //           'If you enjoy using this app, please take a moment to rate it.',
-      //         ),
-      //         actions: [
-      //           TextButton(
-      //             onPressed: () => Navigator.pop(context),
-      //             child: const Text('Later'),
-      //           ),
-      //           TextButton(
-      //             onPressed: () {
-      //               rateMyApp.launchStore(); // opens Play Store / App Store
-      //               Navigator.pop(context);
-      //             },
-      //             child: const Text('Rate Now'),
-      //           ),
-      //         ],
-      //       ),
-      //     );
-      //   },
-      // ),
+    
       body: ListView(
         children: [
-          // 🔹 Image placeholder
-          // SizedBox(
-          //   height: screenHeight * .30,
-          //   child: Image.asset(
-          //     "assets/FB_IMG_1637926450458.jpg",
-          //     width: screenWidth,
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
+      
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             child: Text(
@@ -72,7 +32,6 @@ class Details extends StatelessWidget {
             ),
           ),
 
-          // 🔹 Show Flat description
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
             padding: const EdgeInsets.all(12),
@@ -81,7 +40,7 @@ class Details extends StatelessWidget {
             child: Text(flat.description ?? "No description"),
           ),
 
-          // 🔹 More Specifications using Flat fields
+          
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             padding: const EdgeInsets.all(12),
@@ -152,7 +111,7 @@ class Details extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
               onPressed: () {
-                // booking action
+                
               },
               child: const Center(child: Text('حجز')),
             ),
