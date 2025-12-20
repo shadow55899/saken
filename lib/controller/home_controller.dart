@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:tapbar/controller/auth_controller.dart';
 import 'package:tapbar/models/flat.dart';
 import 'package:tapbar/service/home_service.dart';
-import '../providers/user_provider.dart';
 import '../service/api_service.dart';
 
 class HomeController extends GetxController {

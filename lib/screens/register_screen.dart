@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,9 +8,10 @@ import '../widgets/image_picker_button.dart';
 
 class RegisterScreen extends StatelessWidget {
   final RegisterController controller = Get.put(RegisterController());
-  
+
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(title: const Text('Register')),
       body: Center(
@@ -22,9 +22,7 @@ class RegisterScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.asset(
-                  Theme.of(context).brightness == Brightness.dark
-                      ? 'assets/images/user2.png'
-                      : 'assets/images/user.png',
+                  isDark ? 'assets/images/user2.png' : 'assets/images/user.png',
                   width: 200,
                   height: 200,
                 ),
@@ -34,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 30),
                 ),
                 SizedBox(height: 15),
-                Theme.of(context).brightness == Brightness.dark
+                isDark
                     ? TextFormField(
                         onChanged: (val) => controller.firstName.value = val,
                         keyboardType: TextInputType.name,
@@ -49,14 +47,10 @@ class RegisterScreen extends StatelessWidget {
                     : TextFormField(
                         onChanged: (val) => controller.firstName.value = val,
                         keyboardType: TextInputType.name,
-                        style: const TextStyle(
-                          color: Color(0xFF5A7867),
-                        ),
+                        style: const TextStyle(color: Color(0xFF5A7867)),
                         decoration: InputDecoration(
                           labelText: 'First Name',
-                          labelStyle: const TextStyle(
-                            color: Color(0xFF5A7867),
-                          ),
+                          labelStyle: const TextStyle(color: Color(0xFF5A7867)),
                           border: OutlineInputBorder(
                             gapPadding: 20,
                             borderRadius: BorderRadius.circular(10),
@@ -66,14 +60,12 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           focusedBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(
-                              color: Color(0xFF5A7867),
-                            ),
+                            borderSide: BorderSide(color: Color(0xFF5A7867)),
                           ),
                         ),
                       ),
                 SizedBox(height: 15),
-                Theme.of(context).brightness == Brightness.dark
+                isDark
                     ? TextFormField(
                         onChanged: (val) => controller.lastName.value = val,
                         keyboardType: TextInputType.name,
@@ -88,14 +80,10 @@ class RegisterScreen extends StatelessWidget {
                     : TextFormField(
                         onChanged: (val) => controller.lastName.value = val,
                         keyboardType: TextInputType.name,
-                        style: const TextStyle(
-                          color: Color(0xFF5A7867),
-                        ),
+                        style: const TextStyle(color: Color(0xFF5A7867)),
                         decoration: InputDecoration(
                           labelText: 'Last Name',
-                          labelStyle: const TextStyle(
-                            color: Color(0xFF5A7867),
-                          ),
+                          labelStyle: const TextStyle(color: Color(0xFF5A7867)),
                           border: OutlineInputBorder(
                             gapPadding: 20,
                             borderRadius: BorderRadius.circular(10),
@@ -105,14 +93,12 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           focusedBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(
-                              color: Color(0xFF5A7867),
-                            ),
+                            borderSide: BorderSide(color: Color(0xFF5A7867)),
                           ),
                         ),
                       ),
                 SizedBox(height: 15),
-                Theme.of(context).brightness == Brightness.dark
+                isDark
                     ? TextFormField(
                         onChanged: (val) => controller.phoneNumber.value = val,
                         keyboardType: TextInputType.number,
@@ -127,14 +113,10 @@ class RegisterScreen extends StatelessWidget {
                     : TextFormField(
                         onChanged: (val) => controller.phoneNumber.value = val,
                         keyboardType: TextInputType.number,
-                        style: const TextStyle(
-                          color: Color(0xFF5A7867),
-                        ),
+                        style: const TextStyle(color: Color(0xFF5A7867)),
                         decoration: InputDecoration(
                           labelText: 'Phone number',
-                          labelStyle: const TextStyle(
-                            color: Color(0xFF5A7867),
-                          ),
+                          labelStyle: const TextStyle(color: Color(0xFF5A7867)),
                           border: OutlineInputBorder(
                             gapPadding: 20,
                             borderRadius: BorderRadius.circular(10),
@@ -144,14 +126,12 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           focusedBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(
-                              color: Color(0xFF5A7867),
-                            ),
+                            borderSide: BorderSide(color: Color(0xFF5A7867)),
                           ),
                         ),
                       ),
                 SizedBox(height: 25),
-                Theme.of(context).brightness == Brightness.dark
+                isDark
                     ? TextFormField(
                         onChanged: (val) => controller.password.value = val,
                         obscureText: true,
@@ -164,17 +144,11 @@ class RegisterScreen extends StatelessWidget {
                       )
                     : TextFormField(
                         onChanged: (val) => controller.password.value = val,
-                        style: const TextStyle(
-                          color: Color(
-                            0xFF5A7867,
-                          ),
-                        ),
+                        style: const TextStyle(color: Color(0xFF5A7867)),
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          labelStyle: const TextStyle(
-                            color: Color(0xFF5A7867),
-                          ),
+                          labelStyle: const TextStyle(color: Color(0xFF5A7867)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: const BorderSide(
@@ -183,14 +157,12 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           focusedBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(
-                              color: Color(0xFF5A7867),
-                            ),
+                            borderSide: BorderSide(color: Color(0xFF5A7867)),
                           ),
                         ),
                       ),
                 SizedBox(height: 15),
-                Theme.of(context).brightness == Brightness.dark
+                isDark
                     ? TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
@@ -201,15 +173,11 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       )
                     : TextFormField(
-                        style: const TextStyle(
-                          color: Color(0xFF5A7867),
-                        ),
+                        style: const TextStyle(color: Color(0xFF5A7867)),
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
-                          labelStyle: const TextStyle(
-                            color: Color(0xFF5A7867),
-                          ),
+                          labelStyle: const TextStyle(color: Color(0xFF5A7867)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                             borderSide: const BorderSide(
@@ -218,9 +186,7 @@ class RegisterScreen extends StatelessWidget {
                           ),
                           focusedBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(
-                              color: Color(0xFF5A7867),
-                            ),
+                            borderSide: BorderSide(color: Color(0xFF5A7867)),
                           ),
                         ),
                       ),
@@ -240,17 +206,12 @@ class RegisterScreen extends StatelessWidget {
                       hint: Text(
                         "Role",
                         style: TextStyle(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                              ? Colors.black
-                              : Colors.white,
+                          color: isDark ? Colors.white : Colors.black,
                         ),
                       ),
                       underline: Container(
                         height: 1,
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? Colors.black
-                            : Colors.grey,
+                        color: isDark ? Colors.grey : Colors.black,
                       ),
                       value: allowedRoles.contains(controller.role.value)
                           ? controller.role.value
@@ -261,11 +222,7 @@ class RegisterScreen extends StatelessWidget {
                           child: Text(
                             role.name,
                             style: TextStyle(
-                              color:
-                                  Theme.of(context).brightness ==
-                                      Brightness.light
-                                  ? Colors.black
-                                  : Colors.white,
+                              color: isDark ? Colors.white : Colors.black,
                             ),
                           ),
                         );
@@ -273,10 +230,7 @@ class RegisterScreen extends StatelessWidget {
                       onChanged: (val) {
                         if (val != null) controller.role.value = val;
                       },
-                      iconEnabledColor:
-                          Theme.of(context).brightness == Brightness.light
-                          ? Colors.black
-                          : Colors.white,
+                      iconEnabledColor: isDark ? Colors.white : Colors.black,
                     );
                   }),
                 ),

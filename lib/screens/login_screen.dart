@@ -12,6 +12,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Center(
@@ -22,7 +23,7 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.asset(
-                  Theme.of(context).brightness == Brightness.dark
+                  isDark
                       ? 'assets/images/user2.png'
                       : 'assets/images/user.png',
                   width: 200,
@@ -39,7 +40,7 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 30),
                 ),
                 SizedBox(height: 15),
-                Theme.of(context).brightness == Brightness.dark
+                isDark
                     ? TextFormField(
                         onChanged: (value) {
                           controller.phone.value = value;
@@ -91,32 +92,32 @@ class LoginScreen extends StatelessWidget {
                   return TextFormField(
                     onChanged: (value) => controller.password.value = value,
                     obscureText: !controller.isPasswordVisible.value,
-                    style: Theme.of(context).brightness == Brightness.dark
+                    style: isDark
                         ? null
                         : const TextStyle(color: Color(0xFF5A7867)),
                     decoration: InputDecoration(
                       labelText: 'Password',
                       labelStyle:
-                          Theme.of(context).brightness == Brightness.dark
+                          isDark
                           ? null
                           : const TextStyle(color: Color(0xFF5A7867)),
                       prefixIcon: Icon(
                         Icons.password,
-                        color: Theme.of(context).brightness == Brightness.dark
+                        color: isDark
                             ? null
                             : const Color(0xFF5A7867),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide:
-                            Theme.of(context).brightness == Brightness.dark
+                            isDark
                             ? BorderSide.none
                             : const BorderSide(color: Color(0xFF5A7867)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: Theme.of(context).brightness == Brightness.dark
+                          color: isDark
                               ? Theme.of(context).colorScheme.primary
                               : const Color(0xFF5A7867),
                         ),
@@ -126,7 +127,7 @@ class LoginScreen extends StatelessWidget {
                           controller.isPasswordVisible.value
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: Theme.of(context).brightness == Brightness.dark
+                          color: isDark
                               ? null
                               : const Color(0xFF5A7867),
                         ),
@@ -188,7 +189,7 @@ class LoginScreen extends StatelessWidget {
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 75),
                     side: BorderSide(
-                      color: Theme.of(context).brightness == Brightness.dark
+                      color: isDark
                           ? Colors.white
                           : Colors.black,
                     ),
@@ -196,11 +197,11 @@ class LoginScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     foregroundColor:
-                        Theme.of(context).brightness == Brightness.dark
+                        isDark
                         ? Colors.white
                         : Colors.black,
                     overlayColor:
-                        Theme.of(context).brightness == Brightness.dark
+                        isDark
                         ? Colors.white.withOpacity(0.1)
                         : const Color(
                             0xFF5A7867,
