@@ -36,20 +36,13 @@ class UserProvider {
       http.StreamedResponse response = await request.send();
 
       final respStr = await response.stream.bytesToString();
-
       final data = jsonDecode(respStr);
-      // final userJson = data['data']['user'];
-      // token = data['Token'];
-      // currentuser = User.fromJson(userJson);
-      var userjson;
-      if(response.statusCode == 201){
-        userjson= data['data']['user'];
-        token = data['token'];
+      if (response.statusCode == 201) {
+        var userjson;
+        userjson = data['data']['user'] ?? {};
+        token = data['Token'] ?? '';
         currentuser = User.fromJson(userjson);
       }
-
-
-
       if (data['status_code'] == 201) {
         Get.find<AuthController>().login(token!, currentuser!);
         isLoading = false;

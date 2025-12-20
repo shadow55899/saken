@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -9,7 +8,7 @@ class AuthController extends GetxController {
 
   var isLoggedIn = false.obs;
   var userToken = ''.obs;
-  var currentUser = Rxn<User>(); 
+  var currentUser = Rxn<User>();
 
   @override
   void onInit() {
@@ -34,9 +33,8 @@ class AuthController extends GetxController {
     isLoggedIn.value = true;
     currentUser.value = user;
 
-    
     box.write('token', token);
-    box.write('user', user.toJson()); 
+    box.write('user', user.toJson());
   }
 
   void logout() {
