@@ -23,8 +23,8 @@ Future<List<Flat>> fetchFlats(String token) async {
     },
   );
 
-  print("Status code: ${response["status_code"]}");
-  print("Full response: $response");
+ //print("Status code: ${response["status_code"]}");
+ // print("Full response: $response");
 
   
   if (response["status_code"] == 200 || response["status_code"] == 201) {
@@ -32,16 +32,16 @@ Future<List<Flat>> fetchFlats(String token) async {
 
     
     if (data != null && data is List) {
-      print("Flats fetched: ${data.length}");
+      //print("Flats fetched: ${data.length}");
 
      
       return data.map<Flat>((json) => Flat.fromJson(json)).toList();
     } else {
-      print(" error: response['data'] is not a List");
+     // print(" error: response['data'] is not a List");
       return [];
     }
   } else {
-    print(" API Error: ${response["status_code"]}");
+   // print(" API Error: ${response["status_code"]}");
     return [
     Flat(
       area: 156,

@@ -41,8 +41,8 @@ class HomeController extends GetxController {
     try {
       isLoading.value = true;
       flat.assignAll(await service.fetchFlats("${authController.userToken}"));
-      print(" Requests Loaded: ${flat.length}");
-      print(" Requests Loaded: ${flat}");
+      //print(" Requests Loaded: ${flat.length}");
+     // print(" Requests Loaded: ${flat}");
     } catch (e) {
       print(e);
       flat.assignAll( mockFlats);

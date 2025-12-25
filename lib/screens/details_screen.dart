@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tapbar/widgets/rate.dart';
 
 import '../models/flat.dart';
 
@@ -9,10 +9,9 @@ class Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final Flat? flat = Get.arguments as Flat?;
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenWidth = MediaQuery.of(context).size.width;
 
     if (flat == null) {
       return const Scaffold(body: Center(child: Text("No flat data provided")));
@@ -20,10 +19,9 @@ class Details extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Flat Details"))),
-    
+
       body: ListView(
         children: [
-      
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             child: Text(
@@ -40,7 +38,6 @@ class Details extends StatelessWidget {
             child: Text(flat.description ?? "No description"),
           ),
 
-          
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             padding: const EdgeInsets.all(12),
@@ -110,12 +107,11 @@ class Details extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              onPressed: () {
-                
-              },
+              onPressed: () {},
               child: const Center(child: Text('حجز')),
             ),
           ),
+          Rate(),
         ],
       ),
     );

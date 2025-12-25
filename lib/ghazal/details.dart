@@ -1,24 +1,21 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tapbar/controller/rate_controller.dart';
+import 'package:tapbar/widgets/rate.dart';
 
 import '../models/flat.dart';
 // import 'package:rate_my_app/rate_my_app.dart';
 
-                                          
 class Details extends StatelessWidget {
   const Details({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the Flat object passed from previous screen
-    // late RateMyApp rateMyApp = RateMyApp(
-    //   googlePlayIdentifier: 'app.openauthenticator',
-    //   appStoreIdentifier: '6479272927',
-    // );
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final Flat? flat = Get.arguments as Flat?;
+    final RateController controller = Get.put(RateController());
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenWidth = MediaQuery.of(context).size.width;
 
     if (flat == null) {
       return const Scaffold(body: Center(child: Text("No flat data provided")));
@@ -26,33 +23,16 @@ class Details extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Flat Details"))),
-      // floatingActionButton: FloatingActionButton(
-      //   child: const Icon(Icons.star_rate),
-      //   onPressed: () {
-      //     showDialog(
-      //       context: context,
-      //       builder: (_) => AlertDialog(
-      //         title: const Text('Rate our app'),
-      //         content: const Text(
-      //           'If you enjoy using this app, please take a moment to rate it.',
-      //         ),
-      //         actions: [
-      //           TextButton(
-      //             onPressed: () => Navigator.pop(context),
-      //             child: const Text('Later'),
-      //           ),
-      //           TextButton(
-      //             onPressed: () {
-      //               rateMyApp.launchStore(); // opens Play Store / App Store
-      //               Navigator.pop(context);
-      //             },
-      //             child: const Text('Rate Now'),
-      //           ),
-      //         ],
-      //       ),
-      //     );
-      //   },
-      // ),
+      floatingActionButton: Obx(
+        () => FloatingActionButton(
+          child: Icon(controller.icon.value),
+          backgroundColor: isDark ? null : Colors.green[900],
+          foregroundColor: isDark ? null : Colors.white,
+          onPressed: () {
+            controller.rateApp();
+          },
+        ),
+      ),
       body: ListView(
         children: [
           // 🔹 Image placeholder
@@ -141,8 +121,8 @@ class Details extends StatelessWidget {
 
           const Center(
             child: Text(
-              'اذا كنت ترغب بالحجز',
-              style: TextStyle(fontWeight: FontWeight.w100),
+              'If you want to book this flat',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           Container(
@@ -154,9 +134,10 @@ class Details extends StatelessWidget {
               onPressed: () {
                 // booking action
               },
-              child: const Center(child: Text('حجز')),
+              child: const Center(child: Text('Reserve Now')),
             ),
           ),
+          Rate(),
         ],
       ),
     );

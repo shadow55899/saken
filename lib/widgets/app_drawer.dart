@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:tapbar/controller/auth_controller.dart';
 import 'package:tapbar/controller/login_controller.dart';
+import 'package:tapbar/screens/about_us_screen.dart';
+import 'package:tapbar/screens/settings_screen.dart';
 import 'package:tapbar/widgets/themes.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -82,14 +84,11 @@ class AppDrawer extends StatelessWidget {
 
           _drawerItem(
             context,
-            icon: isDark ? Icons.light_mode : Icons.dark_mode,
-            title: "Change Theme",
-            color: isDark ? Colors.white : Colors.black,
-            onTap: () {
-              Navigator.pop(context);
-              changeTheme();
-            },
+            icon: Icons.chalet,
+            title: "My Reservations",
+            onTap: () {},
           ),
+
           _drawerItem(
             context,
             icon: Icons.notifications,
@@ -101,10 +100,28 @@ class AppDrawer extends StatelessWidget {
             context,
             icon: Icons.settings,
             title: "Settings",
+            onTap: () {
+              Get.to(() => const SettingsScreen());
+            },
+          ),
+
+          _drawerItem(
+            context,
+            icon: Icons.reply_all,
+            title: "Rate Us",
             onTap: () {},
           ),
 
           const Spacer(),
+
+          _drawerItem(
+            context,
+            icon: Icons.people,
+            title: "About Us",
+            onTap: () {
+              Get.to(() => AboutUsScreen());
+            },
+          ),
 
           // LOGOUT
           const Divider(),

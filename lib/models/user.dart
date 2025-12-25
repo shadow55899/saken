@@ -1,4 +1,3 @@
-
 import '../controller/register_controller.dart';
 
 class User {
@@ -35,9 +34,9 @@ class User {
   Map<String, dynamic> toJson() {
     return {
       "id": id,
-      "firstName": firstName,
-      "lastName": lastName,
-      "phone": phone,
+      "firstname": firstName,
+      "lastname": lastName,
+      "phone_number": phone,
       "role": role.name,
     };
   }

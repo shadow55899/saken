@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tapbar/controller/auth_controller.dart';
 import 'package:tapbar/screens/main_screen.dart';
-import 'package:tapbar/screens/otp_screen.dart';
 import 'package:tapbar/widgets/themes.dart';
 import 'screens/login_screen.dart';
 

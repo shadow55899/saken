@@ -24,7 +24,8 @@ class AuthController extends GetxController {
     // Restore user
     Map<String, dynamic>? userJson = box.read('user');
     if (userJson != null) {
-      currentUser.value = User.fromJson(userJson);
+      User user = User.fromJson(userJson);
+      currentUser.value = user;
     }
   }
 
