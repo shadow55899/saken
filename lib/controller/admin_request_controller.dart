@@ -4,13 +4,14 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../models/requests_model.dart';
+import '../models/user.dart';
 import '../providers/user_provider.dart';
 import '../service/admin_request_service.dart';
 
 class AdminRequestController extends GetxController {
   AdminRequestService adminService = AdminRequestService();
   var isLoading = false.obs;
-  List<Userg> RequestList = [];
+  List<User> RequestList = [];
   @override
   void onInit() {
     super.onInit();

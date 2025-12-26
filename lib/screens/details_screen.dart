@@ -46,8 +46,14 @@ class Details extends StatelessWidget {
               children: [
                 _SpecRow(
                   icon: Icons.location_on_outlined,
-                  title: "City ID",
+                  title: "City ",
                   value: flat.city.toString(),
+                ),
+                const Divider(),
+                _SpecRow(
+                  icon: Icons.price_change_outlined,
+                  title: "Governorate",
+                  value: "${flat.governorate}\$",
                 ),
                 const Divider(),
                 _SpecRow(

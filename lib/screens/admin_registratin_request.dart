@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../controller/admin_request_controller.dart';
 import '../models/requests_model.dart';
+import '../models/user.dart';
 import '../widgets/boxInformation.dart';
 import '../widgets/photo.dart';
 
@@ -75,7 +76,7 @@ class AdminRegistratinRequest extends StatelessWidget {
                     style: TextStyle(fontSize: titleSize),
                   ),
 
-                  subtitle: Text('${user.firstname} ${user.lastname}'),
+                  subtitle: Text('${user.firstName} ${user.lastName}'),
                 ),
               ),
             ),
@@ -127,7 +128,7 @@ class AdminRegistratinRequest extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "${user.firstname} ${user.lastname}",
+                    "${user.firstName} ${user.lastName}",
                     style: TextStyle(fontSize: titleSize),
                   ),
                 ],
@@ -139,7 +140,7 @@ class AdminRegistratinRequest extends StatelessWidget {
     });
   }
 
-  void showDialog(BuildContext context, Userg user) {
+  void showDialog(BuildContext context, User user) {
     print('Photo URL: ${user.picture}');
 
     Get.defaultDialog(
@@ -192,8 +193,8 @@ class AdminRegistratinRequest extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              BoxInformation(title: 'First Name:', value: Text(user.firstname)),
-              BoxInformation(title: 'Last Name:', value: Text(user.lastname)),
+              BoxInformation(title: 'First Name:', value: Text(user.firstName)),
+              BoxInformation(title: 'Last Name:', value: Text(user.lastName)),
               BoxInformation(
                 title: 'Date Of Birth:',
                 value: Text(

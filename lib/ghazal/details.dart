@@ -70,8 +70,14 @@ class Details extends StatelessWidget {
               children: [
                 _SpecRow(
                   icon: Icons.location_on_outlined,
-                  title: "City ID",
+                  title: "City ",
                   value: flat.city.toString(),
+                ),
+                const Divider(),
+                _SpecRow(
+                  icon: Icons.location_on_outlined,
+                  title: "Governorate ",
+                  value: flat.governorate.toString(),
                 ),
                 const Divider(),
                 _SpecRow(

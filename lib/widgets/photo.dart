@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../service/api_service.dart'; 
 
 class Photo extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final double? size;
 
   const Photo({
@@ -18,13 +18,14 @@ class Photo extends StatelessWidget {
     
     final origin = Uri.parse(ApiService.baseUrl).origin; // e.g. http://192.168.0.104:8000
     String finalUrl;
-    if (imageUrl.isEmpty) {
+    if (imageUrl?.isEmpty ?? true) {
       finalUrl = '';
-    } else if (imageUrl.startsWith('http')) {
-      finalUrl = imageUrl;
+    } else if (imageUrl!.startsWith('http')) {
+      finalUrl = imageUrl!;
     } else {
       finalUrl = '$origin/storage/$imageUrl';
     }
+
 
   
     print('Photo widget final URL -> $finalUrl');

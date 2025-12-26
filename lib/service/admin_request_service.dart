@@ -4,12 +4,13 @@ import 'package:http/http.dart' as http;
 
 import '../models/flat.dart';
 import '../models/requests_model.dart';
+import '../models/user.dart';
 import 'api_service.dart';
 
 class AdminRequestService {
   final ApiService apiservice = ApiService();
 
-  Future<List<Userg>> fetchRequests(String token) async {
+  Future<List<User>> fetchRequests(String token) async {
     final response = await ApiService.get(
       "/users/isfalse",
       headers: {
@@ -27,9 +28,8 @@ class AdminRequestService {
 
       print("Status code: ${response["status_code"]} inside the 200 condition");
       if (dataJson != null && dataJson["users"] != null) {
-        var data = Data.fromJson(dataJson);
-        print("Users fetched: ${data.users.length}");
-        return data.users;
+        return User.parseUsers(response);
+
       } else {
         print("error response['data']['users'] not found");
         return [];
