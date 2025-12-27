@@ -7,7 +7,6 @@ class Rate extends StatelessWidget {
   final RateController controller = Get.put(RateController());
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       child: Obx(
         () => StarRating(

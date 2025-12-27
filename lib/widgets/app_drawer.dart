@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +8,6 @@ import 'package:tapbar/controller/auth_controller.dart';
 import 'package:tapbar/controller/login_controller.dart';
 import 'package:tapbar/screens/about_us_screen.dart';
 import 'package:tapbar/screens/settings_screen.dart';
-import 'package:tapbar/widgets/themes.dart';
 
 class AppDrawer extends StatelessWidget {
   LoginController loginController = Get.put(LoginController());
