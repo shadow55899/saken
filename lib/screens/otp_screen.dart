@@ -15,6 +15,7 @@ class OtpScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text("Enter verification code :"),
             Theme.of(context).brightness == Brightness.dark
                 ? OtpTextField(
                     numberOfFields: 6,

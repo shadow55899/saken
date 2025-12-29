@@ -118,7 +118,7 @@ class HomeService {
           city: "Al-Mokhaiam",
           address: "61458 Brock Springs Suite 398\nEast Margaritaton, CT 82919-6306",
           status: "Booked",
-          averageRate: "2.12",
+          averageRate: 2.12,
           owner: "Evert O'Conner",
           description: "Rerum sed quidem et recusandae soluta est sit.",
           pictures: [],

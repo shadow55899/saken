@@ -38,15 +38,15 @@ class UserProvider {
       http.StreamedResponse response = await request.send();
 
       final respStr = await response.stream.bytesToString();
-      print(respStr);
       final data = jsonDecode(respStr);
-      if (response.statusCode == 201||data['status_code'] == 200) {
+      if (response.statusCode == 200) {
         var userjson;
         userjson = data['data']['user'] ?? {};
         token = data['Token'] ?? '';
         currentuser = User.fromJson(userjson);
       }
-      if (data['status_code'] == 201|| data['status_code'] == 200) {
+      if (data['status_code'] == 200) {
+        print(data);
         Get.find<AuthController>().login(token!, currentuser!);
         isLoading = false;
         currentuser = User.fromJson(data['data']['user']);
@@ -76,12 +76,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -128,7 +123,8 @@ class UserProvider {
 
       if (data["status_code"] == 201) {
         isLoading = false;
-        Get.offAll(() => LoginScreen());
+        // Get.offAll(() => LoginScreen());
+        Get.to(() => OtpScreen() , arguments: phone_number);
         Get.snackbar(
           "Message",
           data["message"],
@@ -154,12 +150,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -209,12 +200,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -250,12 +236,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -303,12 +284,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -356,12 +332,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -383,17 +354,6 @@ class UserProvider {
       if (data['status_code'] == 200) {
         users = [];
         users = User.parseUsers(data);
-        // Get.snackbar(
-        //   "Message",
-        //   data["message"],
-        //   snackPosition: SnackPosition.BOTTOM,
-        //   backgroundColor: Colors.black.withOpacity(0.5),
-        //   colorText: Colors.white,
-        //   margin: EdgeInsets.all(8),
-        //   borderRadius: 8,
-        //   duration: Duration(seconds: 2),
-        //   snackStyle: SnackStyle.FLOATING,
-        // );
       } else {
         Get.snackbar(
           "Message",
@@ -408,12 +368,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -467,12 +422,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 }
