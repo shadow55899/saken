@@ -4,7 +4,6 @@ class Flat {
   int area;
   int rooms;
       int id;
-
   int livingRooms;
   int bathrooms;
   int rentalPrice;

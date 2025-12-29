@@ -42,11 +42,7 @@ class RoomApply extends StatelessWidget {
           ),
         ),
 
-        // 🔹 Min Value
-        Obx(() {
-          roomController.text =
-          Value.value == 0 ? '' : Value.value.toString();
-          return TextField(
+   TextField(
             controller: roomController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
@@ -60,8 +56,7 @@ class RoomApply extends StatelessWidget {
               final parsed = double.tryParse(val);
               if (parsed != null) Value.value = parsed;
             },
-          );
-        }),
+          ),
         const SizedBox(height: 20),
 
         // 🔹 Max Value

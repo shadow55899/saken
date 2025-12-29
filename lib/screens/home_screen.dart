@@ -11,7 +11,6 @@ import '../widgets/close_button_responsive.dart';
 import '../widgets/filter_card.dart';
 import '../widgets/filter_option_tile.dart';
 import '../widgets/select_gride.dart';
-import 'details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeController controller = Get.put(HomeController());
@@ -129,7 +128,7 @@ class HomeScreen extends StatelessWidget {
 
                   return InkWell(
                     onTap: () {
-                      Get.to(() => DetailsScreen(), arguments: flat);
+                      Get.to(() => Details(), arguments: flat);
 
                     },
 
