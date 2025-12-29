@@ -3,6 +3,8 @@
 class Flat {
   int area;
   int rooms;
+      int id;
+
   int livingRooms;
   int bathrooms;
   int rentalPrice;
@@ -18,6 +20,8 @@ class Flat {
   Flat({
     required this.area,
     required this.rooms,
+            required this.id,
+
     required this.livingRooms,
     required this.bathrooms,
     required this.rentalPrice,
@@ -53,6 +57,8 @@ class Flat {
 
   factory Flat.fromJson(Map<String, dynamic> json) => Flat(
     area: json["area"],
+            id: json["id"],
+
     rooms: json["rooms"],
     livingRooms: json["living_rooms"],
     bathrooms: json["bathrooms"],
@@ -61,15 +67,22 @@ class Flat {
     city: json["city"],
     address: json["address"],
     status: json["status"],
-    averageRate: (json["average_rate"]["original"]["average_rating"] ?? "0"),
+    averageRate: (json["average_rate"] is Map)
+        ? (json["average_rate"]["original"]?["average_rating"]?.toString() ?? "0")
+        : (json["average_rate"]?.toString() ?? "0"),
+
     // json["average_rate"],
     owner: json["owner"],
     description: json["description"],
-    pictures: List<dynamic>.from(json["pictures"].map((x) => x)),
+    pictures: json["pictures"] != null
+        ? List<dynamic>.from(json["pictures"])
+        : [],
   );
 
   Map<String, dynamic> toJson() => {
     "area": area,
+            "id" : id,
+
     "rooms": rooms,
     "living_rooms": livingRooms,
     "bathrooms": bathrooms,

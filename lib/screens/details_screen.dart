@@ -4,8 +4,8 @@ import 'package:tapbar/widgets/rate.dart';
 
 import '../models/flat.dart';
 
-class Details extends StatelessWidget {
-  const Details({super.key});
+class DetailsScreen extends StatelessWidget {
+  const DetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

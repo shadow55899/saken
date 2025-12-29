@@ -129,6 +129,7 @@ class MmController extends GetxController {
 
     // ✅ جمع البيانات
     final newFlat = Flat(
+      id : 1,
       area: int.parse(areaController.text),
       rooms: int.parse(roomsController.text),
       livingRooms: int.parse(livingRoomsController.text),

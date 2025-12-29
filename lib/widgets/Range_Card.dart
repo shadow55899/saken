@@ -48,49 +48,35 @@ class RangeCard extends StatelessWidget {
         ),
 
         // 🔹 Min Value
-        Obx(() {
-          minController.text = minValue.value == 0
-              ? ''
-              : minValue.value.toString();
-          return TextField(
-            controller: minController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: minLabel,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              prefixIcon: const Icon(Icons.arrow_upward, color: Colors.teal),
-            ),
-            onChanged: (val) {
-              final parsed = double.tryParse(val);
-              if (parsed != null) minValue.value = parsed;
-            },
-          );
-        }),
+        TextField(
+          controller: minController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: minLabel,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            prefixIcon: const Icon(Icons.arrow_upward, color: Colors.teal),
+          ),
+          onChanged: (val) {
+            final parsed = double.tryParse(val);
+            if (parsed != null) minValue.value = parsed;
+          },
+        ),
+
         const SizedBox(height: 20),
 
-        // 🔹 Max Value
-        Obx(() {
-          maxController.text = maxValue.value == 0
-              ? ''
-              : maxValue.value.toString();
-          return TextField(
-            controller: maxController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: maxLabel,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              prefixIcon: const Icon(Icons.arrow_downward, color: Colors.teal),
-            ),
-            onChanged: (val) {
-              final parsed = double.tryParse(val);
-              if (parsed != null) maxValue.value = parsed;
-            },
-          );
-        }),
+        TextField(
+          controller: maxController,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: maxLabel,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            prefixIcon: const Icon(Icons.arrow_downward, color: Colors.teal),
+          ),
+          onChanged: (val) {
+            final parsed = double.tryParse(val);
+            if (parsed != null) maxValue.value = parsed;
+          },
+        ),
         const SizedBox(height: 20),
 
         // 🔹 Buttons

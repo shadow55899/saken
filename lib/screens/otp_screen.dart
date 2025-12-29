@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
 import 'package:tapbar/widgets/themes.dart';
 
 class OtpScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class OtpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text("verification"))),
+      appBar: AppBar(title: Center(child: Text("verification".tr))),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,14 +47,14 @@ class OtpScreen extends StatelessWidget {
                     onSubmit: (String verificationCode) {},
                   ),
             SizedBox(height: 50),
-            ElevatedButton(onPressed: () {}, child: Text("verify")),
+            ElevatedButton(onPressed: () {}, child: Text("verify".tr)),
             SizedBox(height: 50),
             TextButton(
               onPressed: () {
                 changeTheme();
               },
               child: Text(
-                "Resend Code",
+                "resend_code".tr,
                 style: TextStyle(
                   color: Theme.of(context).brightness == Brightness.dark
                       ? Colors.white

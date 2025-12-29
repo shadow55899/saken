@@ -16,8 +16,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   static RxString baseUrl =
-      "https://overreservedly-unlyric-mitch.ngrok-free.dev/api".obs;
-  //  static RxString baseUrl = "http://192.168.0.107:8000/api".obs;
+     // "https://overreservedly-unlyric-mitch.ngrok-free.dev/api".obs;
+    "http://10.163.51.37:8000/api".obs;
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();

@@ -4,7 +4,9 @@ import 'package:tapbar/controller/favorite_controller.dart';
 import 'package:tapbar/controller/rate_controller.dart';
 import 'package:tapbar/widgets/rate.dart';
 
+import '../controller/booking_controller.dart';
 import '../models/flat.dart';
+import '../widgets/booking_dialog.dart';
 // import 'package:rate_my_app/rate_my_app.dart';
 
 class Details extends StatelessWidget {
@@ -140,9 +142,23 @@ class Details extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
               onPressed: () {
-                // booking action
+                print("Booking button clicked!"); // Debug
+
+                if (!Get.isRegistered<BookingController>()) {
+                  Get.put(BookingController());
+                }
+
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  ),
+                  builder: (_) => BookingDialog(flatId: flat.id!),
+                );
               },
-              child: const Center(child: Text('Reserve Now')),
+              child: const
+              Center(child: Text('Reserve Now')),
             ),
           ),
           Rate(),

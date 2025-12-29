@@ -83,36 +83,40 @@ class HomeService {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
+
       },
     );
 
-    //print("Status code: ${response["status_code"]}");
+    print("Status code: ${response["status_code"]}");
     print("Full response: $response");
+
 
     if (response["status_code"] == 200 || response["status_code"] == 201) {
       final data = response["data"];
 
+
       if (data != null && data is List) {
-        //print("Flats fetched: ${data.length}");
+        print("Flats fetched: ${data.length}");
+
 
         return data.map<Flat>((json) => Flat.fromJson(json)).toList();
       } else {
-        // print(" error: response['data'] is not a List");
+        print(" error: response['data'] is not a List");
         return [];
       }
     } else {
-      //print(" API Error: ${response["status_code"]}");
+      print(" API Error: ${response["status_code"]}");
       return [
         Flat(
+          id: 1,
           area: 156,
           rooms: 1,
           livingRooms: 1,
           bathrooms: 2,
-          rentalPrice: 22222,
+          rentalPrice:22222,
           governorate: "Homs",
           city: "Al-Mokhaiam",
-          address:
-              "61458 Brock Springs Suite 398\nEast Margaritaton, CT 82919-6306",
+          address: "61458 Brock Springs Suite 398\nEast Margaritaton, CT 82919-6306",
           status: "Booked",
           averageRate: "2.12",
           owner: "Evert O'Conner",
@@ -123,11 +127,12 @@ class HomeService {
     }
   }
 
-  ////////////////////////////
+////////////////////////////
 
   // Filter by Price
   Future<List<Flat>> filterByPrice(double min, double max, String token) async {
     final response = await ApiService.get(
+
       "/apartment/filterPrice/$min/$max",
       headers: {
         'Accept': 'application/json',
@@ -135,8 +140,6 @@ class HomeService {
         'Authorization': 'Bearer $token',
       },
     );
-
-    print(response);
 
     if (response["status_code"] == 200 || response["status_code"] == 201) {
       final data = response["data"];
@@ -223,41 +226,41 @@ class HomeService {
     }
     return [];
   }
+//////////////////////////
+//   Future<bool> filterPrice(String token, double minprice,double maxprice) async {
+//     final response = await ApiService.put(
+//       "/apartment/filterPrice/$minprice/$maxprice",
+//       headers: {
+//         'Authorization': 'Bearer $token',
+//       },
+//     );
+//     print("Status code: ${response["status_code"]}");
+//     print("FULL RESPONSE: $response");
+//
+//     if (response["status_code"] == 200 || response["status_code"] == 201) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+//
+//
+//   Future<bool> filterArea(String token, double minarea,double maxarea) async {
+//     final response = await ApiService.put(
+//       "/apartment/filterArea/$minarea/$maxarea",
+//       headers: {
+//         'Authorization': 'Bearer $token',
+//       },
+//     );
+//     print("Status code: ${response["status_code"]}");
+//     print("FULL RESPONSE: $response");
+//
+//     if (response["status_code"] == 200 || response["status_code"] == 201) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+//
 
-  //////////////////////////
-  //   Future<bool> filterPrice(String token, double minprice,double maxprice) async {
-  //     final response = await ApiService.put(
-  //       "/apartment/filterPrice/$minprice/$maxprice",
-  //       headers: {
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //     );
-  //     print("Status code: ${response["status_code"]}");
-  //     print("FULL RESPONSE: $response");
-  //
-  //     if (response["status_code"] == 200 || response["status_code"] == 201) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   }
-  //
-  //
-  //   Future<bool> filterArea(String token, double minarea,double maxarea) async {
-  //     final response = await ApiService.put(
-  //       "/apartment/filterArea/$minarea/$maxarea",
-  //       headers: {
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //     );
-  //     print("Status code: ${response["status_code"]}");
-  //     print("FULL RESPONSE: $response");
-  //
-  //     if (response["status_code"] == 200 || response["status_code"] == 201) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   }
-  //
 }

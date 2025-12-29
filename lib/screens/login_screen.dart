@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +23,9 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Image.asset(
-                  isDark ? 'assets/images/user2.png' : 'assets/images/user.png',
+                  isDark
+                      ? 'assets/images/user2.png'
+                      : 'assets/images/user.png',
                   width: 200,
                   height: 200,
                 ),
@@ -57,10 +60,14 @@ class LoginScreen extends StatelessWidget {
                           controller.phone.value = value;
                         },
                         keyboardType: TextInputType.number,
-                        style: const TextStyle(color: Color(0xFF5A7867)),
+                        style: const TextStyle(
+                          color: Color(0xFF5A7867),
+                        ),
                         decoration: InputDecoration(
                           labelText: 'Phone number',
-                          labelStyle: const TextStyle(color: Color(0xFF5A7867)),
+                          labelStyle: const TextStyle(
+                            color: Color(0xFF5A7867),
+                          ),
                           prefixIcon: const Icon(
                             Icons.phone,
                             color: Color(0xFF5A7867),
@@ -74,7 +81,9 @@ class LoginScreen extends StatelessWidget {
                           ),
                           focusedBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide: BorderSide(color: Color(0xFF5A7867)),
+                            borderSide: BorderSide(
+                              color: Color(0xFF5A7867),
+                            ),
                           ),
                         ),
                       ),
@@ -88,16 +97,20 @@ class LoginScreen extends StatelessWidget {
                         : const TextStyle(color: Color(0xFF5A7867)),
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      labelStyle: isDark
+                      labelStyle:
+                          isDark
                           ? null
                           : const TextStyle(color: Color(0xFF5A7867)),
                       prefixIcon: Icon(
                         Icons.password,
-                        color: isDark ? null : const Color(0xFF5A7867),
+                        color: isDark
+                            ? null
+                            : const Color(0xFF5A7867),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: isDark
+                        borderSide:
+                            isDark
                             ? BorderSide.none
                             : const BorderSide(color: Color(0xFF5A7867)),
                       ),
@@ -114,7 +127,9 @@ class LoginScreen extends StatelessWidget {
                           controller.isPasswordVisible.value
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: isDark ? null : const Color(0xFF5A7867),
+                          color: isDark
+                              ? null
+                              : const Color(0xFF5A7867),
                         ),
                         onPressed: () {
                           controller.isPasswordVisible.toggle();
@@ -136,10 +151,6 @@ class LoginScreen extends StatelessWidget {
                       ),
                       const Text('Remember me'),
                       const Spacer(),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text('Forgot Password?'),
-                      ),
                     ],
                   );
                 }),
@@ -178,15 +189,23 @@ class LoginScreen extends StatelessWidget {
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 75),
                     side: BorderSide(
-                      color: isDark ? Colors.white : Colors.black,
+                      color: isDark
+                          ? Colors.white
+                          : Colors.black,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    foregroundColor: isDark ? Colors.white : Colors.black,
-                    overlayColor: isDark
+                    foregroundColor:
+                        isDark
+                        ? Colors.white
+                        : Colors.black,
+                    overlayColor:
+                        isDark
                         ? Colors.white.withOpacity(0.1)
-                        : const Color(0xFF5A7867).withOpacity(0.1),
+                        : const Color(
+                            0xFF5A7867,
+                          ).withOpacity(0.1),
                   ),
                   onPressed: () {
                     Get.to(() => RegisterScreen());

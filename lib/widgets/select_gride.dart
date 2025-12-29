@@ -38,26 +38,26 @@ class SelectGrid extends StatelessWidget {
 
             // 🔹 المربع الصغير الذي يعرض الخيار المختار
             Obx(() => Container(
-                  constraints: const BoxConstraints(maxWidth: 140, maxHeight: 28),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: Colors.teal.withOpacity(0.1),
-                    border: Border.all(color: Colors.teal, width: 1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    selectedValue.value.isEmpty
-                        ? "No $title selected"
-                        : selectedValue.value,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 9,
-                      color: Colors.teal,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                )),
+              constraints: const BoxConstraints(maxWidth: 140, maxHeight: 28),
+              padding:
+              const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: Colors.teal.withOpacity(0.1),
+                border: Border.all(color: Colors.teal, width: 1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                selectedValue.value.isEmpty
+                    ? "No $title selected"
+                    : selectedValue.value,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 9,
+                  color: Colors.teal,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            )),
           ],
         ),
 
@@ -70,8 +70,8 @@ class SelectGrid extends StatelessWidget {
             gridDelegate:  SliverGridDelegateWithMaxCrossAxisExtent(
               mainAxisSpacing: 4,
               crossAxisSpacing: 4,
-                maxCrossAxisExtent: 350,
-                childAspectRatio: 2.7,
+              maxCrossAxisExtent: 350,
+              childAspectRatio: 2.7,
               // 🔹 يجعل الكروت أفقية وأنحف
             ),
             itemCount: options.length,

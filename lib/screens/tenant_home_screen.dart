@@ -46,6 +46,7 @@ class TenantHomeScreen extends StatelessWidget {
                   onPressed: () {
                     // مثال: شقة موجودة للتحديث
                     Flat sampleFlat = Flat(
+                      id : 1,
                       area: 120,
                       rooms: 3,
                       livingRooms: 1,
