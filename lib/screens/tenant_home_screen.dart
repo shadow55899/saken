@@ -55,7 +55,7 @@ class TenantHomeScreen extends StatelessWidget {
                       city: "Nasr City",
                       address: "Street 123",
                       status: "Available",
-                      averageRate: "4.5",
+                      averageRate: 4.5,
                       owner: "Owner1",
                       description: "Nice apartment",
                       pictures: [], // يمكن وضع مسارات الصور هنا

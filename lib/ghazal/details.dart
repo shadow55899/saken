@@ -121,7 +121,9 @@ class Details extends StatelessWidget {
                 _SpecRow(
                   icon: Icons.domain,
                   title: "Average Rate",
-                  value: flat.averageRate.toString(),
+                  value: flat.averageRate.toString() == "0.0"
+                      ? "No Rate"
+                      : flat.averageRate.toString(),
                 ),
               ],
             ),

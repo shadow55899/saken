@@ -37,7 +37,6 @@ class UserProvider {
       http.StreamedResponse response = await request.send();
 
       final respStr = await response.stream.bytesToString();
-      //print(respStr);
       final data = jsonDecode(respStr);
       if (response.statusCode == 200) {
         var userjson;

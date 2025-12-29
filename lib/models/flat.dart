@@ -1,34 +1,42 @@
 // import 'dart:io';
 
+import 'package:tapbar/models/booking.dart';
+
 class Flat {
-  int area;
-  int rooms;
-  int livingRooms;
-  int bathrooms;
-  int rentalPrice;
+  int? id;
+  int? area;
+  int? rooms;
+  int? livingRooms;
+  int? bathrooms;
+  int? rentalPrice;
   String? governorate;
   String? city;
   String? address;
   String? status;
-  String? averageRate;
+  double? averageRate;
   String? owner;
+  String? ownerPhone;
   String? description;
-  List<dynamic> pictures;
+  List<String>? pictures;
+  List<Booking>? bookings;
 
   Flat({
-    required this.area,
-    required this.rooms,
-    required this.livingRooms,
-    required this.bathrooms,
-    required this.rentalPrice,
-    required this.governorate,
-    required this.city,
-    required this.address,
-    required this.status,
-    required this.averageRate,
-    required this.owner,
-    required this.description,
-    required this.pictures,
+    this.id,
+    this.area,
+    this.rooms,
+    this.livingRooms,
+    this.bathrooms,
+    this.rentalPrice,
+    this.governorate,
+    this.city,
+    this.address,
+    this.status,
+    this.averageRate,
+    this.owner,
+    this.ownerPhone,
+    this.description,
+    this.pictures,
+    this.bookings,
   });
 
   // factory Flat.fromJson(Map<String, dynamic> json) => Flat(
@@ -52,36 +60,45 @@ class Flat {
   // );
 
   factory Flat.fromJson(Map<String, dynamic> json) => Flat(
-    area: json["area"],
-    rooms: json["rooms"],
-    livingRooms: json["living_rooms"],
-    bathrooms: json["bathrooms"],
-    rentalPrice: json["rental_price"],
-    governorate: json["governorate"],
-    city: json["city"],
-    address: json["address"],
-    status: json["status"],
-    averageRate: (json["average_rate"] ?? 0),
-    // json["average_rate"],
-    owner: json["owner"],
-    description: json["description"],
-    pictures: List<dynamic>.from(json["pictures"].map((x) => x)),
+    id: json['id'],
+    area: json['area'],
+    rooms: json['rooms'],
+    livingRooms: json['living_rooms'],
+    bathrooms: json['bathrooms'],
+    rentalPrice: json['rental_price'],
+    governorate: json['governorate'],
+    city: json['city'],
+    address: json['address'],
+    status: json['status'],
+    averageRate: (json['average_rate'] ?? 0).toDouble(),
+    owner: json['owner'],
+    ownerPhone: json["owner’s phone number "],
+    description: json['description'],
+    pictures: json['pictures'] != null
+        ? List<String>.from(json['pictures'])
+        : [],
+    bookings: json['bookings'] != null
+        ? (json['bookings'] as List).map((e) => Booking.fromJson(e)).toList()
+        : [],
   );
 
   Map<String, dynamic> toJson() => {
-    "area": area,
-    "rooms": rooms,
-    "living_rooms": livingRooms,
-    "bathrooms": bathrooms,
-    "rental_price": rentalPrice,
-    "governorate": governorate,
-    "city": city,
-    "address": address,
-    "status": status,
-    "average_rate": averageRate,
-    "owner": owner,
-    "description": description,
-    "pictures": List<dynamic>.from(pictures.map((x) => x)),
+    'id': id,
+    'area': area,
+    'rooms': rooms,
+    'living_rooms': livingRooms,
+    'bathrooms': bathrooms,
+    'rental_price': rentalPrice,
+    'governorate': governorate,
+    'city': city,
+    'address': address,
+    'status': status,
+    'average_rate': averageRate,
+    'owner': owner,
+    "owner’s phone number ": ownerPhone,
+    'description': description,
+    'pictures': pictures,
+    'bookings': bookings?.map((e) => e.toJson()).toList(),
   };
   static List<Flat> parseList(List<dynamic> list) {
     return list.map((e) => Flat.fromJson(e)).toList();

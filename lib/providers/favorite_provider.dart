@@ -36,12 +36,9 @@ class FavoriteProvider {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final list = data["data"];
         if (data != null) {
-          //print("Flats fetched: ${data.length}");
-
           favoriteList = Flat.parseList(list);
           return favoriteList;
         } else {
-          // print(" error: response['data'] is not a List");
           favoriteList = [];
           return favoriteList;
         }
