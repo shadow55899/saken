@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:tapbar/screens/otp_screen.dart';
 import 'dart:convert';
 
 import '../controller/auth_controller.dart';
@@ -20,6 +21,7 @@ class UserProvider {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   };
+
   Future<void> login(
     String phone_number,
     String password,
@@ -36,6 +38,7 @@ class UserProvider {
       http.StreamedResponse response = await request.send();
 
       final respStr = await response.stream.bytesToString();
+      print(respStr);
       final data = jsonDecode(respStr);
       if (response.statusCode == 201) {
         var userjson;
@@ -391,6 +394,65 @@ class UserProvider {
         //   duration: Duration(seconds: 2),
         //   snackStyle: SnackStyle.FLOATING,
         // );
+      } else {
+        Get.snackbar(
+          "Message",
+          data["message"],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Message",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: Duration(seconds: 3),
+      );
+    }
+  }
+
+  Future<void> delete(String password) async {
+    try {
+      var headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Get.find<AuthController>().userToken}',
+      };
+      var request = http.MultipartRequest(
+        'DELETE',
+        Uri.parse('$baseUrl/user/delete-account'),
+      );
+      request.fields.addAll({'password': password});
+
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+
+      final respStr = await response.stream.bytesToString();
+
+      print(respStr);
+
+      final data = jsonDecode(respStr);
+
+      if (data['status_code'] == 200) {
+        Get.find<AuthController>().logout();
+        Get.offAll(() => LoginScreen());
+        Get.snackbar(
+          "Message",
+          data["message"],
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white,
+          margin: EdgeInsets.all(8),
+          borderRadius: 8,
+          duration: Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+        );
       } else {
         Get.snackbar(
           "Message",

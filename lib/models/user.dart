@@ -8,7 +8,6 @@ class User {
   final int is_approve;
   final Role role;
 
-
   // adds
   final DateTime dateOfBirth;
   final String? picture;
@@ -16,7 +15,7 @@ class User {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  User( {
+  User({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -42,8 +41,8 @@ class User {
         orElse: () => Role.renter,
       ),
       is_approve: json['is_approve'] ?? 0,
-//adds
-          dateOfBirth: DateTime.parse(json["date_of_birth"]),
+      //adds
+      dateOfBirth: DateTime.parse(json["date_of_birth"]) ,
 
       picture: json['picture'],
       idCardImage: json['id_card_image'],
@@ -81,7 +80,6 @@ class User {
   // }
   //
 
-
   static List<User> parseUsers(Map<String, dynamic> json) {
     final raw = json['data'];
 
@@ -90,12 +88,9 @@ class User {
     }
 
     if (raw is Map && raw['users'] is List) {
-      return (raw['users'] as List)
-          .map((e) => User.fromJson(e))
-          .toList();
+      return (raw['users'] as List).map((e) => User.fromJson(e)).toList();
     }
 
     return [];
   }
-
 }

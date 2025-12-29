@@ -19,7 +19,7 @@ class FilterOptionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context).size;
-
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return ListTile(
       leading: Icon(
         icon,
@@ -29,9 +29,12 @@ class FilterOptionTile extends StatelessWidget {
       title: Text(
         label,
         style: TextStyle(
-          fontSize:
-              ((screen.width * 0.04) + (screen.width * 0.01)).clamp(14.0, 20.0),
+          fontSize: ((screen.width * 0.04) + (screen.width * 0.01)).clamp(
+            14.0,
+            20.0,
+          ),
           fontWeight: FontWeight.w500,
+          color: isDark ? Colors.white : Colors.black,
         ),
       ),
       trailing: trailing,

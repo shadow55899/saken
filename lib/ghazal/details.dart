@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tapbar/controller/favorite_controller.dart';
 import 'package:tapbar/controller/rate_controller.dart';
 import 'package:tapbar/widgets/rate.dart';
 
@@ -13,7 +14,7 @@ class Details extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final Flat? flat = Get.arguments as Flat?;
-    final RateController controller = Get.put(RateController());
+    final FavoriteController controller = Get.put(FavoriteController());
     final screenHeight = MediaQuery.of(context).size.height;
     // final screenWidth = MediaQuery.of(context).size.width;
 
@@ -29,6 +30,7 @@ class Details extends StatelessWidget {
           backgroundColor: isDark ? null : Colors.green[900],
           foregroundColor: isDark ? null : Colors.white,
           onPressed: () {
+            //controller.rateApp(flat.id);
             controller.rateApp();
           },
         ),

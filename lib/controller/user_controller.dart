@@ -55,4 +55,7 @@ class UserController extends GetxController {
       Get.snackbar("Error", "Something went wrong");
     }
   }
+
+  
+
 }

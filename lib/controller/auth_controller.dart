@@ -46,4 +46,5 @@ class AuthController extends GetxController {
     box.remove('token');
     box.remove('user');
   }
+
 }

@@ -49,8 +49,9 @@ class RangeCard extends StatelessWidget {
 
         // 🔹 Min Value
         Obx(() {
-          minController.text =
-          minValue.value == 0 ? '' : minValue.value.toString();
+          minController.text = minValue.value == 0
+              ? ''
+              : minValue.value.toString();
           return TextField(
             controller: minController,
             keyboardType: TextInputType.number,
@@ -71,8 +72,9 @@ class RangeCard extends StatelessWidget {
 
         // 🔹 Max Value
         Obx(() {
-          maxController.text =
-          maxValue.value == 0 ? '' : maxValue.value.toString();
+          maxController.text = maxValue.value == 0
+              ? ''
+              : maxValue.value.toString();
           return TextField(
             controller: maxController,
             keyboardType: TextInputType.number,

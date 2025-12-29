@@ -26,38 +26,6 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            // Container(
-            //   height: 60,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(45),
-            //   ),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       Container(
-            //         width: 75,
-            //         height: double.infinity,
-            //         child: ElevatedButton(
-            //           onPressed: () {},
-            //           child: Text("City"),
-            //         ),
-            //       ),
-            //       SizedBox(width: 10),
-            //       Container(
-            //         width: 80,
-            //         height: double.infinity,
-            //         child: ElevatedButton(
-            //           onPressed: () {},
-            //           child: Text("Price"),
-            //         ),
-            //       ),
-            //       Spacer(),
-            //       Text('Filtter', style: TextStyle(fontSize: 25)),
-            //       SizedBox(width: 20),
-            //     ],
-            //   ),
-            // ),
-
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -67,36 +35,25 @@ class HomeScreen extends StatelessWidget {
                     title: "Filter",
                     icon: Icons.filter_list,
                     color: Colors.teal,
-                    onTap: () => _openFilterOptions(),
+                    onTap: () => _openFilterOptions(isDark),
                     subtitle: '',
                   ),
                   const SizedBox(height: 20),
 
                   // ===== عرض القيم المختارة بشكل حي =====
-                  Obx(() => Text(
-                    "Governorate: ${controller.selectedGovernorate.value}\n"
-                        "City: ${controller.selectedCity.value}\n"
-                        "Price: ${controller.minPrice.value}-${controller.maxPrice.value}\n"
-                        "Area: ${controller.minArea.value}-${controller.maxArea.value}\n"
-                        "Rooms: ${controller.numRooms.value}",
-                    textAlign: TextAlign.center,
-                  )),
+                  Obx(
+                    () => Text(
+                      "Governorate: ${controller.selectedGovernorate.value}\n"
+                      "City: ${controller.selectedCity.value}\n"
+                      "Price: ${controller.minPrice.value}-${controller.maxPrice.value}\n"
+                      "Area: ${controller.minArea.value}-${controller.maxArea.value}\n"
+                      "Rooms: ${controller.numRooms.value}",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ],
               ),
             ),
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             SizedBox(height: 10),
 
@@ -121,7 +78,6 @@ class HomeScreen extends StatelessWidget {
                   return InkWell(
                     onTap: () {
                       Get.to(() => Details(), arguments: flat);
-
                     },
 
                     child: Container(
@@ -158,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -198,16 +154,17 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
   // ==================== BottomSheet الفلاتر ====================
-  void _openFilterOptions() {
+  void _openFilterOptions(bool isDark) {
     Get.bottomSheet(
       SafeArea(
         child: Container(
           padding: const EdgeInsets.all(16),
           height: Get.height * 0.75,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+          decoration: BoxDecoration(
+            color: isDark ? Colors.black : Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,7 +174,6 @@ class HomeScreen extends StatelessWidget {
                   width: 50,
                   height: 5,
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
@@ -226,11 +182,7 @@ class HomeScreen extends StatelessWidget {
               const Center(
                 child: Text(
                   "Choose Filter Type",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.teal,
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 25),
@@ -241,32 +193,32 @@ class HomeScreen extends StatelessWidget {
                     FilterOptionTile(
                       label: "City",
                       icon: Icons.location_city,
-                      onTap: () => _openSubFilterSheet("City"),
+                      onTap: () => _openSubFilterSheet("City", isDark),
                     ),
                     const Divider(),
                     FilterOptionTile(
                       label: "Price",
                       icon: Icons.price_change,
-                      onTap: () => _openSubFilterSheet("Price"),
+                      onTap: () => _openSubFilterSheet("Price", isDark),
                     ),
                     const Divider(),
                     FilterOptionTile(
                       label: "Governorate",
                       icon: Icons.map,
-                      onTap: () => _openSubFilterSheet("Governorate"),
+                      onTap: () => _openSubFilterSheet("Governorate", isDark),
                     ),
                     const Divider(),
                     FilterOptionTile(
                       label: "Area",
                       icon: Icons.square_foot,
 
-                      onTap: () => _openSubFilterSheet("Area"),
+                      onTap: () => _openSubFilterSheet("Area", isDark),
                     ),
                     const Divider(),
                     FilterOptionTile(
                       label: "Rooms",
                       icon: Icons.meeting_room,
-                      onTap: () => _openSubFilterSheet("Rooms"),
+                      onTap: () => _openSubFilterSheet("Rooms", isDark),
                     ),
                   ],
                 ),
@@ -284,30 +236,25 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-
-
-  void _openSubFilterSheet(String filterType) {
+  void _openSubFilterSheet(String filterType, bool isDark) {
     Get.bottomSheet(
       SafeArea(
         child: Container(
           padding: const EdgeInsets.all(20),
           height: Get.height * 0.65,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+          decoration: BoxDecoration(
+            color: isDark ? Colors.black : Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
           ),
-          child: _buildFilterContent(filterType,controller),
+          child: _buildFilterContent(filterType, controller),
         ),
       ),
       isScrollControlled: true,
     );
   }
-
 }
 
-
-
-Widget _buildFilterContent(String type,HomeController controller) {
+Widget _buildFilterContent(String type, HomeController controller) {
   // ===== هنا تم تعديل المنطق: القيم المختارة تمر مباشرة للـController =====
   if (type == "Governorate") {
     return SelectGrid(
@@ -319,10 +266,7 @@ Widget _buildFilterContent(String type,HomeController controller) {
         controller.activeFilter = "governorate";
         await controller.applyFilters();
         Get.back(); // close bottom sheet
-        Get.back(); // close bottom sheet
-
       },
-
 
       // ontroller
     );
@@ -340,53 +284,51 @@ Widget _buildFilterContent(String type,HomeController controller) {
     );
   } else if (type == "Price") {
     return RangeCard(
-        title: "Price",
-        minLabel: "Min Price (\$)",
-        maxLabel: "Max Price (\$)",
-        minValue: controller.minPrice,
-        maxValue: controller.maxPrice,
-        onApply: () async {
-          controller.activeFilter = "price";
-          controller.setPriceRange(controller.minPrice.value, controller.maxPrice.value);
-          await controller.applyFilters();
-          Get.back();
-
-        }
-
-
+      title: "Price",
+      minLabel: "Min Price (\$)",
+      maxLabel: "Max Price (\$)",
+      minValue: controller.minPrice,
+      maxValue: controller.maxPrice,
+      onApply: () async {
+        controller.activeFilter = "price";
+        controller.setPriceRange(
+          controller.minPrice.value,
+          controller.maxPrice.value,
+        );
+        await controller.applyFilters();
+        Get.back();
+      },
     );
   } else if (type == "Area") {
     return RangeCard(
-        title: "Area",
-        minLabel: "Min Area (m²)",
-        maxLabel: "Max Area (m²)",
-        minValue: controller.minArea,
-        maxValue: controller.maxArea,
-        onApply: () async {
-          controller.activeFilter = "area";
-          controller.setAreaRange(controller.minArea.value, controller.maxArea.value);
-          await controller.applyFilters();
-          Get.back();
-        }
-
-
+      title: "Area",
+      minLabel: "Min Area (m²)",
+      maxLabel: "Max Area (m²)",
+      minValue: controller.minArea,
+      maxValue: controller.maxArea,
+      onApply: () async {
+        controller.activeFilter = "area";
+        controller.setAreaRange(
+          controller.minArea.value,
+          controller.maxArea.value,
+        );
+        await controller.applyFilters();
+        Get.back();
+      },
     );
   } else if (type == "Rooms") {
     return RoomApply(
-        title: "Rooms",
-        Label: " Rooms",
-        Value: controller.numRooms,
-        onApply: () async {
-          controller.activeFilter = "rooms";
-          controller.setRoomsRange(controller.numRooms.value);
-          await controller.applyFilters();
-          Get.back();
-        }
-
+      title: "Rooms",
+      Label: " Rooms",
+      Value: controller.numRooms,
+      onApply: () async {
+        controller.activeFilter = "rooms";
+        controller.setRoomsRange(controller.numRooms.value);
+        await controller.applyFilters();
+        Get.back();
+      },
     );
   } else {
     return const Center(child: Text("Unknown filter type"));
   }
 }
-
-

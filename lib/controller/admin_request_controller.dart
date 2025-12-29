@@ -1,7 +1,6 @@
-
-
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:tapbar/controller/auth_controller.dart';
 
 import '../models/requests_model.dart';
 import '../models/user.dart';
@@ -21,7 +20,9 @@ class AdminRequestController extends GetxController {
   Future onReady() async {
     try {
       isLoading.value = true;
-      RequestList = await adminService.fetchRequests("${UserProvider.token}");
+      RequestList = await adminService.fetchRequests(
+        "${Get.find<AuthController>().userToken}",
+      );
 
       print(" Requests Loaded: ${RequestList.length}");
       print(" Requests Loaded: ${RequestList}");

@@ -3,11 +3,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:tapbar/controller/auth_controller.dart';
+import 'package:tapbar/controller/favorite_controller.dart';
 import 'package:tapbar/controller/login_controller.dart';
 import 'package:tapbar/screens/about_us_screen.dart';
+import 'package:tapbar/screens/favorite_screen.dart';
 import 'package:tapbar/screens/settings_screen.dart';
+import 'package:tapbar/widgets/photo.dart';
 
 class AppDrawer extends StatelessWidget {
   LoginController loginController = Get.put(LoginController());
@@ -24,9 +28,14 @@ class AppDrawer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 28,
-                        child: Icon(Icons.person, size: 30),
+                        child: Photo(
+                          imageUrl: Get.find<AuthController>()
+                              .currentUser
+                              .value!
+                              .picture,
+                        ),
                       ),
                       const SizedBox(height: 12),
                       Text(
@@ -51,11 +60,16 @@ class AppDrawer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         backgroundColor: Colors.white,
                         foregroundColor: Colors.black,
                         radius: 28,
-                        child: Icon(Icons.person, size: 30),
+                        child: Photo(
+                          imageUrl: Get.find<AuthController>()
+                              .currentUser
+                              .value!
+                              .picture,
+                        ),
                       ),
                       const SizedBox(height: 12),
                       Text(
@@ -88,6 +102,17 @@ class AppDrawer extends StatelessWidget {
             icon: Icons.chalet,
             title: "My Reservations",
             onTap: () {},
+          ),
+
+          _drawerItem(
+            context,
+            icon: Icons.favorite,
+            title: "Favorites",
+            onTap: () async {
+              Get.put(FavoriteController());
+              await Get.find<FavoriteController>().getAllFavorite();
+              Get.to(() => FavoriteScreen());
+            },
           ),
 
           _drawerItem(

@@ -55,4 +55,12 @@ class RegisterController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<void> delete(String pass) async {
+    try {
+      await provider.delete(pass);
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong");
+    }
+  }
 }
