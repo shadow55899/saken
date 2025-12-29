@@ -15,49 +15,57 @@ enum Statuses {
 enum Payment { credit, bank_transfer, cash, digital_wallet }
 
 class Booking {
-  double? rate;
-  Statuses? booking_status;
-  Payment? payment_method;
-  DateTime? check_in_date;
-  DateTime? check_out_date;
-  int? apartment_id;
-  int? user_id;
+  int? id;
+  int? userId;
+  int? apartmentId;
+  String? checkInDate;
+  String? checkOutDate;
+  String? paymentMethod;
+  String? bookingStatus;
+  dynamic rate;
+  String? createdAt;
+  String? updatedAt;
 
   Booking({
+    this.id,
+    this.userId,
+    this.apartmentId,
+    this.checkInDate,
+    this.checkOutDate,
+    this.paymentMethod,
+    this.bookingStatus,
     this.rate,
-    this.booking_status,
-    this.payment_method,
-    this.check_in_date,
-    this.check_out_date,
-    this.apartment_id,
-    this.user_id,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) {
     return Booking(
+      id: json['id'],
+      userId: json['user_id'],
+      apartmentId: json['apartment_id'],
+      checkInDate: json['check_in_date'],
+      checkOutDate: json['check_out_date'],
+      paymentMethod: json['payment_method'],
+      bookingStatus: json['booking_status'],
       rate: json['rate'],
-      booking_status: json['booking_status'],
-      payment_method: json['payment_method'],
-      check_in_date: DateTime.parse(json['check_in_date']),
-      check_out_date: DateTime.parse(json['check_out_date']),
-      apartment_id: json['apartment_id'],
-      user_id: json['user_id'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
     );
   }
+
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
+      'user_id': userId,
+      'apartment_id': apartmentId,
+      'check_in_date': checkInDate,
+      'check_out_date': checkOutDate,
+      'payment_method': paymentMethod,
+      'booking_status': bookingStatus,
       'rate': rate,
-      'booking_status': booking_status,
-      'payment_method': payment_method,
-      'check_in_date': check_in_date?.toIso8601String(),
-      'check_out_date': check_out_date?.toIso8601String(),
-      'apartment_id': apartment_id,
-      'user_id': user_id,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
     };
-  }
-
-  static List<Booking> parseUsers(Map<String, dynamic> json) {
-    final List<dynamic> rawBookings = json['data']['bookings'] ?? [];
-    return rawBookings.map((userJson) => Booking.fromJson(userJson)).toList();
   }
 }

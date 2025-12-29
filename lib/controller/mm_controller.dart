@@ -146,7 +146,7 @@ class MmController extends GetxController {
     );
 
     if (isUpdate) {
-      updateFlat(newFlat, flat!.rentalPrice); // مثال: استخدم ID أو قيمة مميزة
+      updateFlat(newFlat, flat!.rentalPrice!); // مثال: استخدم ID أو قيمة مميزة
     } else {
       addFlat(newFlat);
     }

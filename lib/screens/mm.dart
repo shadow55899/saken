@@ -327,7 +327,7 @@ class Mm extends StatelessWidget {
       controller.statusController.text = flat!.status ?? '';
       controller.descriptionController.text = flat!.description ?? '';
       controller.allImages.assignAll(
-          flat!.pictures.map((p) => File(p)).toList()); // تعديل حسب نوع الصور
+          flat!.pictures!.map((p) => File(p)).toList()); // تعديل حسب نوع الصور
     }
 
     final screenHeight = MediaQuery.of(context).size.height;
