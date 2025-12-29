@@ -7,13 +7,13 @@ import 'package:tapbar/providers/favorite_provider.dart';
 class FavoriteController extends GetxController {
   RxList<Flat> favoriteList = <Flat>[].obs;
   FavoriteProvider provider = FavoriteProvider();
-  var icon = Rx<IconData>(Icons.star_rate_outlined);
+  var icon = Rx<IconData>(Icons.favorite_border_rounded);
 
   void rateApp() {
-    if (icon.value == Icons.star_rate_outlined) {
-      icon.value = Icons.star;
+    if (icon.value == Icons.favorite_border_rounded) {
+      icon.value = Icons.favorite_rounded;
     } else {
-      icon.value = Icons.star_rate_outlined;
+      icon.value = Icons.favorite_border_rounded;
     }
   }
 

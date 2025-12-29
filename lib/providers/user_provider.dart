@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:tapbar/screens/otp_screen.dart';
 import 'dart:convert';
 
 import '../controller/auth_controller.dart';
@@ -38,15 +37,16 @@ class UserProvider {
       http.StreamedResponse response = await request.send();
 
       final respStr = await response.stream.bytesToString();
-      print(respStr);
+      //print(respStr);
       final data = jsonDecode(respStr);
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         var userjson;
         userjson = data['data']['user'] ?? {};
         token = data['Token'] ?? '';
         currentuser = User.fromJson(userjson);
       }
-      if (data['status_code'] == 201) {
+      if (data['status_code'] == 200) {
+        print(data);
         Get.find<AuthController>().login(token!, currentuser!);
         isLoading = false;
         currentuser = User.fromJson(data['data']['user']);
@@ -76,12 +76,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -154,12 +149,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -209,12 +199,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -250,12 +235,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -303,12 +283,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -356,12 +331,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -383,17 +353,6 @@ class UserProvider {
       if (data['status_code'] == 200) {
         users = [];
         users = User.parseUsers(data);
-        // Get.snackbar(
-        //   "Message",
-        //   data["message"],
-        //   snackPosition: SnackPosition.BOTTOM,
-        //   backgroundColor: Colors.black.withOpacity(0.5),
-        //   colorText: Colors.white,
-        //   margin: EdgeInsets.all(8),
-        //   borderRadius: 8,
-        //   duration: Duration(seconds: 2),
-        //   snackStyle: SnackStyle.FLOATING,
-        // );
       } else {
         Get.snackbar(
           "Message",
@@ -408,12 +367,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 
@@ -467,12 +421,7 @@ class UserProvider {
         );
       }
     } catch (e) {
-      Get.snackbar(
-        "Message",
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: Duration(seconds: 3),
-      );
+      print(e.toString());
     }
   }
 }

@@ -61,7 +61,7 @@ class Flat {
     city: json["city"],
     address: json["address"],
     status: json["status"],
-    averageRate: (json["average_rate"]["original"]["average_rating"] ?? "0"),
+    averageRate: (json["average_rate"] ?? 0),
     // json["average_rate"],
     owner: json["owner"],
     description: json["description"],
