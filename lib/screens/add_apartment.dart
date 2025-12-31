@@ -1,0 +1,268 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../Locations.dart';
+import '../controller/add_appartment_controller.dart';
+import '../models/flat.dart';
+
+class AddApartment extends StatelessWidget {
+  final bool isUpdate;
+  final Flat? flat;
+
+  AddApartment({super.key, required this.isUpdate, this.flat});
+
+  final AddAppartmentController controller = Get.put(AddAppartmentController());
+
+  @override
+  Widget build(BuildContext context) {
+    if (isUpdate && flat != null && controller.selectedGovernorate == null) {
+      controller.selectedGovernorate = flat!.governorate;
+      controller.selectedCity = flat!.city;
+    }
+
+
+    // ✅ إذا كانت تحديث، عبئ الحقول مسبقًا
+    if (isUpdate && flat != null &&controller.areaController.text.isEmpty)  {
+      controller.areaController.text = flat!.area.toString();
+      controller.roomsController.text = flat!.rooms.toString();
+      controller.livingRoomsController.text = flat!.livingRooms.toString();
+      controller.bathroomsController.text = flat!.bathrooms.toString();
+      controller.rentalPriceController.text = flat!.rentalPrice.toString();
+      controller.addressController.text = flat!.address ?? '';
+      controller.descriptionController.text = flat!.description ?? '';
+      // controller.allImages.assignAll(
+      //   flat!.pictures!.map((p) => File(p)).toList(),
+      // ); // تعديل حسب نوع الصور
+    }
+
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(isUpdate ? "Update Apartment" : "Add Apartment"),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              isUpdate ? "Update apartment details" : "Add apartment details",
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+
+            // ✅ الصور
+            Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+
+                    Padding(
+
+                      padding: const EdgeInsets.only(right: 20 ),
+                      child: Row(
+
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+
+                            onPressed: () =>
+                                controller.pickImage(fromCamera: false),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.teal,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12))
+                            ),
+                            child: const Text("From Gallery"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () =>
+                                controller.pickImage(fromCamera: true),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.teal,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12))),
+                            child: const Text("From Camera"),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 12),
+              Obx(() {
+                final images = controller.allImages;
+
+                // If updating and no new images selected, show nothing
+                if (isUpdate && images.isEmpty) {
+                  return SizedBox.shrink();
+                }
+
+                return images.isEmpty
+                    ? const Text("No images selected")
+                    : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: images.map((file) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.file(
+                                file,
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              top: 4,
+                              right: 4,
+                              child: GestureDetector(
+                                onTap: () => controller.allImages.remove(file),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black54,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: const EdgeInsets.all(3),
+                                  child: const Icon(
+                                    Icons.close,
+                                    size: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              }),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // ✅ حقول Flat
+            buildTextField(
+              "Area (m²)",
+              controller.areaController,
+              keyboardType: TextInputType.number,
+            ),
+            buildTextField(
+              "Rooms",
+              controller.roomsController,
+              keyboardType: TextInputType.number,
+            ),
+            buildTextField(
+              "Living Rooms",
+              controller.livingRoomsController,
+              keyboardType: TextInputType.number,
+            ),
+            buildTextField(
+              "Bathrooms",
+              controller.bathroomsController,
+              keyboardType: TextInputType.number,
+            ),
+            buildTextField(
+              "Rental Price",
+              controller.rentalPriceController,
+              keyboardType: TextInputType.number,
+            ),
+
+            DropdownButtonFormField<String>(
+
+              value: Locations.cites.contains(controller.selectedCity)
+                  ? controller.selectedCity
+                  : null,
+
+              decoration: InputDecoration(
+                labelText: "City",
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              items: Locations.cites
+                  .map((c) => DropdownMenuItem(
+                value: c,
+                child: Text(c),
+              ))
+                  .toList(),
+              onChanged: (value) {
+                controller.selectedCity = value;
+              },
+            ),
+
+            buildTextField("Address", controller.addressController),
+            buildTextField(
+              "Description",
+              controller.descriptionController,
+              maxLines: 3,
+            ),
+
+            const SizedBox(height: 32),
+
+            Center(
+              child: MaterialButton(
+                height: 50,
+                minWidth: screenWidth * 0.6,
+                color: Colors.teal,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                onPressed: () =>
+                    controller.sendData(isUpdate: isUpdate, flat: flat),
+                child: Text(
+                  isUpdate ? "Update" : "Send",
+
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextField(
+      String label,
+      TextEditingController controller, {
+        int maxLines = 1,
+        TextInputType keyboardType = TextInputType.text,
+      }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: TextField(
+        controller: controller,
+        maxLines: maxLines,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          filled: true,
+          fillColor: Colors.grey[100],
+        ),
+      ),
+    );
+  }
+}

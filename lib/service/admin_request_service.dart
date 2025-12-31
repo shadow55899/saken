@@ -39,7 +39,6 @@ class AdminRequestService {
       return [];
     }
   }
-
   Future<bool> acceptRequest(String token, int id) async {
     final response = await ApiService.put(
       "/users/$id/approve",

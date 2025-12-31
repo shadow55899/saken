@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tapbar/screens/apartment_owner_home.dart';
 import 'package:tapbar/widgets/app_drawer.dart';
 
 import '../controller/auth_controller.dart';
@@ -25,7 +26,10 @@ class MainScreen extends StatelessWidget {
 
       body: Get.find<AuthController>().currentUser.value?.role.name == "admin"
           ? Admin()
-          : HomeScreen(),
+          : Get.find<AuthController>().currentUser.value?.role.name == "renter"
+          ? HomeScreen()
+          : ApartmentOwnerHome(),
+
     );
   }
 }

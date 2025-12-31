@@ -58,26 +58,9 @@ class ApiService {
     return _processResponse(response);
   }
 
-  static Future<Map<String, dynamic>> upload(
-    String endpoint,
-    Map<String, String> fields,
-    Map<String, String> files, {
-    Map<String, String>? headers,
-  }) async {
-    var request = http.MultipartRequest("POST", Uri.parse("$baseUrl$endpoint"));
-    request.fields.addAll(fields);
 
-    files.forEach((name, path) async {
-      request.files.add(await http.MultipartFile.fromPath(name, path));
-    });
 
-    request.headers.addAll(headers ?? defaultHeaders);
 
-    final response = await request.send();
-    final respStr = await response.stream.bytesToString();
-
-    return jsonDecode(respStr);
-  }
 
   static Map<String, dynamic> _processResponse(http.Response response) {
     try {
@@ -101,4 +84,16 @@ class ApiService {
       };
     }
   }
+  static Future<Map<String, dynamic>> delete(
+      String endpoint, {
+        Map<String, String>? headers,
+      }) async {
+    final response = await http.delete(
+      Uri.parse("$baseUrl$endpoint"),
+      headers: headers ?? defaultHeaders,
+    );
+
+    return _processResponse(response);
+  }
+
 }
