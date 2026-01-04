@@ -14,14 +14,12 @@ class AuthController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // Restore token
     String? token = box.read('token');
     if (token != null && token.isNotEmpty) {
       userToken.value = token;
       isLoggedIn.value = true;
     }
 
-    // Restore user
     Map<String, dynamic>? userJson = box.read('user');
     if (userJson != null) {
       User user = User.fromJson(userJson);

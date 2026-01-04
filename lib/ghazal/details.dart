@@ -25,7 +25,7 @@ class Details extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text("Flat Details"))),
+      appBar: AppBar(title: Center(child: Text('flat_details'.tr))),
       floatingActionButton: Obx(
         () => FloatingActionButton(
           child: Icon(controller.icon.value),
@@ -39,19 +39,48 @@ class Details extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          // 🔹 Image placeholder
-          // SizedBox(
-          //   height: screenHeight * .30,
-          //   child: Image.asset(
-          //     "assets/FB_IMG_1637926450458.jpg",
-          //     width: screenWidth,
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-          const Padding(
+
+          Container(
+            height: 250,
+            color: Colors.grey[200],
+            child: (flat.pictures == null || flat.pictures!.isEmpty)
+                ? const Center(
+              child: Text(
+                "No images available",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            )
+                : PageView.builder(
+              itemCount: flat.pictures!.length,
+              itemBuilder: (context, index) {
+                final imageUrl = flat.pictures![index];
+
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, progress) {
+                        if (progress == null) return child;
+                        return const Center(
+                            child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (context, error, stackTrace) =>
+                      const Center(
+                          child: Icon(Icons.broken_image, size: 50)),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             child: Text(
-              'Specifications',
+              'specifications'.tr,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
           ),
@@ -62,7 +91,7 @@ class Details extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             height: screenHeight * .15,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-            child: Text(flat.description ?? "No description"),
+            child: Text(flat.description ?? 'no_description'.tr),
           ),
 
           // 🔹 More Specifications using Flat fields
@@ -74,66 +103,67 @@ class Details extends StatelessWidget {
               children: [
                 _SpecRow(
                   icon: Icons.location_on_outlined,
-                  title: "City ",
+                  title: 'city'.tr,
                   value: flat.city.toString(),
                 ),
                 const Divider(),
                 _SpecRow(
                   icon: Icons.location_on_outlined,
-                  title: "Governorate ",
+                  title: "governorate".tr,
                   value: flat.governorate.toString(),
                 ),
                 const Divider(),
                 _SpecRow(
                   icon: Icons.price_change_outlined,
-                  title: "Price",
+                  title: "price".tr,
                   value: "${flat.rentalPrice}\$",
                 ),
                 const Divider(),
                 _SpecRow(
                   icon: Icons.straighten,
-                  title: "Area",
-                  value: "${flat.area} m²",
+                  title: "area".tr,
+                  value: "${flat.area} ${'m²'.tr}",
                 ),
                 const Divider(),
                 _SpecRow(
                   icon: Icons.bedroom_parent,
-                  title: "Rooms",
+                  title: "rooms".tr,
                   value: flat.rooms.toString(),
                 ),
                 const Divider(),
                 _SpecRow(
                   icon: Icons.living_rounded,
-                  title: "Halls",
+                  title: "halls".tr,
                   value: flat.livingRooms.toString(),
                 ),
                 const Divider(),
                 _SpecRow(
                   icon: Icons.bathroom,
-                  title: "Bathrooms",
+                  title: "bathrooms".tr,
                   value: flat.bathrooms.toString(),
                 ),
                 const Divider(),
                 _SpecRow(
                   icon: Icons.history,
-                  title: "Status",
+                  title: "status".tr,
                   value: flat.status.toString(),
                 ),
                 const Divider(),
                 _SpecRow(
                   icon: Icons.domain,
-                  title: "Average Rate",
+                  title: 'average_rate'.tr,
+
                   value: flat.averageRate.toString() == "0.0"
-                      ? "No Rate"
+                      ? 'no_rate'.tr
                       : flat.averageRate.toString(),
                 ),
               ],
             ),
           ),
 
-          const Center(
+           Center(
             child: Text(
-              'If you want to book this flat',
+              'if_you_want_to_book'.tr,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -159,8 +189,8 @@ class Details extends StatelessWidget {
                   builder: (_) => BookingDialog(flatId: flat.id!),
                 );
               },
-              child: const
-              Center(child: Text('Reserve Now')),
+              child:
+              Center(child: Text('reserve_now'.tr)),
             ),
           ),
           Rate(),
@@ -204,3 +234,5 @@ class _SpecRow extends StatelessWidget {
     );
   }
 }
+
+

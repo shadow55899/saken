@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class Locations {
  static const List<String> governorates = [
   'Damascus',
@@ -87,4 +89,5 @@ class Locations {
   'Al-Malikiyah',
   'Shaddadi',
  ];
+
 }

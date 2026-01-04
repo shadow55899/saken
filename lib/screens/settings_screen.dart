@@ -13,7 +13,7 @@ class SettingsScreen extends StatelessWidget {
     Get.put(RegisterController());
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title:  Text( 'settings'.tr)),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,8 +33,20 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Text(
-                  'ِUsername: ${Get.find<AuthController>().currentUser.value!.firstName} ${Get.find<AuthController>().currentUser.value!.lastName} \n Phone Number:${Get.find<AuthController>().currentUser.value!.phone} \n Birth Date:${Get.find<AuthController>().currentUser.value!.dateOfBirth.day}-${Get.find<AuthController>().currentUser.value!.dateOfBirth.month}-${Get.find<AuthController>().currentUser.value!.dateOfBirth.year} \n Role:${Get.find<AuthController>().currentUser.value!.role.name}',
+               // Text(
+                 // 'ِUsername: ${Get.find<AuthController>().currentUser.value!.firstName} ${Get.find<AuthController>().currentUser.value!.lastName} \n Phone Number:${Get.find<AuthController>().currentUser.value!.phone} \n Birth Date:${Get.find<AuthController>().currentUser.value!.dateOfBirth.day}-${Get.find<AuthController>().currentUser.value!.dateOfBirth.month}-${Get.find<AuthController>().currentUser.value!.dateOfBirth.year} \n Role:${Get.find<AuthController>().currentUser.value!.role.name}',
+                  Text(
+                    '${'username'.tr}: '
+                        '${Get.find<AuthController>().currentUser.value!.firstName} '
+                        '${Get.find<AuthController>().currentUser.value!.lastName}\n'
+                        '${'phone_number'.tr}: '
+                        '${Get.find<AuthController>().currentUser.value!.phone}\n'
+                        '${'birth_date'.tr}: '
+                        '${Get.find<AuthController>().currentUser.value!.dateOfBirth.day}-'
+                        '${Get.find<AuthController>().currentUser.value!.dateOfBirth.month}-'
+                        '${Get.find<AuthController>().currentUser.value!.dateOfBirth.year}\n'
+                        '${'role'.tr}: '
+                        '${Get.find<AuthController>().currentUser.value!.role.name}',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -47,7 +59,7 @@ class SettingsScreen extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.dark_mode),
-            title: const Text('Dark Mode'),
+            title:  Text( 'dark_mode'.tr),
             trailing: Switch(
               value: isDark,
               onChanged: (value) {
@@ -60,11 +72,24 @@ class SettingsScreen extends StatelessWidget {
             onTap: () {
               _openDialog(context);
             },
-            title: const Text(
-              'Delete My Account',
+            title:  Text(
+              'delete_account'.tr,
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             ),
           ),
+          ListTile(
+            leading: const Icon(Icons.language), // أيقونة تغيير اللغة
+            title: Text('change_language'.tr),
+            onTap: () {
+              // تبديل اللغة بين العربية والانجليزية
+              if (Get.locale?.languageCode == 'en') {
+                Get.updateLocale(const Locale('ar'));
+              } else {
+                Get.updateLocale(const Locale('en'));
+              }
+            },
+          ),
+
         ],
       ),
     );
@@ -88,23 +113,27 @@ Future<String?> showConfirmPasswordDialog(BuildContext context) {
     barrierDismissible: false,
     builder: (context) {
       return AlertDialog(
-        title: const Text("Confirm Password"),
+        title:  Text('confirm_password'.tr),
         content: TextField(
           controller: passwordController,
           obscureText: true,
-          decoration: const InputDecoration(labelText: "Password"),
+          decoration:  InputDecoration(labelText: "password".tr),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
+            child:  Text("cancel".tr),
           ),
           TextButton(
             onPressed: () {
               Get.find<RegisterController>().delete(passwordController.text);
             },
-            child: const Text("Confirm"),
+            child:  Text("confirm".tr),
           ),
+
+          //
+
+
         ],
       );
     },

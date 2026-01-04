@@ -1,64 +1,4 @@
-// import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:image_picker/image_picker.dart';
 
-// class MmController extends GetxController {
-//   final RxList<File> allImages = <File>[].obs;
-//   final ImagePicker _picker = ImagePicker();
-//   final cityController = TextEditingController();
-//   final priceController = TextEditingController();
-//   final areaController = TextEditingController();
-//   final roomsController = TextEditingController();
-//   final hallsController = TextEditingController();
-//   final bathroomsController = TextEditingController();
-//   final descriptionController = TextEditingController();
-
-//   /// 🔹 اختيار الصور من الكاميرا أو المعرض بدون تكرار
-//   Future<void> pickImage({required bool fromCamera}) async {
-//     if (fromCamera) {
-//       final XFile? photo = await _picker.pickImage(
-//         source: ImageSource.camera,
-//         imageQuality: 75,
-//       );
-//       if (photo != null) {
-//         final newFile = File(photo.path);
-
-//         // ✅ تحقق من عدم وجودها مسبقًا
-//         if (!allImages.any((img) => img.path == newFile.path)) {
-//           allImages.add(newFile);
-//         }
-//       }
-//     } else {
-//       final List<XFile> photos = await _picker.pickMultiImage(
-//         imageQuality: 75,
-//       );
-//       if (photos.isNotEmpty) {
-//         for (var xfile in photos) {
-//           final newFile = File(xfile.path);
-
-//           // ✅ تحقق من التكرار قبل الإضافة
-//           if (!allImages.any((img) => img.path == newFile.path)) {
-//             allImages.add(newFile);
-//           }
-//         }
-//       }
-//     }
-
-//     if (allImages.isEmpty) {
-//       Get.snackbar("Image", "No image selected");
-//     }
-//   }
-
-//   /// 🔹 زر الإرسال
-//   void sendImages() {
-//     if (allImages.isNotEmpty) {
-//       Get.snackbar("Success", "You selected ${allImages.length} unique images!");
-//     } else {
-//       Get.snackbar("Error", "Please select at least one image");
-//     }
-//   }
-// }
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,7 +8,7 @@ import '../models/flat.dart';
 import '../service/add_apartment_service.dart';
 
 class AddAppartmentController extends GetxController {
-  // ✅ TextEditingController لكل حقل
+
   String? selectedGovernorate;
   final Map<String, int> citesId = {
     'Dhadeel': 1,
@@ -152,11 +92,9 @@ class AddAppartmentController extends GetxController {
   final addressController = TextEditingController();
   final descriptionController = TextEditingController();
 
-  // ✅ الصور
   final RxList<File> allImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();
 
-  /// اختيار الصور من الكاميرا أو المعرض بدون تكرار
   Future<void> pickImage({required bool fromCamera}) async {
     if (fromCamera) {
       final XFile? photo = await _picker.pickImage(
@@ -182,14 +120,13 @@ class AddAppartmentController extends GetxController {
     }
 
     if (allImages.isEmpty) {
-      Get.snackbar("Image", "No image selected");
+      Get.snackbar("image".tr,  'image_no_selected'.tr);
     }
   }
 
 
   @override
   void onClose() {
-    // تحرير الموارد
     areaController.dispose();
     roomsController.dispose();
     livingRoomsController.dispose();
@@ -205,14 +142,14 @@ class AddAppartmentController extends GetxController {
     if (areaController.text.isEmpty ||
         roomsController.text.isEmpty ||
         rentalPriceController.text.isEmpty) {
-      Get.snackbar("Error", "Please fill all required fields");
+      Get.snackbar("Error".tr,   'error_fill_fields'.tr);
       return;
     }
 
     final cityName = selectedCity;
     final cityId = citesId[cityName];
     if (cityId == null) {
-      Get.snackbar("Error", "Please select a valid city");
+      Get.snackbar("Error".tr,   'error_select_city'.tr);
       return;
     }
 
@@ -232,7 +169,7 @@ class AddAppartmentController extends GetxController {
       apartmentId: flat!.id!,
       flat: flatData,
       city: cityId,
-      img: allImages.isNotEmpty ? allImages : null, // ✅ send only if user picked new images
+      img: allImages.isNotEmpty ? allImages : null,
     )
         : await AddApartmentService().addApartment(
       flat: flatData,
@@ -242,10 +179,10 @@ class AddAppartmentController extends GetxController {
 
 
     if (success) {
-      Get.snackbar("Success", "Apartment added successfully");
-//      Get.back();
+      Get.snackbar("success".tr, 'success_add_apartment'.tr);
+
     } else {
-      Get.snackbar("Error", "Failed to add apartment");
+      Get.snackbar("Error".tr,  'error_add_apartment'.tr);
     }
   }
 }

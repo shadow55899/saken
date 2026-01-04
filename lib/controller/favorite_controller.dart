@@ -36,7 +36,7 @@ class FavoriteController extends GetxController {
       await provider.removeFavorite(id);
       getAllFavorite();
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,    'error_something_wrong'.tr);
     }
   }
 
@@ -45,7 +45,7 @@ class FavoriteController extends GetxController {
       await provider.addFavorite(id);
       getAllFavorite();
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,    'error_something_wrong'.tr);
     }
   }
 }

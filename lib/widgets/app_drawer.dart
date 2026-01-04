@@ -91,7 +91,7 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.home,
-            title: "Home",
+            title:  'home'.tr,
             onTap: () {
               Navigator.pop(context);
             },
@@ -100,15 +100,15 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.chalet,
-            title: "My Reservations",
+            title:'my_reservations'.tr,
             onTap: () {},
           ),
 
           _drawerItem(
             context,
             icon: Icons.favorite,
-            title: "Favorites",
-            onTap: () async {
+            title:  'favorites'.tr,
+           onTap: () async {
               Get.put(FavoriteController());
               await Get.find<FavoriteController>().getAllFavorite();
               Get.to(() => FavoriteScreen());
@@ -118,14 +118,14 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.notifications,
-            title: "Notifications",
+            title: 'notifications'.tr,
             onTap: () {},
           ),
 
           _drawerItem(
             context,
             icon: Icons.settings,
-            title: "Settings",
+            title:'settings'.tr     ,
             onTap: () {
               Get.to(() => const SettingsScreen());
             },
@@ -134,7 +134,7 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.reply_all,
-            title: "Rate Us",
+            title:  'rate_us'.tr,
             onTap: () {},
           ),
 
@@ -143,7 +143,7 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.people,
-            title: "About Us",
+            title: 'about_us'.tr,
             onTap: () {
               Get.to(() => AboutUsScreen());
             },
@@ -154,7 +154,7 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.logout,
-            title: "Logout",
+            title: 'logout'.tr   ,
             color: Colors.red,
             onTap: () {
               loginController.logout();

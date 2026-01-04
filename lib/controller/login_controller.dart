@@ -20,7 +20,7 @@ class LoginController extends GetxController {
       isLoading.value = true;
       await provider.login(phone.value, password.value, isLoading.value);
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
     } finally {
       isLoading.value = false;
     }

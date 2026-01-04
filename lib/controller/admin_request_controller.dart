@@ -28,7 +28,7 @@ class AdminRequestController extends GetxController {
       print(" Requests Loaded: ${RequestList}");
     } catch (e) {
       print("error in onReady: $e");
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
     } finally {
       isLoading.value = false;
     }
@@ -45,7 +45,7 @@ class AdminRequestController extends GetxController {
       return success;
     } catch (e) {
       print("error in Reject request in controller: $e");
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,   'error_something_wrong'.tr);
       return false;
     } finally {
       print("in finally");
@@ -63,7 +63,7 @@ class AdminRequestController extends GetxController {
       return success;
     } catch (e) {
       print("Error in accept request in controller: $e");
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,   'error_something_wrong'.tr);
       return false;
     } finally {
       isLoading.value = false;

@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(title:  Text('login'.tr)),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -30,12 +30,12 @@ class LoginScreen extends StatelessWidget {
                   height: 200,
                 ),
                 Text(
-                  'Welcome',
+                  'welcome'.tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Log in to your account",
+                  'login_to_account'.tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 30),
                 ),
@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                         },
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          labelText: 'Phone number',
+                          labelText:  'phone'.tr,
                           prefixIcon: Icon(Icons.phone),
                           border: OutlineInputBorder(
                             gapPadding: 20,
@@ -64,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                           color: Color(0xFF5A7867),
                         ),
                         decoration: InputDecoration(
-                          labelText: 'Phone number',
+                          labelText: 'phone'.tr,
                           labelStyle: const TextStyle(
                             color: Color(0xFF5A7867),
                           ),
@@ -96,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                         ? null
                         : const TextStyle(color: Color(0xFF5A7867)),
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText:'password'.tr,
                       labelStyle:
                           isDark
                           ? null
@@ -149,7 +149,7 @@ class LoginScreen extends StatelessWidget {
                           }
                         },
                       ),
-                      const Text('Remember me'),
+                       Text('remember_me'.tr),
                       const Spacer(),
                     ],
                   );
@@ -180,7 +180,7 @@ class LoginScreen extends StatelessWidget {
                               color: Colors.white,
                             ),
                           )
-                        : const Text("Login"),
+                        :  Text('login'.tr),
                   );
                 }),
 
@@ -210,8 +210,8 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     Get.to(() => RegisterScreen());
                   },
-                  child: const Text(
-                    'Create new account',
+                  child:  Text(
+                    'create_account'.tr,
                     style: TextStyle(fontSize: 20),
                   ),
                 ),

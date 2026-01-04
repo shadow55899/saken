@@ -29,7 +29,7 @@ class UserRemoveScreen extends StatelessWidget {
             width: boxWidth,
             alignment: Alignment.center,
             child: Text(
-              "Current Users",
+              'current_users'.tr,
               style: TextStyle(
                 fontSize: titleSize,
                 fontWeight: FontWeight.bold,
@@ -40,7 +40,7 @@ class UserRemoveScreen extends StatelessWidget {
           Expanded(
             child: Obx(() {
               if (controller.users.isEmpty) {
-                return const Center(child: Text("No users"));
+                return  Center(child: Text( 'no_users'.tr));
               }
               return isMobile
                   ? _buildMobileList(context, controller.users)
@@ -121,10 +121,11 @@ void showDeleteDialog(
   UserController controller,
 ) {
   Get.defaultDialog(
-    title: 'Remove User',
-    textCancel: 'Cancel',
-    textConfirm: 'Delete',
-    middleText: 'Do you want to delete ${user.firstName} ${user.lastName}?',
+    title: 'remove_user'.tr,
+    textCancel: 'cancel'.tr,
+    textConfirm:  'delete'.tr,
+    middleText:' ${'confirm_delete'.tr} ${user.firstName} ${user.lastName}?',
+
     onCancel: () => print('Cancelled: ${user.id}'),
     onConfirm: () async {
       try {

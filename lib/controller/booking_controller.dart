@@ -14,8 +14,8 @@ class BookingController extends GetxController {
         checkOut.value == null ||
         paymentMethod.value.isEmpty) {
       Get.snackbar(
-        "Missing Information",
-        "Please select dates and payment method",
+        "Error".tr,
+          'missing_info'.tr,
       );
       return;
     }
@@ -30,12 +30,12 @@ class BookingController extends GetxController {
     if (result["success"] == true) {
       Get.back();
       Get.snackbar(
-        "Booking Request sent Wait for Response",
-        "Your booking Request has been completed",
+        "success".tr,
+          'booking_request_sent'.tr,
       );
     } else {
       Get.snackbar(
-        "Booking Failed",
+        "Booking Failed".tr,
         "Error ${result["statusCode"]}: ${result["message"]}",
       );
     }

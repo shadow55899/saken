@@ -24,8 +24,8 @@ class BookingDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            "Book Apartment",
+          Text(
+         'book_apartment'.tr,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
@@ -35,7 +35,7 @@ class BookingDialog extends StatelessWidget {
             title: Obx(
                   () => Text(
                 controller.checkIn.value == null
-                    ? "Select check-in date"
+                    ?   'select_check_in_date'.tr
                     : controller.checkIn.value!.toString().split(" ").first,
               ),
             ),
@@ -48,7 +48,7 @@ class BookingDialog extends StatelessWidget {
             title: Obx(
                   () => Text(
                 controller.checkOut.value == null
-                    ? "Select check-out date"
+                    ?   'select_check_out_date'.tr
                     : controller.checkOut.value!.toString().split(" ").first,
               ),
             ),
@@ -64,18 +64,18 @@ class BookingDialog extends StatelessWidget {
               value: controller.paymentMethod.value.isEmpty
                   ? null
                   : controller.paymentMethod.value,
-              hint: const Text("Select payment method"),
-              items: const [
+              hint:  Text('select_payment_method'.tr),
+              items:  [
                 DropdownMenuItem(
                   value: "bank_transfer",
-                  child: Text("Bank Transfer"),
+                  child: Text( 'payment_bank_transfer'.tr),
                 ),
-                DropdownMenuItem(value: "cash", child: Text("Cash")),
+                DropdownMenuItem(value: "cash", child: Text( 'payment_cash'.tr)),
                 DropdownMenuItem(
                   value: "digital_wallet",
-                  child: Text("Digital Wallet"),
+                  child: Text(  'payment_digital_wallet'.tr),
                 ),
-                DropdownMenuItem(value: "credit", child: Text("Credit Card")),
+                DropdownMenuItem(value: "credit", child: Text(  'payment_credit_card'.tr)),
               ],
               onChanged: (val) => controller.paymentMethod.value = val!,
             ),
@@ -85,7 +85,7 @@ class BookingDialog extends StatelessWidget {
 
           ElevatedButton(
             onPressed: () => controller.submitBooking(flatId),
-            child: const Text("Confirm Booking"),
+            child:  Text( 'confirm_booking'.tr),
           ),
 
           const SizedBox(height: 20),

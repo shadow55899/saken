@@ -33,7 +33,7 @@ class RoomApply extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Text(
-            "$title Room",
+            "${title} ",
             style: TextStyle(
               fontSize: screen.width * 0.04,
               fontWeight: FontWeight.bold,
@@ -65,13 +65,19 @@ class RoomApply extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            CloseButtonResponsive(
-              label: "Apply",
-              onPressed: onApply, // pass the callback from parent
+            Padding(
+              padding: const EdgeInsets.only(top: 100),
+              child: CloseButtonResponsive(
+                label:'apply'.tr ,
+                onPressed: onApply, // pass the callback from parent
+              ),
             ),
-            CloseButtonResponsive(
-              label: "Close",
-              onPressed: () => Get.back(), // just closes bottom sheet
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: CloseButtonResponsive(
+                label: "close".tr,
+                onPressed: () => Get.back(), // just closes bottom sheet
+              ),
             ),
           ],
         ),

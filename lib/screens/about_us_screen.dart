@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TeamMember {
   final String name;
@@ -19,7 +20,7 @@ class AboutUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("About Us")),
+      appBar: AppBar(title:  Text("about_us".tr)),
       body: ListView.separated(
         padding: const EdgeInsets.all(16),
         itemCount: team.length,
@@ -43,7 +44,7 @@ class AboutUsScreen extends StatelessWidget {
                 member.name,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(member.role),
+              subtitle: Text(member.role.tr),
             ),
           );
         },

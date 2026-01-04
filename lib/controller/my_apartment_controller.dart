@@ -13,57 +13,8 @@ class MyApartmentController extends GetxController {
   final ApiService apiservice = new ApiService();
   MyApartmentService service = MyApartmentService();
   final List<Flat> mockFlats = [
-    Flat(
-      id: 1,
-      area: 156,
-      rooms: 1,
-      livingRooms: 1,
-      bathrooms: 2,
-      rentalPrice: 111111,
-      governorate: "Homs",
-      city: "Al-Mokhaiam",
-      address:
-      "61458 Brock Springs Suite 398\nEast Margaritaton, CT 82919-6306",
-      status: "Booked",
-      averageRate: 2.12,
-      owner: "Evert O'Conner",
-      description: "Rerum sed quidem et recusandae soluta est sit.",
-      pictures: [],
-    ),
 
     Flat(
-      id: 1,
-      area: 156,
-      rooms: 1,
-      livingRooms: 1,
-      bathrooms: 2,
-      rentalPrice: 111111,
-      governorate: "Homs",
-      city: "Al-Mokhaiam",
-      address:
-      "61458 Brock Springs Suite 398\nEast Margaritaton, CT 82919-6306",
-      status: "Booked",
-      averageRate: 2.12,
-      owner: "Evert O'Conner",
-      description: "Rerum sed quidem et recusandae soluta est sit.",
-      pictures: [],
-    ),    Flat(
-      id: 1,
-      area: 156,
-      rooms: 1,
-      livingRooms: 1,
-      bathrooms: 2,
-      rentalPrice: 111111,
-      governorate: "Homs",
-      city: "Al-Mokhaiam",
-      address:
-      "61458 Brock Springs Suite 398\nEast Margaritaton, CT 82919-6306",
-      status: "Booked",
-      averageRate: 2.12,
-      owner: "Evert O'Conner",
-      description: "Rerum sed quidem et recusandae soluta est sit.",
-      pictures: [],
-    ),    Flat(
       id: 1,
       area: 156,
       rooms: 1,
@@ -115,7 +66,7 @@ class MyApartmentController extends GetxController {
       print ("i am in excepiton");
       print(e);
       flat.assignAll(mockFlats);
-      Get.snackbar("Offline Mode", "Using mock data because API failed");
+    //  Get.snackbar("Offline Mode", "Using mock data because API failed");
     } finally {
       isLoading.value = false;
     }
@@ -126,12 +77,12 @@ class MyApartmentController extends GetxController {
 
       if (success) {
         flat.removeWhere((item) => item.id == apartmentId);
-        Get.snackbar("Success", "Apartment deleted successfully");
+        Get.snackbar("success".tr,  'success_delete_apartment'.tr);
       } else {
-        Get.snackbar("Error", "Failed to delete apartment");
+        Get.snackbar("Error".tr,  'error_delete_apartment'.tr);
       }
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
     }
   }
 

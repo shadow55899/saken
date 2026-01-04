@@ -40,7 +40,7 @@ class AddApartment extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isUpdate ? "Update Apartment" : "Add Apartment"),
+        title: Text(isUpdate ? 'update_apartment'.tr :'add_apartment'.tr),
         centerTitle: true,
         backgroundColor: Colors.teal,
       ),
@@ -50,7 +50,7 @@ class AddApartment extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              isUpdate ? "Update apartment details" : "Add apartment details",
+              isUpdate ? 'update_details'.tr : 'add_details'.tr,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
@@ -73,25 +73,35 @@ class AddApartment extends StatelessWidget {
 
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ElevatedButton(
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0,left: 8),
+                              child: ElevatedButton(
 
-                            onPressed: () =>
-                                controller.pickImage(fromCamera: false),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.teal,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12))
+                                onPressed: () =>
+                                    controller.pickImage(fromCamera: false),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.teal,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12))
+                                ),
+                                child:  Text('from_gallery'.tr),
+                              ),
                             ),
-                            child: const Text("From Gallery"),
                           ),
-                          ElevatedButton(
-                            onPressed: () =>
-                                controller.pickImage(fromCamera: true),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.teal,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12))),
-                            child: const Text("From Camera"),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: ElevatedButton(
+                                onPressed: () =>
+                                    controller.pickImage(fromCamera: true),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.teal,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12))),
+                                child:  Text('from_camera'.tr),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -107,7 +117,7 @@ class AddApartment extends StatelessWidget {
                 }
 
                 return images.isEmpty
-                    ? const Text("No images selected")
+                    ?  Text('no_images'.tr)
                     : SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -160,27 +170,27 @@ class AddApartment extends StatelessWidget {
 
             // ✅ حقول Flat
             buildTextField(
-              "Area (m²)",
+              'area'.tr,
               controller.areaController,
               keyboardType: TextInputType.number,
             ),
             buildTextField(
-              "Rooms",
+              'rooms'.tr,
               controller.roomsController,
               keyboardType: TextInputType.number,
             ),
             buildTextField(
-              "Living Rooms",
+              'halls'.tr,
               controller.livingRoomsController,
               keyboardType: TextInputType.number,
             ),
             buildTextField(
-              "Bathrooms",
+              'bathrooms'.tr,
               controller.bathroomsController,
               keyboardType: TextInputType.number,
             ),
             buildTextField(
-              "Rental Price",
+              'rental_price'.tr,
               controller.rentalPriceController,
               keyboardType: TextInputType.number,
             ),
@@ -192,7 +202,7 @@ class AddApartment extends StatelessWidget {
                   : null,
 
               decoration: InputDecoration(
-                labelText: "City",
+                labelText: 'city'.tr,
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
               ),
               items: Locations.cites
@@ -206,9 +216,9 @@ class AddApartment extends StatelessWidget {
               },
             ),
 
-            buildTextField("Address", controller.addressController),
+            buildTextField('address'.tr, controller.addressController),
             buildTextField(
-              "Description",
+              'description'.tr,
               controller.descriptionController,
               maxLines: 3,
             ),
@@ -226,7 +236,7 @@ class AddApartment extends StatelessWidget {
                 onPressed: () =>
                     controller.sendData(isUpdate: isUpdate, flat: flat),
                 child: Text(
-                  isUpdate ? "Update" : "Send",
+                  isUpdate ? 'update'.tr : 'send'.tr,
 
                   style: const TextStyle(
                     fontSize: 18,

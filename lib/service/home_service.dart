@@ -162,41 +162,6 @@ class HomeService {
     }
     return [];
   }
-//////////////////////////
-//   Future<bool> filterPrice(String token, double minprice,double maxprice) async {
-//     final response = await ApiService.put(
-//       "/apartment/filterPrice/$minprice/$maxprice",
-//       headers: {
-//         'Authorization': 'Bearer $token',
-//       },
-//     );
-//     print("Status code: ${response["status_code"]}");
-//     print("FULL RESPONSE: $response");
-//
-//     if (response["status_code"] == 200 || response["status_code"] == 201) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
-//
-//
-//   Future<bool> filterArea(String token, double minarea,double maxarea) async {
-//     final response = await ApiService.put(
-//       "/apartment/filterArea/$minarea/$maxarea",
-//       headers: {
-//         'Authorization': 'Bearer $token',
-//       },
-//     );
-//     print("Status code: ${response["status_code"]}");
-//     print("FULL RESPONSE: $response");
-//
-//     if (response["status_code"] == 200 || response["status_code"] == 201) {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//   }
-//
+
 
 }

@@ -51,7 +51,7 @@ class Admin extends StatelessWidget {
               ),
 
               Text(
-                'Welcome',
+               'welcome'.tr ,
                 style: TextStyle(
                   fontSize: titleSize,
                   fontWeight: FontWeight.bold,
@@ -61,7 +61,7 @@ class Admin extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 30),
                 child: Text(
-                  'Admin',
+                  'admin'.tr,
                   style: TextStyle(
                     fontSize: nameSize,
                     fontWeight: FontWeight.w500,
@@ -85,8 +85,8 @@ class Admin extends StatelessWidget {
                               onPressed: () {
                                 Get.to(() => AdminRegistratinRequest());
                               },
-                              child: const Text(
-                                'Registration Request',
+                              child:  Text(
+                                'registration_request'.tr ,
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
@@ -107,7 +107,7 @@ class Admin extends StatelessWidget {
                                   Get.to(() => UserRemoveScreen());
                                 },
                                 child: Text(
-                                  "Delete Requests",
+                                  'delete_requests'.tr,
                                   style: TextStyle(fontSize: 18),
                                 ),
                               ),
@@ -133,8 +133,8 @@ class Admin extends StatelessWidget {
                               onPressed: () {
                                 Get.to(() => AdminRegistratinRequest());
                               },
-                              child: const Text(
-                                'Registration Request',
+                              child:  Text(
+                                'registration_request'.tr,
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
@@ -152,8 +152,8 @@ class Admin extends StatelessWidget {
                                 Get.put(UserController());
                                 Get.to(() => UserRemoveScreen());
                               },
-                              child: const Text(
-                                "Delete Requests",
+                              child:  Text(
+                                  'delete_requests'.tr,
                                 style: TextStyle(fontSize: 18),
                               ),
                             ),
@@ -161,6 +161,7 @@ class Admin extends StatelessWidget {
                         ],
                       ),
                     ),
+
             ],
           ),
         ),

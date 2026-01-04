@@ -19,7 +19,7 @@ class UserController extends GetxController {
       await provider.getAllUsersis_apprved_false();
       users.assignAll(UserProvider.users);
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
     }
   }
 
@@ -29,20 +29,20 @@ class UserController extends GetxController {
       users.removeWhere((u) => u.id == user.id);
       users.refresh();
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
     }
   }
 
   Future<void> rejectUser(User user) async {
     if (user.id == 1) {
-      Get.snackbar("Error", "You can't reject admin");
+      Get.snackbar("Error".tr,   'error_reject_admin'.tr);
     } else {
       try {
         await provider.rejectuser(user);
         users.removeWhere((u) => u.id == user.id);
         users.refresh();
       } catch (e) {
-        Get.snackbar("Error", "Something went wrong");
+        Get.snackbar("Error".tr,  'error_something_wrong'.tr);
       }
     }
   }
@@ -52,7 +52,7 @@ class UserController extends GetxController {
       await provider.getAllUsersis_apprved_true();
       users.assignAll(UserProvider.users);
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
     }
   }
 

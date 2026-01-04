@@ -10,7 +10,7 @@ class RangeCard extends StatelessWidget {
   final RxDouble maxValue;
   final VoidCallback onApply;
 
-  // Use TextEditingController outside build
+
   final TextEditingController minController = TextEditingController();
   final TextEditingController maxController = TextEditingController();
 
@@ -34,11 +34,11 @@ class RangeCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 🔹 Title
+
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Text(
-            "$title Range",
+            "${title}",
             style: TextStyle(
               fontSize: screen.width * 0.04,
               fontWeight: FontWeight.bold,
@@ -83,13 +83,21 @@ class RangeCard extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            CloseButtonResponsive(
-              label: "Apply",
-              onPressed: onApply, // pass the callback from parent
+            Padding(
+              padding: const EdgeInsets.only(top:60),
+              child: CloseButtonResponsive(
+                label: "apply".tr,
+                onPressed: onApply, // pass the callback from parent
+              ),
             ),
-            CloseButtonResponsive(
-              label: "Close",
-              onPressed: () => Get.back(), // just closes bottom sheet
+
+
+            Padding(
+              padding: const EdgeInsets.only(top:20),
+              child: CloseButtonResponsive(
+                label: "close".tr,
+                onPressed: () => Get.back(), // just closes bottom sheet
+              ),
             ),
           ],
         ),

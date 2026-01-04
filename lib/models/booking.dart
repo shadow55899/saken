@@ -15,7 +15,7 @@ enum Statuses {
 enum Payment { credit, bank_transfer, cash, digital_wallet }
 
 class Booking {
-  int? id;
+  int id;
   int? userId;
   int? apartmentId;
   String? checkInDate;
@@ -26,8 +26,9 @@ class Booking {
   String? createdAt;
   String? updatedAt;
 
-  Booking({
-    this.id,
+  Booking( {
+    required this.id,
+
     this.userId,
     this.apartmentId,
     this.checkInDate,
@@ -40,6 +41,7 @@ class Booking {
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) {
+    print("Booking JSON: $json");
     return Booking(
       id: json['id'],
       userId: json['user_id'],
@@ -49,8 +51,8 @@ class Booking {
       paymentMethod: json['payment_method'],
       bookingStatus: json['booking_status'],
       rate: json['rate'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
     );
   }
 

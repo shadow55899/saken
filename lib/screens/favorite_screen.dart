@@ -13,7 +13,7 @@ class FavoriteScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Favorites"), centerTitle: true),
+      appBar: AppBar(title:  Text('favorites'.tr), centerTitle: true),
 
       body: Padding(
         padding: const EdgeInsets.all(10),
@@ -21,8 +21,8 @@ class FavoriteScreen extends StatelessWidget {
           final favorites = controller.favoriteList;
 
           if (favorites.isEmpty) {
-            return const Center(
-              child: Text("No favorites yet", style: TextStyle(fontSize: 18)),
+            return  Center(
+              child: Text( 'no_favorites_yet'.tr, style: TextStyle(fontSize: 18)),
             );
           }
 
@@ -96,7 +96,8 @@ class FavoriteScreen extends StatelessWidget {
                                 children: [
                                   const Icon(Icons.location_on_outlined),
                                   const SizedBox(width: 5),
-                                  Text("City ID: ${flat.city}"),
+
+                                  Text('${'city_id'.tr} ${flat.city}')
                                 ],
                               ),
                               Row(

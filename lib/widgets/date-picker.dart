@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DatePickerRow extends StatefulWidget {
   final ValueChanged<DateTime?> onDateSelected;
@@ -58,7 +59,7 @@ class _DatePickerRowState extends State<DatePickerRow> {
       children: [
         Expanded(
           child: buildDropdown(
-            label: "Day",
+            label:  'day'.tr,
             value: _selectedDay,
             items: _days,
             onChanged: (val) {
@@ -70,7 +71,7 @@ class _DatePickerRowState extends State<DatePickerRow> {
         const SizedBox(width: 8),
         Expanded(
           child: buildDropdown(
-            label: "Month",
+            label: 'month'.tr,
             value: _selectedMonth,
             items: _months,
             onChanged: (val) {
@@ -82,7 +83,7 @@ class _DatePickerRowState extends State<DatePickerRow> {
         const SizedBox(width: 8),
         Expanded(
           child: buildDropdown(
-            label: "Year",
+            label: 'year'.tr,
             value: _selectedYear,
             items: _years,
             onChanged: (val) {

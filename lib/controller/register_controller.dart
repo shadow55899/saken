@@ -50,7 +50,7 @@ class RegisterController extends GetxController {
         role.value,
       );
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
     } finally {
       isLoading.value = false;
     }
@@ -60,7 +60,7 @@ class RegisterController extends GetxController {
     try {
       await provider.delete(pass);
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
     }
   }
 }

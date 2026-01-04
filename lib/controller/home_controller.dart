@@ -1,59 +1,4 @@
-//
-// import 'package:get/get.dart';
-// import 'package:tapbar/controller/auth_controller.dart';
-// import 'package:tapbar/models/flat.dart';
-// import 'package:tapbar/service/home_service.dart';
-// import '../service/api_service.dart';
-//
-// class HomeController extends GetxController {
-//   RxList<Flat> flat =<Flat> [].obs;
-//   final ApiService apiservice = new ApiService();
-//   HomeService service = HomeService();
-//   RxBool isLoading = true.obs;
-//
-//
-//   final List<Flat> mockFlats = [
-//     Flat(
-//       area: 156,
-//       rooms: 1,
-//       livingRooms: 1,
-//       bathrooms: 2,
-//       rentalPrice: 111111,
-//       governorate: "Homs",
-//       city: "Al-Mokhaiam",
-//       address:
-//           "61458 Brock Springs Suite 398\nEast Margaritaton, CT 82919-6306",
-//       status: "Booked",
-//       averageRate: "2.12",
-//       owner: "Evert O'Conner",
-//       description: "Rerum sed quidem et recusandae soluta est sit.",
-//       pictures: [],
-//     ),
-//   ];
-//   @override
-//   void onInit() {
-//     super.onInit();
-//   }
-//
-//   @override
-//   void onReady() async {
-//     AuthController authController = Get.find<AuthController>();
-//     try {
-//       isLoading.value = true;
-//       flat.assignAll(await service.fetchFlats("${authController.userToken}"));
-//       print(" Requests Loaded: ${flat.length}");
-//       print(" Requests Loaded: ${flat}");
-//     } catch (e) {
-//       print(e);
-//       flat.assignAll( mockFlats);
-//
-//       Get.snackbar("Offline Mode", "Using mock data because API failed");
-//     } finally {
-//       isLoading.value = false;
-//     }
-//     super.onReady();
-//   }
-// }
+
 import 'package:get/get.dart';
 
 //import '../service/api_service.dart';
@@ -157,6 +102,7 @@ class HomeController extends GetxController {
     'Shaddadi': 70,
   };
 
+
   RxList<Flat> flat = <Flat>[].obs;
   final ApiService apiservice = new ApiService();
   HomeService service = HomeService();
@@ -213,16 +159,15 @@ class HomeController extends GetxController {
       print(e);
       flat.assignAll(mockFlats);
 
-      Get.snackbar("Offline Mode", "Using mock data because API failed");
+     // Get.snackbar("Offline Mode", "Using mock data because API failed");
     } finally {
       isLoading.value = false;
     }
     super.onReady();
   }
 
-  // ===== Controllers للنصوص (لـ RangeCard) =====
 
-  // ===== دوال لتعديل الـ State =====
+
   void setCity(String city) => selectedCity.value = city;
 
   void setGovernorate(String gov) => selectedGovernorate.value = gov;
@@ -243,13 +188,13 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {
-    // تنظيف TextEditingControllers عند اغلاق Controller
+
     minController.dispose();
     maxController.dispose();
     super.onClose();
   }
 
-  //////////
+
   Future<void> applyFilters() async {
     try {
       isLoading.value = true;
@@ -291,7 +236,7 @@ class HomeController extends GetxController {
           final cityName = selectedCity.value;
           final cityId = citesId[cityName];
           if (cityId == null) {
-            Get.snackbar("Error", "Invalid city selected");
+            Get.snackbar("Error".tr,  'error_invalid_city'.tr);
             return;
           }
           results = await service.filterByCity(cityId, "${auth.userToken}");
@@ -301,7 +246,7 @@ class HomeController extends GetxController {
           final govId = governorateIds[govName];
 
           if (govId == null) {
-            Get.snackbar("Error", "Invalid governorate selected");
+            Get.snackbar("Error".tr,  'error_invalid_city'.tr);
             return;
           }
 
@@ -311,9 +256,7 @@ class HomeController extends GetxController {
           );
           break;
 
-          Get.back();
 
-          break;
 
         default:
           results = await service.fetchFlats("${auth.userToken}");
@@ -322,7 +265,7 @@ class HomeController extends GetxController {
       flat.assignAll(results);
     } catch (e) {
       flat.assignAll(mockFlats);
-      Get.snackbar("Offline Mode", "Using mock data");
+
     } finally {
       isLoading.value = false;
     }

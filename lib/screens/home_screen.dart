@@ -26,44 +26,14 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            // Container(
-            //   height: 60,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(45),
-            //   ),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       Container(
-            //         width: 75,
-            //         height: double.infinity,
-            //         child: ElevatedButton(
-            //           onPressed: () {},
-            //           child: Text("City"),
-            //         ),
-            //       ),
-            //       SizedBox(width: 10),
-            //       Container(
-            //         width: 80,
-            //         height: double.infinity,
-            //         child: ElevatedButton(
-            //           onPressed: () {},
-            //           child: Text("Price"),
-            //         ),
-            //       ),
-            //       Spacer(),
-            //       Text('Filtter', style: TextStyle(fontSize: 25)),
-            //       SizedBox(width: 20),
-            //     ],
-            //   ),
-            // ),
+
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  // ===== FilterCard الرئيسي =====
+
                   FilterCard(
-                    title: "Filter",
+                    title: "filter".tr,
                     icon: Icons.filter_list,
                     color: Colors.teal,
                     onTap: () => _openFilterOptions(),
@@ -71,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   FilterCard(
-                    title: "Remove Filter",
+                    title:  'remove_filter'.tr ,
                     icon: Icons.remove_circle,
                     color: Colors.teal,
                     onTap: () => controller.onReady(),
@@ -79,17 +49,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
-                  // ===== عرض القيم المختارة بشكل حي =====
-                  Obx(
-                    () => Text(
-                      "Governorate: ${controller.selectedGovernorate.value}\n"
-                      "City: ${controller.selectedCity.value}\n"
-                      "Price: ${controller.minPrice.value}-${controller.maxPrice.value}\n"
-                      "Area: ${controller.minArea.value}-${controller.maxArea.value}\n"
-                      "Rooms: ${controller.numRooms.value}",
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+
                 ],
               ),
             ),
@@ -167,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                                     children: [
                                       const Icon(Icons.location_on_outlined),
                                       const SizedBox(width: 5),
-                                      Text("City ID: ${flat.city}"),
+                                      Text('${'city'.tr} ${flat.city}')
                                     ],
                                   ),
                                   Row(
@@ -219,9 +179,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
-              const Center(
+               Center(
                 child: Text(
-                  "Choose Filter Type",
+                  'choose_filter'.tr ,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -235,32 +195,32 @@ class HomeScreen extends StatelessWidget {
                 child: ListView(
                   children: [
                     FilterOptionTile(
-                      label: "City",
+                      label: 'city'.tr,
                       icon: Icons.location_city,
                       onTap: () => _openSubFilterSheet("City"),
                     ),
                     const Divider(),
                     FilterOptionTile(
-                      label: "Price",
+                      label:'price'.tr ,
                       icon: Icons.price_change,
                       onTap: () => _openSubFilterSheet("Price"),
                     ),
                     const Divider(),
                     FilterOptionTile(
-                      label: "Governorate",
+                      label:  'governorate'.tr,
                       icon: Icons.map,
                       onTap: () => _openSubFilterSheet("Governorate"),
                     ),
                     const Divider(),
                     FilterOptionTile(
-                      label: "Area",
+                      label: 'area'.tr ,
                       icon: Icons.square_foot,
 
                       onTap: () => _openSubFilterSheet("Area"),
                     ),
                     const Divider(),
                     FilterOptionTile(
-                      label: "Rooms",
+                      label: 'rooms'.tr ,
                       icon: Icons.meeting_room,
                       onTap: () => _openSubFilterSheet("Rooms"),
                     ),
@@ -269,7 +229,7 @@ class HomeScreen extends StatelessWidget {
               ),
 
               CloseButtonResponsive(
-                label: "Close",
+                label:  'close'.tr ,
                 onPressed: () => Get.back(),
               ),
             ],
@@ -299,24 +259,23 @@ class HomeScreen extends StatelessWidget {
 }
 
 Widget _buildFilterContent(String type, HomeController controller) {
-  // ===== هنا تم تعديل المنطق: القيم المختارة تمر مباشرة للـController =====
   if (type == "Governorate") {
     return SelectGrid(
-      title: "Governorate",
+      title: 'governorate'.tr,
       options: Locations.governorates,
       selectedValue: controller.selectedGovernorate,
       onChanged: (value) async {
         controller.setGovernorate(value);
         controller.activeFilter = "governorate";
         await controller.applyFilters();
-        Get.back(); // close bottom sheet
-        Get.back(); // close bottom sheet
+        Get.back();
+        Get.back();
       },
     );
   } else if (type == "City") {
     return SelectGrid(
-      title: "City",
-      options: Locations.cites, // أو إذا كان لديك قائمة المدن
+      title: 'city'.tr,
+      options: Locations.cites,
       selectedValue: controller.selectedCity,
 
       onChanged: (value) async {
@@ -329,9 +288,9 @@ Widget _buildFilterContent(String type, HomeController controller) {
     );
   } else if (type == "Price") {
     return RangeCard(
-      title: "Price",
-      minLabel: "Min Price (\$)",
-      maxLabel: "Max Price (\$)",
+      title:  'price'.tr,
+      minLabel: "${'min_price'.tr}${('\$')}",
+      maxLabel: "${'max_price'.tr}${('\$')}",
       minValue: controller.minPrice,
       maxValue: controller.maxPrice,
       onApply: () async {
@@ -346,9 +305,9 @@ Widget _buildFilterContent(String type, HomeController controller) {
     );
   } else if (type == "Area") {
     return RangeCard(
-      title: "Area",
-      minLabel: "Min Area (m²)",
-      maxLabel: "Max Area (m²)",
+      title: "area".tr,
+      minLabel: "${'min_area'.tr}${'m²'.tr}",
+      maxLabel: "${'max_area'.tr}${'m²'.tr}",
       minValue: controller.minArea,
       maxValue: controller.maxArea,
       onApply: () async {
@@ -363,8 +322,8 @@ Widget _buildFilterContent(String type, HomeController controller) {
     );
   } else if (type == "Rooms") {
     return RoomApply(
-      title: "Rooms",
-      Label: " Rooms",
+      title: 'rooms'.tr,
+      Label:'rooms'.tr,
       Value: controller.numRooms,
       onApply: () async {
         controller.activeFilter = "rooms";
@@ -374,6 +333,6 @@ Widget _buildFilterContent(String type, HomeController controller) {
       },
     );
   } else {
-    return const Center(child: Text("Unknown filter type"));
+    return  Center(child: Text('unknown_filter_type'.tr));
   }
 }

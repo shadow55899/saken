@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'add_apartment.dart';
+import 'bookings_requests.dart';
 
 
 class ApartmentOwnerHome extends StatelessWidget {
@@ -18,7 +19,7 @@ class ApartmentOwnerHome extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Apartment owner"),
+        title:  Text('apartment_owner'.tr),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 54, 201, 177),
       ),
@@ -27,7 +28,7 @@ class ApartmentOwnerHome extends StatelessWidget {
           SizedBox(height: screenHeight*0.15,),
           Center(
             child: Text(
-              'Welcome',
+              'welcome'.tr,
               style: TextStyle(
                 fontSize:screenWidth*0.1,
                 fontWeight:FontWeight.w600 ),),
@@ -35,7 +36,7 @@ class ApartmentOwnerHome extends StatelessWidget {
              SizedBox(height: screenHeight * 0.2), // مسافة من الأعل
                 // الصف الأول
                 CloseButtonResponsive(
-                  label: "Add apartment",
+                  label: 'add_apartment'.tr,
                 
                   onPressed: () {
                     // فتح صفحة Mm لإضافة شقة جديدة
@@ -45,7 +46,7 @@ class ApartmentOwnerHome extends StatelessWidget {
                 const SizedBox(height:16),
 
                 CloseButtonResponsive(
-                  label: "My apartments",
+                  label:'my_apartments'.tr,
                  
                   onPressed: () {
                     Get.to(()=>MyApartmentScreen());
@@ -54,10 +55,11 @@ class ApartmentOwnerHome extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 CloseButtonResponsive(
-                  label: " Apartment Requests",
-                
+                  label:'apartment_requests'.tr ,
+
                   onPressed: () {
-                  
+                    Get.to(()=>BookingsRequests());
+
                   },
                 ),
               ],
