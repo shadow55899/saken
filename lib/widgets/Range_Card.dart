@@ -10,7 +10,6 @@ class RangeCard extends StatelessWidget {
   final RxDouble maxValue;
   final VoidCallback onApply;
 
-
   final TextEditingController minController = TextEditingController();
   final TextEditingController maxController = TextEditingController();
 
@@ -29,12 +28,12 @@ class RangeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final screen = MediaQuery.of(context).size;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Text(
@@ -49,6 +48,7 @@ class RangeCard extends StatelessWidget {
 
         // 🔹 Min Value
         TextField(
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
           controller: minController,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
@@ -65,6 +65,7 @@ class RangeCard extends StatelessWidget {
         const SizedBox(height: 20),
 
         TextField(
+          style: TextStyle(color: isDark ? Colors.white : Colors.black),
           controller: maxController,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
@@ -84,16 +85,15 @@ class RangeCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top:60),
+              padding: const EdgeInsets.only(top: 60),
               child: CloseButtonResponsive(
                 label: "apply".tr,
                 onPressed: onApply, // pass the callback from parent
               ),
             ),
 
-
             Padding(
-              padding: const EdgeInsets.only(top:20),
+              padding: const EdgeInsets.only(top: 20),
               child: CloseButtonResponsive(
                 label: "close".tr,
                 onPressed: () => Get.back(), // just closes bottom sheet

@@ -6,7 +6,6 @@ import 'package:get/get_core/get_core.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:http/http.dart' as http;
 import 'package:tapbar/controller/auth_controller.dart';
-import 'package:tapbar/controller/favorite_controller.dart';
 import 'package:tapbar/main.dart';
 import 'package:tapbar/models/flat.dart';
 
@@ -107,7 +106,7 @@ class FavoriteProvider {
       };
       var request = http.Request(
         'DELETE',
-        Uri.parse('$baseUrl/apartment/$id/favorite'),
+        Uri.parse('$baseUrl/apartment/$id/removeFavorite'),
       );
 
       request.headers.addAll(headers);

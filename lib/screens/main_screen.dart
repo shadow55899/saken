@@ -26,9 +26,7 @@ class MainScreen extends StatelessWidget {
 
       body: Get.find<AuthController>().currentUser.value?.role.name == "admin"
           ? Admin()
-          : Get.find<AuthController>().currentUser.value?.role.name == "renter"
-          ? HomeScreen()
-          : ApartmentOwnerHome(),
+          : HomeScreen()
 
     );
   }

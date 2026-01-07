@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:tapbar/controller/favorite_controller.dart';
 import 'package:tapbar/widgets/room_apply.dart';
 import '../Locations.dart';
 import '../controller/home_controller.dart';
@@ -26,30 +27,26 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-
                   FilterCard(
                     title: "filter".tr,
                     icon: Icons.filter_list,
                     color: Colors.teal,
-                    onTap: () => _openFilterOptions(),
+                    onTap: () => _openFilterOptions(isDark),
                     subtitle: '',
                   ),
                   const SizedBox(height: 20),
                   FilterCard(
-                    title:  'remove_filter'.tr ,
+                    title: 'remove_filter'.tr,
                     icon: Icons.remove_circle,
                     color: Colors.teal,
                     onTap: () => controller.onReady(),
                     subtitle: '',
                   ),
                   const SizedBox(height: 20),
-
-
                 ],
               ),
             ),
@@ -75,7 +72,11 @@ class HomeScreen extends StatelessWidget {
                   final flat = flats[index];
 
                   return InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      Get.put(FavoriteController());
+                      await Get.find<FavoriteController>().checkFavorite(
+                        flat.id!,
+                      );
                       Get.to(() => Details(), arguments: flat);
                     },
 
@@ -127,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                                     children: [
                                       const Icon(Icons.location_on_outlined),
                                       const SizedBox(width: 5),
-                                      Text('${'city'.tr} ${flat.city}')
+                                      Text('${'city'.tr} ${flat.city}'),
                                     ],
                                   ),
                                   Row(
@@ -155,14 +156,14 @@ class HomeScreen extends StatelessWidget {
   }
 
   // ==================== BottomSheet الفلاتر ====================
-  void _openFilterOptions() {
+  void _openFilterOptions(bool isDark) {
     Get.bottomSheet(
       SafeArea(
         child: Container(
           padding: const EdgeInsets.all(16),
           height: Get.height * 0.75,
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: isDark ? Colors.grey[900] : Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
           ),
           child: Column(
@@ -179,9 +180,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
-               Center(
+              Center(
                 child: Text(
-                  'choose_filter'.tr ,
+                  'choose_filter'.tr,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -197,39 +198,39 @@ class HomeScreen extends StatelessWidget {
                     FilterOptionTile(
                       label: 'city'.tr,
                       icon: Icons.location_city,
-                      onTap: () => _openSubFilterSheet("City"),
+                      onTap: () => _openSubFilterSheet("City", isDark),
                     ),
                     const Divider(),
                     FilterOptionTile(
-                      label:'price'.tr ,
+                      label: 'price'.tr,
                       icon: Icons.price_change,
-                      onTap: () => _openSubFilterSheet("Price"),
+                      onTap: () => _openSubFilterSheet("Price", isDark),
                     ),
                     const Divider(),
                     FilterOptionTile(
-                      label:  'governorate'.tr,
+                      label: 'governorate'.tr,
                       icon: Icons.map,
-                      onTap: () => _openSubFilterSheet("Governorate"),
+                      onTap: () => _openSubFilterSheet("Governorate", isDark),
                     ),
                     const Divider(),
                     FilterOptionTile(
-                      label: 'area'.tr ,
+                      label: 'area'.tr,
                       icon: Icons.square_foot,
 
-                      onTap: () => _openSubFilterSheet("Area"),
+                      onTap: () => _openSubFilterSheet("Area", isDark),
                     ),
                     const Divider(),
                     FilterOptionTile(
-                      label: 'rooms'.tr ,
+                      label: 'rooms'.tr,
                       icon: Icons.meeting_room,
-                      onTap: () => _openSubFilterSheet("Rooms"),
+                      onTap: () => _openSubFilterSheet("Rooms", isDark),
                     ),
                   ],
                 ),
               ),
 
               CloseButtonResponsive(
-                label:  'close'.tr ,
+                label: 'close'.tr,
                 onPressed: () => Get.back(),
               ),
             ],
@@ -240,14 +241,14 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void _openSubFilterSheet(String filterType) {
+  void _openSubFilterSheet(String filterType, bool isDark) {
     Get.bottomSheet(
       SafeArea(
         child: Container(
           padding: const EdgeInsets.all(20),
           height: Get.height * 0.65,
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: isDark ? Colors.grey[900] : Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
           ),
           child: _buildFilterContent(filterType, controller),
@@ -288,7 +289,7 @@ Widget _buildFilterContent(String type, HomeController controller) {
     );
   } else if (type == "Price") {
     return RangeCard(
-      title:  'price'.tr,
+      title: 'price'.tr,
       minLabel: "${'min_price'.tr}${('\$')}",
       maxLabel: "${'max_price'.tr}${('\$')}",
       minValue: controller.minPrice,
@@ -323,7 +324,7 @@ Widget _buildFilterContent(String type, HomeController controller) {
   } else if (type == "Rooms") {
     return RoomApply(
       title: 'rooms'.tr,
-      Label:'rooms'.tr,
+      Label: 'rooms'.tr,
       Value: controller.numRooms,
       onApply: () async {
         controller.activeFilter = "rooms";
@@ -333,6 +334,6 @@ Widget _buildFilterContent(String type, HomeController controller) {
       },
     );
   } else {
-    return  Center(child: Text('unknown_filter_type'.tr));
+    return Center(child: Text('unknown_filter_type'.tr));
   }
 }

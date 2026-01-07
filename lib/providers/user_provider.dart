@@ -123,19 +123,18 @@ class UserProvider {
 
       if (data["status_code"] == 201) {
         isLoading = false;
-        // Get.offAll(() => LoginScreen());
         Get.to(() => OtpScreen() , arguments: phone_number);
-        Get.snackbar(
-          "Message",
-          data["message"],
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.black.withOpacity(0.5),
-          colorText: Colors.white,
-          margin: EdgeInsets.all(8),
-          borderRadius: 8,
-          duration: Duration(seconds: 2),
-          snackStyle: SnackStyle.FLOATING,
-        );
+        // Get.snackbar(
+        //   "Message",
+        //   data["message"],
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.black.withOpacity(0.5),
+        //   colorText: Colors.white,
+        //   margin: EdgeInsets.all(8),
+        //   borderRadius: 8,
+        //   duration: Duration(seconds: 2),
+        //   snackStyle: SnackStyle.FLOATING,
+        // );
       } else {
         Get.snackbar(
           "Message",
@@ -175,17 +174,17 @@ class UserProvider {
         token = null;
         currentuser = null;
         Get.offAll(() => LoginScreen());
-        Get.snackbar(
-          "Message",
-          data["message"],
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.black.withOpacity(0.5),
-          colorText: Colors.white,
-          margin: EdgeInsets.all(8),
-          borderRadius: 8,
-          duration: Duration(seconds: 2),
-          snackStyle: SnackStyle.FLOATING,
-        );
+        // Get.snackbar(
+        //   "Message",
+        //   data["message"],
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.black.withOpacity(0.5),
+        //   colorText: Colors.white,
+        //   margin: EdgeInsets.all(8),
+        //   borderRadius: 8,
+        //   duration: Duration(seconds: 2),
+        //   snackStyle: SnackStyle.FLOATING,
+        // );
       } else {
         Get.snackbar(
           "Message",
@@ -389,8 +388,6 @@ class UserProvider {
       http.StreamedResponse response = await request.send();
 
       final respStr = await response.stream.bytesToString();
-
-      print(respStr);
 
       final data = jsonDecode(respStr);
 

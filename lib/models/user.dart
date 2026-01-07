@@ -1,3 +1,5 @@
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
+
 import '../controller/register_controller.dart';
 
 class User {
@@ -30,6 +32,17 @@ class User {
     this.updatedAt,
   });
 
+ static String roleToLocalized(Role role) {
+    switch (role) {
+      case Role.apartment_owner:
+        return 'owner'.tr;
+      case Role.renter:
+        return 'renter'.tr;
+      case Role.admin:
+        return 'admin'.tr;
+    }
+  }
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] ?? 0,
@@ -42,7 +55,7 @@ class User {
       ),
       is_approve: json['is_approve'] ?? 0,
       //adds
-      dateOfBirth: DateTime.parse(json["date_of_birth"]) ,
+      dateOfBirth: DateTime.parse(json["date_of_birth"]),
 
       picture: json['picture'],
       idCardImage: json['id_card_image'],

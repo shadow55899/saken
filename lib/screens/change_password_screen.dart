@@ -12,30 +12,33 @@ class ChangePasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title: const Text("Change Password")),
+      appBar: AppBar(title: Text("Change Password".tr)),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Please Enter Your New Password",
+              "please enter your new password".tr,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextFormField(
+              style: TextStyle(color: isDark ? Colors.white : Colors.black),
               onChanged: (value) => password = value,
-              decoration: const InputDecoration(
-                labelText: "New Password",
+              decoration: InputDecoration(
+                labelText: "new password".tr,
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 20),
 
             TextFormField(
+              style: TextStyle(color: isDark ? Colors.white : Colors.black),
               onChanged: (value) => password_confimation = value,
-              decoration: const InputDecoration(
-                labelText: "confirm_password",
+              decoration: InputDecoration(
+                labelText: 'confirm_password'.tr,
                 border: OutlineInputBorder(),
               ),
             ),
@@ -43,7 +46,11 @@ class ChangePasswordScreen extends StatelessWidget {
             Obx(
               () => ElevatedButton(
                 onPressed: () {
-                  controller.ResetPass(password, password_confimation,phone_number);
+                  controller.ResetPass(
+                    password,
+                    password_confimation,
+                    phone_number,
+                  );
                 },
                 child: controller.isLoading.value
                     ? const SizedBox(
@@ -54,7 +61,7 @@ class ChangePasswordScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                       )
-                    : const Text("Next", style: TextStyle(fontSize: 18)),
+                    : Text("next".tr, style: TextStyle(fontSize: 18)),
               ),
             ),
           ],

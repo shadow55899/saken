@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tapbar/models/user.dart';
 
 import '../controller/register_controller.dart';
 import '../widgets/date-picker.dart';
@@ -13,7 +14,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title:  Text('register'.tr)),
+      appBar: AppBar(title: Text('register'.tr)),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -27,7 +28,7 @@ class RegisterScreen extends StatelessWidget {
                   height: 200,
                 ),
                 Text(
-                  'create_account'.tr ,
+                  'create_account'.tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 30),
                 ),
@@ -37,7 +38,7 @@ class RegisterScreen extends StatelessWidget {
                         onChanged: (val) => controller.firstName.value = val,
                         keyboardType: TextInputType.name,
                         decoration: InputDecoration(
-                          labelText:'first_name'.tr ,
+                          labelText: 'first_name'.tr,
                           border: OutlineInputBorder(
                             gapPadding: 20,
                             borderRadius: BorderRadius.circular(10),
@@ -49,7 +50,7 @@ class RegisterScreen extends StatelessWidget {
                         keyboardType: TextInputType.name,
                         style: const TextStyle(color: Color(0xFF5A7867)),
                         decoration: InputDecoration(
-                          labelText:'first_name'.tr,
+                          labelText: 'first_name'.tr,
                           labelStyle: const TextStyle(color: Color(0xFF5A7867)),
                           border: OutlineInputBorder(
                             gapPadding: 20,
@@ -82,7 +83,7 @@ class RegisterScreen extends StatelessWidget {
                         keyboardType: TextInputType.name,
                         style: const TextStyle(color: Color(0xFF5A7867)),
                         decoration: InputDecoration(
-                          labelText:'last_name'.tr ,
+                          labelText: 'last_name'.tr,
                           labelStyle: const TextStyle(color: Color(0xFF5A7867)),
                           border: OutlineInputBorder(
                             gapPadding: 20,
@@ -103,7 +104,7 @@ class RegisterScreen extends StatelessWidget {
                         onChanged: (val) => controller.phoneNumber.value = val,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          labelText:'phone'.tr ,
+                          labelText: 'phone'.tr,
                           border: OutlineInputBorder(
                             gapPadding: 20,
                             borderRadius: BorderRadius.circular(10),
@@ -115,7 +116,7 @@ class RegisterScreen extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         style: const TextStyle(color: Color(0xFF5A7867)),
                         decoration: InputDecoration(
-                          labelText:'phone'.tr ,
+                          labelText: 'phone'.tr,
                           labelStyle: const TextStyle(color: Color(0xFF5A7867)),
                           border: OutlineInputBorder(
                             gapPadding: 20,
@@ -136,7 +137,7 @@ class RegisterScreen extends StatelessWidget {
                         onChanged: (val) => controller.password.value = val,
                         obscureText: true,
                         decoration: InputDecoration(
-                          labelText:'password'.tr ,
+                          labelText: 'password'.tr,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -147,7 +148,7 @@ class RegisterScreen extends StatelessWidget {
                         style: const TextStyle(color: Color(0xFF5A7867)),
                         obscureText: true,
                         decoration: InputDecoration(
-                          labelText:'password'.tr ,
+                          labelText: 'password'.tr,
                           labelStyle: const TextStyle(color: Color(0xFF5A7867)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -166,7 +167,7 @@ class RegisterScreen extends StatelessWidget {
                     ? TextFormField(
                         obscureText: true,
                         decoration: InputDecoration(
-                          labelText:'confirm_password'.tr,
+                          labelText: 'confirm_password'.tr,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -191,9 +192,19 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                 SizedBox(height: 15),
-                DatePickerRow(
-                  onDateSelected: (date) =>
-                      controller.selectedDate.value = date,
+                ListTile(
+                  title: Obx(
+                    () => Text(
+                      controller.selectedDate.value == null
+                          ? 'birth_date'.tr
+                          : controller.selectedDate.value!
+                                .toString()
+                                .split(" ")
+                                .first,
+                    ),
+                  ),
+                  trailing: const Icon(Icons.date_range),
+                  onTap: () => controller.pickDate(context),
                 ),
                 SizedBox(height: 15),
                 Center(
@@ -220,7 +231,7 @@ class RegisterScreen extends StatelessWidget {
                         return DropdownMenuItem<Role>(
                           value: role,
                           child: Text(
-                            role.name,
+                            User.roleToLocalized(role),
                             style: TextStyle(
                               color: isDark ? Colors.white : Colors.black,
                             ),
@@ -248,7 +259,7 @@ class RegisterScreen extends StatelessWidget {
                             controller.pickImage(true, ImageSource.camera),
                       ),
                       imagePickerButton(
-                        label:'id_image'.tr,
+                        label: 'id_image'.tr,
                         image: controller.idImage,
                         onPressed: () =>
                             controller.pickImage(false, ImageSource.gallery),
@@ -282,7 +293,7 @@ class RegisterScreen extends StatelessWidget {
                               color: Colors.white,
                             ),
                           )
-                        :  Text('create_account'.tr),
+                        : Text('create_account'.tr),
                   );
                 }),
               ],

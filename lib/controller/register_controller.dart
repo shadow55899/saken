@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tapbar/providers/user_provider.dart';
@@ -50,7 +51,7 @@ class RegisterController extends GetxController {
         role.value,
       );
     } catch (e) {
-      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
+      Get.snackbar("Error".tr, 'error_something_wrong'.tr);
     } finally {
       isLoading.value = false;
     }
@@ -60,7 +61,20 @@ class RegisterController extends GetxController {
     try {
       await provider.delete(pass);
     } catch (e) {
-      Get.snackbar("Error".tr,  'error_something_wrong'.tr);
+      Get.snackbar("Error".tr, 'error_something_wrong'.tr);
+    }
+  }
+
+  Future<void> pickDate(BuildContext context) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(DateTime.now().year - 18),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null) {
+      selectedDate.value = picked;
     }
   }
 }

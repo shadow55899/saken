@@ -24,6 +24,7 @@ class RoomApply extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final screen = MediaQuery.of(context).size;
 
     return Column(
@@ -43,6 +44,7 @@ class RoomApply extends StatelessWidget {
         ),
 
    TextField(
+    style: TextStyle(color: isDark ? Colors.white : Colors.black),
             controller: roomController,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(

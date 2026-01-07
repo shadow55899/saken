@@ -19,7 +19,12 @@ class OtpController extends GetxController {
   ) async {
     try {
       isLoading.value = true;
-      // await provider.resetPassword(phone_number , password , password_confimation);
+      phone_number = phone_number == null ? "" : phone_number;
+      await provider.resetPassword(
+        phone_number,
+        password,
+        password_confimation,
+      );
       isLoading.value = false;
     } catch (e) {
       Get.snackbar("Error", "Something went wrong");
@@ -29,7 +34,8 @@ class OtpController extends GetxController {
   Future<void> verify_otp(String phone_number) async {
     try {
       isLoading.value = true;
-      // await provider.verifyOtp(otp.value, phone_number, isForgotPassword);
+      print(otp.value);
+      await provider.verifyOtp(phone_number, otp.value, isForgotPassword);
       isLoading.value = false;
     } catch (e) {
       Get.snackbar("Error", "Something went wrong");
@@ -39,7 +45,7 @@ class OtpController extends GetxController {
   Future<void> resend_otp(String phone_number) async {
     try {
       isOtpSent.value = true;
-      // await provider.resendOtp(phone_number);
+      await provider.resendOtp(phone_number);
       isOtpSent.value = false;
     } catch (e) {
       Get.snackbar("Error", "Something went wrong");
@@ -49,10 +55,9 @@ class OtpController extends GetxController {
   Future<void> forgotPass(String phone_number) async {
     try {
       isLoading.value = true;
-      // bool? res = await provider.forgotPassword(phone_number);
+      bool? res = await provider.forgotPassword(phone_number);
       isLoading.value = false;
-      // if(res == true)
-      // isForgotPassword = true;
+      if (res == true) isForgotPassword = true;
     } catch (e) {
       Get.snackbar("Error", "Something went wrong");
     }

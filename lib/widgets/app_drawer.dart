@@ -9,7 +9,10 @@ import 'package:tapbar/controller/auth_controller.dart';
 import 'package:tapbar/controller/favorite_controller.dart';
 import 'package:tapbar/controller/login_controller.dart';
 import 'package:tapbar/screens/about_us_screen.dart';
+import 'package:tapbar/screens/apartment_owner_home.dart';
+import 'package:tapbar/screens/booking_screen.dart';
 import 'package:tapbar/screens/favorite_screen.dart';
+import 'package:tapbar/screens/notification_screen.dart';
 import 'package:tapbar/screens/settings_screen.dart';
 import 'package:tapbar/widgets/photo.dart';
 
@@ -91,7 +94,7 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.home,
-            title:  'home'.tr,
+            title: 'home'.tr,
             onTap: () {
               Navigator.pop(context);
             },
@@ -100,15 +103,24 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.chalet,
-            title:'my_reservations'.tr,
-            onTap: () {},
+            title:
+                Get.find<AuthController>().currentUser.value!.role.name ==
+                    'apartment_owner'
+                ? 'owner page'.tr
+                : 'my_reservations'.tr,
+            onTap: () {
+              Get.find<AuthController>().currentUser.value!.role.name ==
+                      'apartment_owner'
+                  ? Get.to(() => ApartmentOwnerHome())
+                  : Get.to(() => BookingScreen());
+            },
           ),
 
           _drawerItem(
             context,
             icon: Icons.favorite,
-            title:  'favorites'.tr,
-           onTap: () async {
+            title: 'favorites'.tr,
+            onTap: () async {
               Get.put(FavoriteController());
               await Get.find<FavoriteController>().getAllFavorite();
               Get.to(() => FavoriteScreen());
@@ -119,13 +131,15 @@ class AppDrawer extends StatelessWidget {
             context,
             icon: Icons.notifications,
             title: 'notifications'.tr,
-            onTap: () {},
+            onTap: () {
+              Get.to(() => NotificationScreen());
+            },
           ),
 
           _drawerItem(
             context,
             icon: Icons.settings,
-            title:'settings'.tr     ,
+            title: 'settings'.tr,
             onTap: () {
               Get.to(() => const SettingsScreen());
             },
@@ -134,7 +148,7 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.reply_all,
-            title:  'rate_us'.tr,
+            title: 'rate_us'.tr,
             onTap: () {},
           ),
 
@@ -154,7 +168,7 @@ class AppDrawer extends StatelessWidget {
           _drawerItem(
             context,
             icon: Icons.logout,
-            title: 'logout'.tr   ,
+            title: 'logout'.tr,
             color: Colors.red,
             onTap: () {
               loginController.logout();

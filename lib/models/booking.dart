@@ -22,13 +22,14 @@ class Booking {
   String? checkOutDate;
   String? paymentMethod;
   String? bookingStatus;
-  dynamic rate;
+  int? duration;
+  int? price;
+  int? rate;
   String? createdAt;
   String? updatedAt;
 
-  Booking( {
+  Booking({
     required this.id,
-
     this.userId,
     this.apartmentId,
     this.checkInDate,
@@ -38,21 +39,25 @@ class Booking {
     this.rate,
     this.createdAt,
     this.updatedAt,
+    this.duration,
+    this.price,
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) {
     print("Booking JSON: $json");
     return Booking(
-      id: json['id'],
-      userId: json['user_id'],
-      apartmentId: json['apartment_id'],
-      checkInDate: json['check_in_date'],
-      checkOutDate: json['check_out_date'],
-      paymentMethod: json['payment_method'],
-      bookingStatus: json['booking_status'],
-      rate: json['rate'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      id: json['id'] ?? 0,
+      userId: json['user_id'] ?? 0,
+      apartmentId: json['apartment_id'] ?? 0,
+      checkInDate: json['check_in_date'] ?? '',
+      checkOutDate: json['check_out_date'] ?? '',
+      paymentMethod: json['payment_method'] ?? '',
+      bookingStatus: json['booking_status'] ?? '',
+      rate: json['rate'] ?? 0,
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
+      duration: json['duration_in_days'] ?? 0,
+      price: json['total_price'] ?? 0,
     );
   }
 
@@ -68,6 +73,12 @@ class Booking {
       'rate': rate,
       'created_at': createdAt,
       'updated_at': updatedAt,
+      'duration_in_days': duration,
+      'total_price': price,
     };
+  }
+
+  static List<Booking> parseList(List<dynamic> list) {
+    return list.map((e) => Booking.fromJson(e)).toList();
   }
 }

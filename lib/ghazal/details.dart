@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tapbar/controller/auth_controller.dart';
 import 'package:tapbar/controller/favorite_controller.dart';
 import 'package:tapbar/controller/rate_controller.dart';
 import 'package:tapbar/widgets/rate.dart';
@@ -21,7 +22,7 @@ class Details extends StatelessWidget {
     // final screenWidth = MediaQuery.of(context).size.width;
 
     if (flat == null) {
-      return const Scaffold(body: Center(child: Text("No flat data provided")));
+      return Scaffold(body: Center(child: Text("No flat data provided".tr)));
     }
 
     return Scaffold(
@@ -32,52 +33,55 @@ class Details extends StatelessWidget {
           backgroundColor: isDark ? null : Colors.green[900],
           foregroundColor: isDark ? null : Colors.white,
           onPressed: () {
-            //controller.rateApp(flat.id);
-            controller.rateApp();
+            controller.toggleFavorite(flat.id!);
           },
         ),
       ),
       body: ListView(
         children: [
-
           Container(
             height: 250,
             color: Colors.grey[200],
             child: (flat.pictures == null || flat.pictures!.isEmpty)
-                ? const Center(
-              child: Text(
-                "No images available",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            )
-                : PageView.builder(
-              itemCount: flat.pictures!.length,
-              itemBuilder: (context, index) {
-                final imageUrl = flat.pictures![index];
-
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.network(
-                      imageUrl,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, progress) {
-                        if (progress == null) return child;
-                        return const Center(
-                            child: CircularProgressIndicator());
-                      },
-                      errorBuilder: (context, error, stackTrace) =>
-                      const Center(
-                          child: Icon(Icons.broken_image, size: 50)),
+                ? Center(
+                    child: Text(
+                      "No images available".tr,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                  )
+                : PageView.builder(
+                    itemCount: flat.pictures!.length,
+                    itemBuilder: (context, index) {
+                      final imageUrl = flat.pictures![index];
+
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.network(
+                            imageUrl,
+                            fit: BoxFit.cover,
+                            loadingBuilder: (context, child, progress) {
+                              if (progress == null) return child;
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Center(
+                                  child: Icon(Icons.broken_image, size: 50),
+                                ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
 
-           Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             child: Text(
               'specifications'.tr,
@@ -160,40 +164,47 @@ class Details extends StatelessWidget {
               ],
             ),
           ),
-
-           Center(
-            child: Text(
-              'if_you_want_to_book'.tr,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-            child: MaterialButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              onPressed: () {
-                print("Booking button clicked!"); // Debug
-
-                if (!Get.isRegistered<BookingController>()) {
-                  Get.put(BookingController());
-                }
-
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          Get.find<AuthController>().currentUser.value!.role.name == "renter"
+              ? Center(
+                  child: Text(
+                    'if_you_want_to_book'.tr,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  builder: (_) => BookingDialog(flatId: flat.id!),
-                );
-              },
-              child:
-              Center(child: Text('reserve_now'.tr)),
-            ),
-          ),
-          Rate(),
+                )
+              : Container(),
+          Get.find<AuthController>().currentUser.value!.role.name == "renter"
+              ? Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 8,
+                  ),
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    onPressed: () {
+                      print("Booking button clicked!"); // Debug
+
+                      if (!Get.isRegistered<BookingController>()) {
+                        Get.put(BookingController());
+                      }
+
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                        ),
+                        builder: (_) => BookingDialog(flatId: flat.id!),
+                      );
+                    },
+                    child: Center(child: Text('reserve_now'.tr)),
+                  ),
+                )
+              : Container(),
+          // Rate(),
         ],
       ),
     );
@@ -234,5 +245,3 @@ class _SpecRow extends StatelessWidget {
     );
   }
 }
-
-

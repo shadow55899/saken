@@ -10,25 +10,29 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title: const Text("Forgot Password")),
+      appBar: AppBar(title: Text("forgot_password".tr)),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Please Enter Your Phone Number",
+              'please enter your phone number'.tr,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             TextFormField(
               onChanged: (value) => phone_number = value,
-              decoration: const InputDecoration(
-                labelText: "Phone Number",
+              decoration: InputDecoration(
+                labelText: 'phone'.tr,
                 prefixIcon: Icon(Icons.phone),
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.phone,
+              style: TextStyle(
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
             ),
             const SizedBox(height: 20),
             Obx(
@@ -48,7 +52,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                       )
-                    : const Text("Next", style: TextStyle(fontSize: 18)),
+                    : Text("next".tr, style: TextStyle(fontSize: 18)),
               ),
             ),
           ],

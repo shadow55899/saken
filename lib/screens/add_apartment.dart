@@ -15,14 +15,14 @@ class AddApartment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     if (isUpdate && flat != null && controller.selectedGovernorate == null) {
       controller.selectedGovernorate = flat!.governorate;
       controller.selectedCity = flat!.city;
     }
 
-
     // ✅ إذا كانت تحديث، عبئ الحقول مسبقًا
-    if (isUpdate && flat != null &&controller.areaController.text.isEmpty)  {
+    if (isUpdate && flat != null && controller.areaController.text.isEmpty) {
       controller.areaController.text = flat!.area.toString();
       controller.roomsController.text = flat!.rooms.toString();
       controller.livingRoomsController.text = flat!.livingRooms.toString();
@@ -40,7 +40,7 @@ class AddApartment extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isUpdate ? 'update_apartment'.tr :'add_apartment'.tr),
+        title: Text(isUpdate ? 'update_apartment'.tr : 'add_apartment'.tr),
         centerTitle: true,
         backgroundColor: Colors.teal,
       ),
@@ -65,27 +65,27 @@ class AddApartment extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-
                     Padding(
-
-                      padding: const EdgeInsets.only(right: 20 ),
+                      padding: const EdgeInsets.only(right: 20),
                       child: Row(
-
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0,left: 8),
+                              padding: const EdgeInsets.only(
+                                right: 8.0,
+                                left: 8,
+                              ),
                               child: ElevatedButton(
-
                                 onPressed: () =>
                                     controller.pickImage(fromCamera: false),
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.teal,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12))
+                                  backgroundColor: Colors.teal,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
                                 ),
-                                child:  Text('from_gallery'.tr),
+                                child: Text('from_gallery'.tr),
                               ),
                             ),
                           ),
@@ -96,10 +96,12 @@ class AddApartment extends StatelessWidget {
                                 onPressed: () =>
                                     controller.pickImage(fromCamera: true),
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.teal,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12))),
-                                child:  Text('from_camera'.tr),
+                                  backgroundColor: Colors.teal,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                child: Text('from_camera'.tr),
                               ),
                             ),
                           ),
@@ -108,59 +110,62 @@ class AddApartment extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 12),
-              Obx(() {
-                final images = controller.allImages;
+                    Obx(() {
+                      final images = controller.allImages;
 
-                // If updating and no new images selected, show nothing
-                if (isUpdate && images.isEmpty) {
-                  return SizedBox.shrink();
-                }
+                      // If updating and no new images selected, show nothing
+                      if (isUpdate && images.isEmpty) {
+                        return SizedBox.shrink();
+                      }
 
-                return images.isEmpty
-                    ?  Text('no_images'.tr)
-                    : SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: images.map((file) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.file(
-                                file,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
+                      return images.isEmpty
+                          ? Text('no_images'.tr)
+                          : SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: images.map((file) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 8),
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          child: Image.file(
+                                            file,
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: 4,
+                                          right: 4,
+                                          child: GestureDetector(
+                                            onTap: () => controller.allImages
+                                                .remove(file),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.black54,
+                                                shape: BoxShape.circle,
+                                              ),
+                                              padding: const EdgeInsets.all(3),
+                                              child: const Icon(
+                                                Icons.close,
+                                                size: 16,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
                               ),
-                            ),
-                            Positioned(
-                              top: 4,
-                              right: 4,
-                              child: GestureDetector(
-                                onTap: () => controller.allImages.remove(file),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black54,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  padding: const EdgeInsets.all(3),
-                                  child: const Icon(
-                                    Icons.close,
-                                    size: 16,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                );
-              }),
+                            );
+                    }),
                   ],
                 ),
               ),
@@ -170,54 +175,58 @@ class AddApartment extends StatelessWidget {
 
             // ✅ حقول Flat
             buildTextField(
+              isDark,
               'area'.tr,
               controller.areaController,
               keyboardType: TextInputType.number,
             ),
             buildTextField(
+              isDark,
               'rooms'.tr,
               controller.roomsController,
               keyboardType: TextInputType.number,
             ),
             buildTextField(
+              isDark,
               'halls'.tr,
               controller.livingRoomsController,
               keyboardType: TextInputType.number,
             ),
             buildTextField(
+              isDark,
               'bathrooms'.tr,
               controller.bathroomsController,
               keyboardType: TextInputType.number,
             ),
             buildTextField(
+              isDark,
               'rental_price'.tr,
               controller.rentalPriceController,
               keyboardType: TextInputType.number,
             ),
 
             DropdownButtonFormField<String>(
-
               value: Locations.cites.contains(controller.selectedCity)
                   ? controller.selectedCity
                   : null,
 
               decoration: InputDecoration(
                 labelText: 'city'.tr,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               items: Locations.cites
-                  .map((c) => DropdownMenuItem(
-                value: c,
-                child: Text(c),
-              ))
+                  .map((c) => DropdownMenuItem(value: c, child: Text(c)))
                   .toList(),
               onChanged: (value) {
                 controller.selectedCity = value;
               },
             ),
 
-            buildTextField('address'.tr, controller.addressController),
+            buildTextField(isDark, 'address'.tr, controller.addressController),
             buildTextField(
+              isDark,
               'description'.tr,
               controller.descriptionController,
               maxLines: 3,
@@ -243,7 +252,6 @@ class AddApartment extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
-
                 ),
               ),
             ),
@@ -255,14 +263,16 @@ class AddApartment extends StatelessWidget {
   }
 
   Widget buildTextField(
-      String label,
-      TextEditingController controller, {
-        int maxLines = 1,
-        TextInputType keyboardType = TextInputType.text,
-      }) {
+    bool isDark,
+    String label,
+    TextEditingController controller, {
+    int maxLines = 1,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextField(
+        style: TextStyle(color: isDark ? Colors.black : null),
         controller: controller,
         maxLines: maxLines,
         keyboardType: keyboardType,
@@ -270,7 +280,7 @@ class AddApartment extends StatelessWidget {
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           filled: true,
-          fillColor: Colors.grey[100],
+          fillColor: isDark ? null : Colors.grey[100],
         ),
       ),
     );

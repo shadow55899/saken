@@ -5,11 +5,13 @@ import 'package:tapbar/models/booking.dart';
 import '../widgets/boxInformation.dart';
 
 class BookingsRequests extends StatelessWidget {
-  final BookingsRequestsController controller =
-  Get.put(BookingsRequestsController());
+  final BookingsRequestsController controller = Get.put(
+    BookingsRequestsController(),
+  );
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final size = MediaQuery.of(context).size;
     final bool isMobile = size.height > size.width;
 
@@ -37,15 +39,15 @@ class BookingsRequests extends StatelessWidget {
             ),
 
             isMobile
-                ? _buildMobileList(context, titleSize)
-                : _buildGridList(context, titleSize, titleSize1),
+                ? _buildMobileList(context, titleSize, isDark)
+                : _buildGridList(context, titleSize, titleSize1, isDark),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMobileList(BuildContext context, double titleSize) {
+  Widget _buildMobileList(BuildContext context, double titleSize, bool isDark) {
     return Obx(() {
       if (controller.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
@@ -71,9 +73,17 @@ class BookingsRequests extends StatelessWidget {
                 child: ListTile(
                   title: Text(
                     '${'registration_number'.tr} ${booking.id}',
-                    style: TextStyle(fontSize: titleSize),
+                    style: TextStyle(
+                      fontSize: titleSize,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
                   ),
-                  subtitle: Text('Status: ${booking.id}'),
+                  subtitle: Text(
+                    'Status: ${booking.id}',
+                    style: TextStyle(
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -84,7 +94,11 @@ class BookingsRequests extends StatelessWidget {
   }
 
   Widget _buildGridList(
-      BuildContext context, double titleSize, double titleSize1) {
+    BuildContext context,
+    double titleSize,
+    double titleSize1,
+    bool isDark,
+  ) {
     return Obx(() {
       if (controller.isLoading.value) {
         return const Center(child: CircularProgressIndicator());
@@ -116,12 +130,18 @@ class BookingsRequests extends StatelessWidget {
                 children: [
                   Text(
                     '${'registration_number'.tr} ${booking.id}',
-                    style: TextStyle(fontSize: titleSize),
+                    style: TextStyle(
+                      fontSize: titleSize,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     'Status: ${booking.bookingStatus}',
-                    style: TextStyle(fontSize: titleSize),
+                    style: TextStyle(
+                      fontSize: titleSize,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
                   ),
                 ],
               ),
@@ -139,7 +159,7 @@ class BookingsRequests extends StatelessWidget {
       textConfirm: 'accept'.tr,
       onCancel: () async {
         bool success = await controller.rejectRequest(booking.id);
-     //   Get.back();
+        //   Get.back();
         Get.snackbar(
           success ? 'Great'.tr : 'error'.tr,
           success ? 'request_rejected'.tr : 'failed_reject'.tr,
@@ -163,13 +183,18 @@ class BookingsRequests extends StatelessWidget {
           child: Column(
             children: [
               BoxInformation(
-                  title: 'Booking_ID'.tr, value: Text('${booking.id}')),
+                title: 'Booking_ID'.tr,
+                value: Text('${booking.id}'),
+              ),
 
               BoxInformation(
-                  title: 'Check_in'.tr, value: Text('${booking.checkInDate}')),
+                title: 'Check_in'.tr,
+                value: Text('${booking.checkInDate}'),
+              ),
               BoxInformation(
-                  title: 'Check_out'.tr, value: Text('${booking.checkOutDate}')),
-
+                title: 'Check_out'.tr,
+                value: Text('${booking.checkOutDate}'),
+              ),
             ],
           ),
         ),

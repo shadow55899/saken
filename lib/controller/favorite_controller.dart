@@ -8,18 +8,47 @@ class FavoriteController extends GetxController {
   RxList<Flat> favoriteList = <Flat>[].obs;
   FavoriteProvider provider = FavoriteProvider();
   var icon = Rx<IconData>(Icons.favorite_border_rounded);
+  RxBool isFavorite = false.obs;
 
-  void rateApp() {
-    if (icon.value == Icons.favorite_border_rounded) {
-      icon.value = Icons.favorite_rounded;
-    } else {
+  Future<void> checkFavorite(int id) async {
+    try {
+      await getAllFavorite();
+      isFavorite.value = favoriteList.any((element) => element.id == id);
+      icon.value = isFavorite.value
+          ? Icons.favorite_rounded
+          : Icons.favorite_border_rounded;
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong");
+    }
+  }
+
+  void toggleFavorite(int id) async {
+    // Check current state
+    bool currentlyFavorite = favoriteList.any((f) => f.id == id);
+
+    if (currentlyFavorite) {
+      // Remove
+      await removeFavorite(id);
+      isFavorite.value = false;
       icon.value = Icons.favorite_border_rounded;
+    } else {
+      // Add
+      await addFavorite(id);
+      isFavorite.value = true;
+      icon.value = Icons.favorite_rounded;
     }
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await getAllFavorite();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    print(isFavorite.value);
   }
 
   Future<void> getAllFavorite() async {
@@ -36,7 +65,7 @@ class FavoriteController extends GetxController {
       await provider.removeFavorite(id);
       getAllFavorite();
     } catch (e) {
-      Get.snackbar("Error".tr,    'error_something_wrong'.tr);
+      Get.snackbar("Error".tr, 'error_something_wrong'.tr);
     }
   }
 
@@ -45,7 +74,7 @@ class FavoriteController extends GetxController {
       await provider.addFavorite(id);
       getAllFavorite();
     } catch (e) {
-      Get.snackbar("Error".tr,    'error_something_wrong'.tr);
+      Get.snackbar("Error".tr, 'error_something_wrong'.tr);
     }
   }
 }

@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import '../controller/user_controller.dart';
 import '../models/user.dart';
 
-
 class UserRemoveScreen extends StatelessWidget {
   final UserController controller = Get.find();
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,11 @@ class UserRemoveScreen extends StatelessWidget {
 
           Expanded(
             child: Obx(() {
+              if (controller.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
               if (controller.users.isEmpty) {
-                return  Center(child: Text( 'no_users'.tr));
+                return Center(child: Text('no_users'.tr));
               }
               return isMobile
                   ? _buildMobileList(context, controller.users)
@@ -123,15 +126,15 @@ void showDeleteDialog(
   Get.defaultDialog(
     title: 'remove_user'.tr,
     textCancel: 'cancel'.tr,
-    textConfirm:  'delete'.tr,
-    middleText:' ${'confirm_delete'.tr} ${user.firstName} ${user.lastName}?',
+    textConfirm: 'delete'.tr,
+    middleText: ' ${'confirm_delete'.tr} ${user.firstName} ${user.lastName}?',
 
     onCancel: () => print('Cancelled: ${user.id}'),
     onConfirm: () async {
       try {
-        await controller.rejectUser(user); 
+        await controller.rejectUser(user);
       } finally {
-        Get.back(closeOverlays: true); 
+        Get.back(closeOverlays: true);
       }
     },
   );

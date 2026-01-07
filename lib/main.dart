@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       home: Obx(() {
         return authController.isLoggedIn.value ? MainScreen() : LoginScreen();
       }),
-      // home: OtpScreen(),
+      // home: LoginScreen(),
       theme: Themes.myLightTheme,
       darkTheme: Themes.myDarkTheme,
       themeMode: ThemeMode.system,
