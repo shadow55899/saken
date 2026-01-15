@@ -13,10 +13,7 @@ class BookingController extends GetxController {
     if (checkIn.value == null ||
         checkOut.value == null ||
         paymentMethod.value.isEmpty) {
-      Get.snackbar(
-        "Error".tr,
-          'missing_info'.tr,
-      );
+      Get.snackbar("Error".tr, 'missing_info'.tr);
       return;
     }
 
@@ -29,10 +26,7 @@ class BookingController extends GetxController {
 
     if (result["success"] == true) {
       Get.back();
-      Get.snackbar(
-        "success".tr,
-          'booking_request_sent'.tr,
-      );
+      Get.snackbar("success".tr, 'booking_request_sent'.tr);
     } else {
       Get.snackbar(
         "Booking Failed".tr,
@@ -40,11 +34,20 @@ class BookingController extends GetxController {
       );
     }
   }
+
   Future<void> pickDate(BuildContext context, {required bool isStart}) async {
     final picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      initialDate: DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day + 1,
+      ),
+      firstDate: DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day + 1,
+      ),
       lastDate: DateTime(2100),
     );
 
@@ -56,5 +59,4 @@ class BookingController extends GetxController {
       }
     }
   }
-
 }

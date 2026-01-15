@@ -44,11 +44,15 @@ class Details extends StatelessWidget {
             color: Colors.grey[200],
             child: (flat.pictures == null || flat.pictures!.isEmpty)
                 ? Center(
-                    child: Text(
-                      "No images available".tr,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/house.jpg"),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   )

@@ -33,7 +33,7 @@ class BookingProvider {
       if (response.statusCode == 200) {
         Get.snackbar(
           "Message",
-          "Thanks for rating us",
+          "Thanks for rating us please refresh your page to see the changes",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.black.withOpacity(0.5),
           colorText: Colors.white,
@@ -49,6 +49,38 @@ class BookingProvider {
       print(e.toString());
     }
   }
+
+  // Future<void> payFlat(int id) async {
+  //   try {
+  //     var headers = {
+  //       'Accept': 'application/json',
+  //       'Authorization': 'Bearer $token',
+  //     };
+  //     var request = http.Request('PUT', Uri.parse('$baseUrl/bookings/$id/pay'));
+
+  //     request.headers.addAll(headers);
+
+  //     http.StreamedResponse response = await request.send();
+
+  //     if (response.statusCode == 200) {
+  //       Get.snackbar(
+  //         "Message",
+  //         "Thanks for rating us",
+  //         snackPosition: SnackPosition.BOTTOM,
+  //         backgroundColor: Colors.black.withOpacity(0.5),
+  //         colorText: Colors.white,
+  //         margin: EdgeInsets.all(8),
+  //         borderRadius: 8,
+  //         duration: Duration(seconds: 2),
+  //         snackStyle: SnackStyle.FLOATING,
+  //       );
+  //     } else {
+  //       print(response.reasonPhrase);
+  //     }
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
 
   Future<List<Booking>> getAllReservation() async {
     try {
@@ -180,7 +212,7 @@ class BookingProvider {
       if (response.statusCode == 200) {
         Get.snackbar(
           "Message",
-          data['message'],
+          "Thanks for rating us please refresh your page to see the changes",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.black.withOpacity(0.5),
           colorText: Colors.white,

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../controller/auth_controller.dart';
 import '../service/api_service.dart';
+
 class BookingService {
   Future<Map<String, dynamic>> createBooking({
     required int apartmentId,
@@ -20,6 +21,7 @@ class BookingService {
           "payment_method": paymentMethod,
         },
         headers: {
+          "Accept": "application/json",
           "Authorization": "Bearer $token",
           "Content-Type": "application/json",
         },
@@ -32,8 +34,8 @@ class BookingService {
       print("==========================================");
 
       return {
-        "success": response["status_code"] == 200 ||
-            response["status_code"] == 201,
+        "success":
+            response["status_code"] == 200 || response["status_code"] == 201,
         "statusCode": response["status_code"],
         "message": response["message"] ?? "No message from server",
       };

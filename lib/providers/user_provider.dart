@@ -123,7 +123,7 @@ class UserProvider {
 
       if (data["status_code"] == 201) {
         isLoading = false;
-        Get.to(() => OtpScreen() , arguments: phone_number);
+        Get.to(() => OtpScreen(), arguments: phone_number);
         // Get.snackbar(
         //   "Message",
         //   data["message"],
@@ -136,6 +136,7 @@ class UserProvider {
         //   snackStyle: SnackStyle.FLOATING,
         // );
       } else {
+        print(data["message"]);
         Get.snackbar(
           "Message",
           data["message"],

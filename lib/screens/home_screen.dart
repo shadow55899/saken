@@ -101,8 +101,16 @@ class HomeScreen extends StatelessWidget {
                                 top: Radius.circular(20),
                               ),
                               child: Container(
-                                child: const Center(
-                                  child: Icon(Icons.home, size: 50),
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      "assets/images/house.jpg",
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),

@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:tapbar/controller/auth_controller.dart';
 import 'package:tapbar/controller/favorite_controller.dart';
 import 'package:tapbar/controller/login_controller.dart';
+import 'package:tapbar/providers/notifications_provider.dart';
 import 'package:tapbar/screens/about_us_screen.dart';
 import 'package:tapbar/screens/apartment_owner_home.dart';
 import 'package:tapbar/screens/booking_screen.dart';
@@ -132,6 +133,7 @@ class AppDrawer extends StatelessWidget {
             icon: Icons.notifications,
             title: 'notifications'.tr,
             onTap: () {
+              NotificationsProvider().getAllNotofications();
               Get.to(() => NotificationScreen());
             },
           ),

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:get/instance_manager.dart';
@@ -27,9 +29,10 @@ class NotificationsProvider {
       http.StreamedResponse response = await request.send();
       final respStr = await response.stream.bytesToString();
       final data = jsonDecode(respStr);
-      // print(data);
+      print(data);
+      // print(token);
       if (response.statusCode == 200) {
-        print(data);
+        // print(data);
         // if (data["notifications"] == null) return [];
         // notifications = AppNotification.parseList(data["notifications"]);
       } else {

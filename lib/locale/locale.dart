@@ -358,6 +358,7 @@ class AppTranslation extends Translations {
       'No bookings found': 'لا يوجد حجوزات حتى الان',
       "pending": "قيد الانتظار",
       "confirmed": "مقبول",
+      "modified": "معدل",
       "rejected": "مرفوض",
       "cancelled": "ملغي",
       "completed": "مكتمل",

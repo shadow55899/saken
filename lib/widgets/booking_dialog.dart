@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +9,6 @@ class BookingDialog extends StatelessWidget {
 
   BookingDialog({required this.flatId, super.key});
   final BookingController controller = Get.find<BookingController>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,7 @@ class BookingDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-         'book_apartment'.tr,
+            'book_apartment'.tr,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
@@ -33,9 +31,9 @@ class BookingDialog extends StatelessWidget {
           // Check-in
           ListTile(
             title: Obx(
-                  () => Text(
+              () => Text(
                 controller.checkIn.value == null
-                    ?   'select_check_in_date'.tr
+                    ? 'select_check_in_date'.tr
                     : controller.checkIn.value!.toString().split(" ").first,
               ),
             ),
@@ -46,9 +44,9 @@ class BookingDialog extends StatelessWidget {
           // Check-out
           ListTile(
             title: Obx(
-                  () => Text(
+              () => Text(
                 controller.checkOut.value == null
-                    ?   'select_check_out_date'.tr
+                    ? 'select_check_out_date'.tr
                     : controller.checkOut.value!.toString().split(" ").first,
               ),
             ),
@@ -60,22 +58,56 @@ class BookingDialog extends StatelessWidget {
 
           // Payment Method
           Obx(
-                () => DropdownButtonFormField<String>(
+            () => DropdownButtonFormField<String>(
               value: controller.paymentMethod.value.isEmpty
                   ? null
                   : controller.paymentMethod.value,
-              hint:  Text('select_payment_method'.tr),
-              items:  [
+              hint: Text('select_payment_method'.tr),
+              items: [
                 DropdownMenuItem(
                   value: "bank_transfer",
-                  child: Text( 'payment_bank_transfer'.tr),
+                  child: Text(
+                    'payment_bank_transfer'.tr,
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
                 ),
-                DropdownMenuItem(value: "cash", child: Text( 'payment_cash'.tr)),
+                DropdownMenuItem(
+                  value: "cash",
+                  child: Text(
+                    'payment_cash'.tr,
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
+                ),
                 DropdownMenuItem(
                   value: "digital_wallet",
-                  child: Text(  'payment_digital_wallet'.tr),
+                  child: Text(
+                    'payment_digital_wallet'.tr,
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
                 ),
-                DropdownMenuItem(value: "credit", child: Text(  'payment_credit_card'.tr)),
+                DropdownMenuItem(
+                  value: "credit",
+                  child: Text(
+                    'payment_credit_card'.tr,
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  ),
+                ),
               ],
               onChanged: (val) => controller.paymentMethod.value = val!,
             ),
@@ -85,7 +117,7 @@ class BookingDialog extends StatelessWidget {
 
           ElevatedButton(
             onPressed: () => controller.submitBooking(flatId),
-            child:  Text( 'confirm_booking'.tr),
+            child: Text('confirm_booking'.tr),
           ),
 
           const SizedBox(height: 20),

@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
 import 'package:tapbar/controller/auth_controller.dart';
 import 'package:tapbar/models/booking.dart';
+import 'package:tapbar/providers/booking_provider.dart';
 import 'package:tapbar/service/bookings_requests_service.dart';
 import '../providers/user_provider.dart';
 
 class BookingsRequestsController extends GetxController {
   final BookingsRequestsService bookingsRequestsService =
-  BookingsRequestsService();
+      BookingsRequestsService();
 
   var isLoading = false.obs;
   List<Booking> requestList = [];
@@ -22,7 +23,9 @@ class BookingsRequestsController extends GetxController {
       AuthController authController = Get.find<AuthController>();
 
       isLoading.value = true;
-      requestList = await bookingsRequestsService.fetchRequests("${authController.userToken}");
+      requestList = await bookingsRequestsService.fetchRequests(
+        "${authController.userToken}",
+      );
 
       print("Bookings loaded: ${requestList.length}");
     } catch (e) {
@@ -44,7 +47,7 @@ class BookingsRequestsController extends GetxController {
       return success;
     } catch (e) {
       print("Error rejecting booking: $e");
-      Get.snackbar("Error".tr,    'error_something_wrong'.tr);
+      Get.snackbar("Error".tr, 'error_something_wrong'.tr);
       return false;
     } finally {
       isLoading.value = false;
@@ -62,7 +65,7 @@ class BookingsRequestsController extends GetxController {
       return success;
     } catch (e) {
       print("Error accepting booking: $e");
-      Get.snackbar("Error".tr,    'error_something_wrong'.tr);
+      Get.snackbar("Error".tr, 'error_something_wrong'.tr);
       return false;
     } finally {
       isLoading.value = false;

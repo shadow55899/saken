@@ -13,7 +13,20 @@ class BookingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      appBar: AppBar(title: Text('Bookings'.tr)),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Text('Bookings'.tr),
+            Spacer(),
+            IconButton(
+              onPressed: () {
+                controller.getAllReservation();
+              },
+              icon: Icon(Icons.refresh),
+            ),
+          ],
+        ),
+      ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return Center(child: CircularProgressIndicator());
